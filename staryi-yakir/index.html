@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Старий Якір — кав’ярня портового міста (демо)</title>
+<meta name="description" content="«Старий Якір» — кав’ярня біля гавані: кава, сніданки й випічка з морським характером. Демонстраційний сайт.">
+<meta name="theme-color" content="#0c1a22">
+<meta property="og:title" content="Старий Якір — кав’ярня портового міста">
+<meta property="og:description" content="Кава з присмаком солі й далеких рейсів. Демонстраційний сайт.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c1a22'/%3E%3Cg fill='none' stroke='%23d9ab62' stroke-width='4' stroke-linecap='round'%3E%3Ccircle cx='32' cy='13' r='5'/%3E%3Cpath d='M32 18v34M20 24h24M14 38c2 10 9 15 18 15s16-5 18-15'/%3E%3C/g%3E%3C/svg%3E">
+<script>
+/* JS is running: allow the intro and the scroll reveals. If the main script never starts, show everything. */
+document.documentElement.classList.add('js');
+setTimeout(function(){ if(!window.__ykReady){ document.documentElement.classList.remove('js'); } }, 2500);
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Oswald:wght@400;500&family=Caveat:wght@500;600&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  Photos: real photographs from Unsplash (Unsplash License), loaded from images.unsplash.com.
+  Every photo, its author and its page are listed in ATTRIBUTION.md and in the footer.
+  To keep copies next to the site, run download-photos.ps1 (Windows) — it saves them to photos/ and makes index-offline.html.
+-->
+<style>
+/* VOICE: a harbour café at dusk — brass, rope, old charts, warm wood; calm and welcoming.
+   IDEA: the page behaves like a ship's logbook kept in a port café: brass plates, a travel notebook, log entries.
+   PICTURE: real photographs carry it (sea, facade, coffee, pastry); the anchor is the one drawn brand mark.
+   COLOUR/TYPE: deep harbour navy, paper, brass gold, sea teal, rope; Lora + Oswald (signage) + Caveat (notebook) + Golos Text.
+   LAYOUT: full-bleed photo bands between paper bands; menu as a notebook page; one drawer for cart and order. */
+:root{
+  --navy:#0c1a22; --navy-2:#13303c; --teal:#1f5b63; --paper:#f4ecdd; --paper-2:#eadfca; --ink:#1c2328; --mute:#5f6a6e;
+  --brass:#c99a52; --brass-l:#f0cf8b; --brass-d:#8a6230; --rope:#cdb48b; --coral:#d8694a;
+  --line:rgba(28,35,40,.14); --line-l:rgba(244,236,221,.16);
+  --serif:'Lora',Georgia,serif; --sign:'Oswald','Arial Narrow',sans-serif; --hand:'Caveat','Segoe Print',cursive; --sans:'Golos Text',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.08;text-wrap:balance}
+h2{font-size:clamp(36px,4.8vw,60px)}
+h1 em,h2 em{font-style:italic;font-weight:400;color:var(--brass-d)}
+.dark h2 em,.hero h1 em{color:var(--brass-l)}
+.plate-label{display:inline-flex;align-items:center;gap:10px;font:500 13px/1 var(--sign);letter-spacing:.12em;text-transform:uppercase;color:var(--brass-d);margin-bottom:14px}
+.dark .plate-label{color:var(--brass)}
+.plate-label svg{width:16px;height:20px}
+.lead{font-size:clamp(16.5px,1.3vw,18.5px);max-width:580px}
+.photo{position:relative;overflow:hidden;background:var(--navy-2)}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+
+/* buttons: brass and rope, with a soft press */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:13px 24px;border-radius:999px;border:0;background:linear-gradient(180deg,#e2b96e,#b8843f);color:#1b1309;font-weight:600;font-size:15px;text-decoration:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 24px -14px rgba(138,98,48,.9);transition:transform .45s var(--ease),filter .3s,box-shadow .45s}
+.btn:hover{filter:brightness(1.06);transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 16px 30px -14px rgba(138,98,48,.95)}
+.btn:active{transform:translateY(0) scale(.97)}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.ghost:hover{background:rgba(255,255,255,.08)}
+.btn.small{min-height:40px;padding:8px 16px;font-size:14px}
+.add{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;font-weight:500;font-size:14px;transition:background .3s,color .3s,transform .3s}
+.add:hover{background:var(--ink);color:var(--paper)}
+.add:active{transform:scale(.95)}
+.add.done{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* rope divider with the anchor */
+.rope{display:flex;align-items:center;gap:16px;color:var(--rope);margin:0 auto;max-width:560px}
+.rope:before,.rope:after{content:"";flex:1;height:6px;background:repeating-linear-gradient(-55deg,var(--rope) 0 4px,#b89a6b 4px 7px);border-radius:3px;opacity:.8}
+.rope svg{width:26px;height:34px;flex:none}
+
+/* ============ intro: silence → anchor → light → sea → foam ============ */
+.intro{display:none}
+.js .intro{display:grid;place-items:center;position:fixed;inset:0;z-index:100;background:#060d12;overflow:hidden}
+.intro .sea{position:absolute;inset:0;opacity:0;transform:scale(1.08);animation:seaIn 1.6s var(--ease) 1.2s forwards}
+.intro .sea img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.8)}
+.intro .sea:after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 45%,transparent,#060d12 85%)}
+@keyframes seaIn{to{opacity:.75;transform:none}}
+.intro .light{position:absolute;left:50%;top:-10%;width:min(70vw,520px);height:80%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,228,170,.55),rgba(255,228,170,.08) 70%,transparent);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);opacity:0;animation:lightIn 1.4s var(--ease) .8s forwards;mix-blend-mode:screen}
+@keyframes lightIn{to{opacity:1}}
+.intro .mark{position:relative;width:min(34vw,150px);opacity:0;animation:markIn 1.2s var(--ease) .2s forwards}
+.intro .mark svg{width:100%;height:auto;filter:drop-shadow(0 0 0 rgba(255,214,140,0));animation:shine 1.4s var(--ease) 1s forwards}
+@keyframes markIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes shine{to{filter:drop-shadow(0 0 26px rgba(255,214,140,.55))}}
+.intro .word{position:absolute;left:0;right:0;bottom:22%;text-align:center;color:#efe3cb;font:italic 400 clamp(26px,4vw,40px)/1 var(--serif);opacity:0;animation:markIn 1s var(--ease) 1.5s forwards}
+.intro .word small{display:block;margin-top:10px;font:500 12px/1 var(--sign);letter-spacing:.3em;text-transform:uppercase;color:var(--brass)}
+.intro .hush{position:absolute;left:50%;bottom:12%;width:120px;height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(239,227,203,.5),transparent);animation:hush 2.4s ease-in-out infinite}
+@keyframes hush{50%{width:200px;opacity:.4}}
+.intro .foam{position:absolute;left:-10%;right:-10%;top:100%;height:140%;background:radial-gradient(40% 18% at 20% 8%,rgba(244,236,221,.95),transparent 70%),radial-gradient(45% 16% at 70% 4%,rgba(244,236,221,.9),transparent 70%),linear-gradient(180deg,rgba(244,236,221,.0),rgba(244,236,221,.92) 14%,var(--paper) 30%);animation:foam 1.2s var(--ease) 2.5s forwards}
+@keyframes foam{to{top:-40%}}
+.intro.out{opacity:0;transition:opacity .5s}
+.intro .skip{position:absolute;right:18px;bottom:18px;z-index:2;min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid rgba(239,227,203,.3);background:rgba(239,227,203,.08);color:#efe3cb;font-size:14px}
+.intro .skip:hover{background:rgba(239,227,203,.18)}
+
+/* ============ header ============ */
+.top{position:fixed;inset:0 0 auto;z-index:50;color:#f4ecdd;padding:16px 0;transition:background .45s,padding .45s,box-shadow .45s}
+.top.solid{background:rgba(12,26,34,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:9px 0;box-shadow:0 1px 0 var(--line-l)}
+.top .wrap{display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto}
+.brand svg{width:30px;height:40px;flex:none;transition:transform .8s var(--ease)}
+.brand:hover svg{transform:rotate(-8deg)}
+.brand b{display:block;font:italic 500 22px/1 var(--serif)}
+.brand small{display:block;font:500 10.5px/1 var(--sign);letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin-top:5px}
+.nav{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.nav a{text-decoration:none;font-size:15px;opacity:.85;padding:8px 0;transition:opacity .3s}
+.nav a:hover,.nav a.on{opacity:1;color:var(--brass-l)}
+.iconbtn{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-l);background:rgba(12,26,34,.35);color:#f4ecdd;transition:background .3s,transform .3s}
+.iconbtn:hover{background:rgba(244,236,221,.12)}
+.iconbtn:active{transform:scale(.94)}
+.iconbtn svg{width:20px;height:20px}
+.iconbtn[aria-pressed=true]{background:var(--teal);border-color:var(--teal)}
+.count{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--brass-l);color:#1b1309;font-size:11.5px;font-weight:600;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,1.6,.4,1)}
+.count.pop{transform:scale(1.35)}
+.burger{display:none}
+.burger i,.burger i:before,.burger i:after{display:block;width:18px;height:1.6px;background:currentColor;position:relative;transition:transform .4s,background .3s}
+.burger i:before,.burger i:after{content:"";position:absolute;left:0}.burger i:before{top:-6px}.burger i:after{top:6px}
+.burger[aria-expanded=true] i{background:transparent}.burger[aria-expanded=true] i:before{transform:translateY(6px) rotate(45deg)}.burger[aria-expanded=true] i:after{transform:translateY(-6px) rotate(-45deg)}
+.drawer-nav{position:fixed;inset:0;z-index:45;background:var(--navy);color:var(--paper);display:flex;flex-direction:column;justify-content:center;padding:92px 24px 30px;gap:2px;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
+.drawer-nav.on{opacity:1;visibility:visible}
+.drawer-nav a:not(.btn){font:400 32px/1.25 var(--serif);text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line-l)}
+.drawer-nav .btn{margin-top:24px;align-self:flex-start}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;color:#f4ecdd;overflow:hidden;background:var(--navy)}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);animation:slowzoom 18s ease-out forwards}
+@keyframes slowzoom{to{transform:scale(1)}}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,18,24,.85),rgba(8,18,24,.45) 50%,rgba(8,18,24,.1)),linear-gradient(0deg,rgba(8,18,24,.75),transparent 50%)}
+.hero .copy{position:relative;z-index:2;padding-bottom:clamp(60px,10vh,110px)}
+.hero h1{font-size:clamp(44px,6.6vw,94px);max-width:820px;margin:4px 0 20px}
+.hero .lead{color:#e2dccf}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.sign{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;border-radius:8px;background:linear-gradient(180deg,#e9c47e,#b8843f);color:#24180b;font:500 13px/1 var(--sign);letter-spacing:.16em;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 8px 20px -10px rgba(0,0,0,.7)}
+.sign i{width:7px;height:7px;border-radius:50%;background:#5a3d18;box-shadow:inset 0 1px 1px rgba(0,0,0,.4)}
+
+/* reveal */
+.rv{transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv:not(.in){opacity:0;transform:translateY(26px)}
+
+.band{padding:clamp(80px,10vw,130px) 0}
+.dark{background:var(--navy);color:#f4ecdd}
+.dark p{color:#c9cfcb}
+/* old-chart texture: fine lines, very quiet */
+.chart{background-color:var(--paper);background-image:
+  radial-gradient(circle at 85% 20%,rgba(201,154,82,.08),transparent 40%),
+  repeating-linear-gradient(0deg,transparent 0 59px,rgba(31,91,99,.06) 59px 60px),
+  repeating-linear-gradient(90deg,transparent 0 59px,rgba(31,91,99,.06) 59px 60px)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+
+/* ============ try ============ */
+.try-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto auto;gap:22px}
+.item{display:flex;flex-direction:column;background:#fbf6ec;border-radius:18px;overflow:hidden;box-shadow:0 1px 0 var(--line),0 24px 50px -40px rgba(12,26,34,.6);transition:transform .5s var(--ease),box-shadow .5s}
+.item:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--line),0 34px 60px -36px rgba(12,26,34,.7)}
+.item:hover .photo img{transform:scale(1.05)}
+.item .photo{aspect-ratio:4/3}
+.item.big{grid-row:span 2}
+.item.big .photo{aspect-ratio:auto;flex:1;min-height:320px}
+.item .body{padding:16px 18px 18px}
+.item h3{font-size:22px}
+.item p{margin:6px 0 14px;font-size:14.5px;color:var(--mute)}
+.item .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.item .price{font:500 20px/1 var(--serif)}
+.badge{position:absolute;left:12px;top:12px;z-index:1;background:rgba(12,26,34,.78);color:var(--brass-l);font:500 11.5px/1 var(--sign);letter-spacing:.14em;text-transform:uppercase;padding:7px 10px;border-radius:6px}
+
+/* ============ story ============ */
+.story .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
+.framed{position:relative;padding:12px;background:linear-gradient(145deg,#e7c27c,#9a6c34 45%,#d9ab62);border-radius:6px;box-shadow:0 30px 60px -36px rgba(12,26,34,.8)}
+.framed .photo{aspect-ratio:4/5;border-radius:2px}
+.framed .photo img{filter:sepia(.15) contrast(1.05)}
+.framed .tagnote{position:absolute;right:-14px;bottom:28px;background:var(--paper);padding:10px 14px;font:600 20px/1.1 var(--hand);color:var(--teal);transform:rotate(-3deg);box-shadow:0 10px 20px -12px rgba(0,0,0,.5);max-width:200px}
+.small-photo{position:absolute;left:-26px;top:-26px;width:42%;aspect-ratio:1;border-radius:50%;border:8px solid var(--paper);box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
+.small-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.log{list-style:none;margin:28px 0 0;padding:0}
+.log li{display:grid;grid-template-columns:84px 1fr;gap:16px;padding:16px 0;border-top:1px dashed rgba(28,35,40,.22)}
+.log b{font:500 15px/1.3 var(--sign);letter-spacing:.08em;color:var(--teal);text-transform:uppercase}
+.log p{margin:0;color:var(--mute);font-size:15.5px}
+
+/* ============ facade ============ */
+.facade{position:relative;color:#f4ecdd;min-height:min(86vh,760px);display:flex;align-items:flex-end}
+.facade .bg{position:absolute;inset:0}
+.facade .bg img{width:100%;height:100%;object-fit:cover}
+.facade:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,18,24,.8),rgba(8,18,24,0) 55%)}
+.facade .wrap{position:relative;z-index:1;padding:clamp(40px,6vw,80px) 0;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.brassplate{background:linear-gradient(160deg,#f0cf8b,#b8843f 55%,#d9ab62);color:#24180b;border-radius:10px;padding:18px 22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 20px 40px -20px rgba(0,0,0,.8);max-width:360px;position:relative}
+.brassplate:before,.brassplate:after{content:"";position:absolute;top:10px;width:8px;height:8px;border-radius:50%;background:#6b4a1f;box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.brassplate:before{left:10px}.brassplate:after{right:10px}
+.brassplate b{display:block;font:500 13px/1 var(--sign);letter-spacing:.2em;text-transform:uppercase;margin:6px 0 8px}
+.brassplate span{font:italic 500 24px/1.15 var(--serif)}
+.brassplate small{display:block;margin-top:8px;font-size:13px}
+
+/* ============ inside ============ */
+.inside{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:end}
+.inside figure{margin:0}
+.inside .photo{border-radius:18px}
+.inside figure:first-child .photo{aspect-ratio:4/3}
+.inside figure:last-child .photo{aspect-ratio:4/5}
+.inside figcaption{margin-top:10px;font:600 22px/1.2 var(--hand);color:var(--teal)}
+
+/* ============ menu: a travel notebook ============ */
+.menu-sec{background:var(--navy);padding:clamp(80px,10vw,130px) 0}
+.book{position:relative;max-width:1060px;margin:0 auto;background:
+  linear-gradient(90deg,transparent 64px,rgba(216,105,74,.35) 64px 66px,transparent 66px),
+  repeating-linear-gradient(180deg,transparent 0 33px,rgba(31,91,99,.13) 33px 34px),
+  radial-gradient(120% 80% at 50% 0%,#f8f1e3,#efe3cc);
+  border-radius:6px 16px 16px 6px;padding:52px clamp(20px,5vw,64px) 52px clamp(84px,9vw,110px);box-shadow:0 50px 90px -50px rgba(0,0,0,.9),inset 14px 0 18px -14px rgba(0,0,0,.25)}
+.book:before{content:"";position:absolute;left:22px;top:30px;bottom:30px;width:14px;background:radial-gradient(circle,#0c1a22 4px,transparent 5px) 0 0/14px 44px repeat-y;opacity:.85}
+.stain{position:absolute;right:8%;top:-24px;width:120px;height:120px;border-radius:50%;border:9px solid rgba(110,72,38,.12);transform:rotate(12deg);pointer-events:none}
+.taped{position:absolute;right:clamp(16px,4vw,46px);top:36px;width:min(30%,240px);transform:rotate(3deg);background:#fff;padding:8px 8px 30px;box-shadow:0 18px 30px -18px rgba(0,0,0,.6)}
+.taped .photo{aspect-ratio:1}
+.taped:before{content:"";position:absolute;left:50%;top:-12px;width:90px;height:24px;transform:translateX(-50%) rotate(-4deg);background:rgba(201,154,82,.45)}
+.taped span{position:absolute;left:0;right:0;bottom:6px;text-align:center;font:600 18px/1 var(--hand);color:var(--ink)}
+.book h2{color:var(--ink);max-width:60%}
+.book .note{font:600 22px/1.2 var(--hand);color:var(--teal);margin:8px 0 26px;max-width:58%}
+.ribbons{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.ribbons button{position:relative;border:0;padding:10px 18px 10px 16px;min-height:44px;background:#e6d7bb;color:var(--ink);font:500 14px/1 var(--sign);letter-spacing:.1em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,92% 50%,100% 100%,0 100%);transition:background .3s,color .3s,transform .3s}
+.ribbons button:hover{transform:translateY(-2px)}
+.ribbons button[aria-selected=true]{background:var(--teal);color:#fff}
+.mlist{list-style:none;margin:0;padding:0;columns:2;column-gap:56px}
+.mlist li{break-inside:avoid;padding:10px 0 12px}
+.mlist .r{display:flex;align-items:baseline;gap:10px}
+.mlist b{font:500 19px/1.3 var(--serif)}
+.mlist .dots{flex:1;border-bottom:2px dotted rgba(28,35,40,.3);transform:translateY(-4px)}
+.mlist .p{font:600 16px/1 var(--sans);white-space:nowrap}
+.mlist p{margin:2px 0 6px;font-size:14.5px;color:var(--mute)}
+.mlist .plus{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-size:18px;line-height:1;display:grid;place-items:center;flex:none;transition:background .3s,color .3s,transform .3s}
+.mlist .plus:hover{background:var(--ink);color:var(--paper)}
+.mlist .plus:active{transform:scale(.9)}
+.mlist .plus.done{background:var(--teal);border-color:var(--teal);color:#fff}
+.stamp{position:absolute;right:clamp(16px,4vw,50px);bottom:30px;width:120px;height:120px;border-radius:50%;border:3px double rgba(31,91,99,.5);display:grid;place-items:center;text-align:center;font:500 11px/1.3 var(--sign);letter-spacing:.14em;text-transform:uppercase;color:rgba(31,91,99,.7);transform:rotate(-12deg)}
+.panel-fade{animation:pf .45s var(--ease)}
+@keyframes pf{from{opacity:0;transform:translateY(8px)}}
+
+/* ============ gallery: the logbook ============ */
+.gal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:clamp(120px,14vw,190px);gap:14px}
+.gal button{position:relative;border:0;padding:0;border-radius:14px;overflow:hidden;background:var(--navy-2)}
+.gal button img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter .6s}
+.gal button:hover img{transform:scale(1.06)}
+.gal button span{position:absolute;left:10px;bottom:10px;right:10px;text-align:left;color:#fff;font:600 19px/1.1 var(--hand);text-shadow:0 2px 10px rgba(0,0,0,.7);opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}
+.gal button:hover span,.gal button:focus-visible span{opacity:1;transform:none}
+.g1{grid-column:span 3;grid-row:span 2}.g2{grid-column:span 3}.g3{grid-column:span 2;grid-row:span 2}.g4{grid-column:span 1}.g5{grid-column:span 2;grid-row:span 2}.g6{grid-column:span 2}.g7{grid-column:span 1}
+.lb{position:fixed;inset:0;z-index:90;background:rgba(6,13,18,.94);display:grid;place-items:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.lb.on{opacity:1;visibility:visible}
+.lb figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:min(1100px,100%)}
+.lb img{max-width:100%;max-height:78vh;width:auto;border-radius:10px;object-fit:contain}
+.lb figcaption{color:#efe3cb;text-align:center;font:600 24px/1.1 var(--hand)}
+.lb figcaption small{display:block;font:400 12.5px var(--sans);color:#9fb0b4;margin-top:6px}
+.lb .lbtn{position:absolute;width:50px;height:50px;border-radius:50%;border:1px solid rgba(239,227,203,.3);background:rgba(239,227,203,.08);color:#fff;font-size:18px}
+.lb .x{top:16px;right:16px}.lb .p{left:16px;top:50%;transform:translateY(-50%)}.lb .n{right:16px;top:50%;transform:translateY(-50%)}
+
+/* ============ order teaser ============ */
+.order .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.order .photo{aspect-ratio:5/4;border-radius:200px 18px 18px 18px}
+.steps{list-style:none;margin:24px 0 28px;padding:0;display:grid;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start}
+.steps li:before{content:counter(s);flex:none;width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--brass-l);display:grid;place-items:center;font:500 15px/1 var(--sign)}
+
+/* ============ contacts ============ */
+.contacts .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,70px)}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:26px 22px;margin-top:30px}
+.info h3{font:500 13px/1 var(--sign);letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:10px}
+.info p{margin:0}
+.hours{display:grid;grid-template-columns:auto auto;gap:4px 16px}
+.hours span:nth-child(odd){color:#9fb0b4}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links button{min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid var(--line-l);background:none;color:#f4ecdd;font-size:14.5px;transition:background .3s}
+.links button:hover{background:rgba(244,236,221,.1)}
+.contacts .photo{border-radius:18px;min-height:340px;height:100%}
+
+footer{background:#081218;color:#8fa2a6;padding:34px 0 28px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer b{color:#f4ecdd;font:italic 500 20px var(--serif)}
+footer details{width:100%;margin-top:14px;border-top:1px solid var(--line-l);padding-top:14px}
+footer summary{cursor:pointer;color:#c9cfcb}
+footer ul{columns:2;column-gap:30px;padding-left:18px;margin:12px 0 0}
+footer li{break-inside:avoid;margin-bottom:4px}
+footer a{color:#c9cfcb}
+
+/* ============ cart + order drawer ============ */
+.shade{position:fixed;inset:0;z-index:60;background:rgba(6,13,18,.55);opacity:0;pointer-events:none;transition:opacity .4s}
+.shade.on{opacity:1;pointer-events:auto}
+.cart{position:fixed;top:0;right:0;bottom:0;z-index:61;width:min(460px,100%);background:var(--paper);display:flex;flex-direction:column;transform:translateX(102%);transition:transform .55s var(--ease);box-shadow:-30px 0 60px -30px rgba(0,0,0,.5)}
+.cart.on{transform:none}
+.cart header{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.cart header h2{font-size:26px}
+.cart .x{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;font-size:18px}
+.cart .scroll{flex:1;overflow:auto;padding:4px 20px 20px;overscroll-behavior:contain}
+.line{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.line .th{width:64px;height:64px;border-radius:12px;overflow:hidden;background:var(--paper-2)}
+.line .th img{width:100%;height:100%;object-fit:cover}
+.line b{font:500 16.5px/1.25 var(--serif)}
+.line .sum{font-weight:600;white-space:nowrap}
+.line .ctl{grid-column:2/4;display:flex;justify-content:space-between;align-items:center}
+.qty{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px}
+.qty button{width:36px;height:36px;border:0;background:none;font-size:17px;border-radius:50%}
+.qty button:hover{background:var(--paper-2)}
+.qty span{min-width:24px;text-align:center;font-weight:600}
+.rm{border:0;background:none;color:var(--mute);text-decoration:underline;font-size:13.5px;min-height:36px}
+.empty{padding:40px 0;text-align:center;color:var(--mute)}
+.empty svg{width:46px;height:60px;margin:0 auto 14px;opacity:.5}
+.totals{padding:14px 20px 18px;border-top:1px solid var(--line);background:#efe5d3}
+.totals .t{display:flex;justify-content:space-between;font-size:15px;margin-bottom:4px}
+.totals .t.g{font:600 20px/1.3 var(--serif)}
+.totals .btn{width:100%;margin-top:12px}
+.co h3{font-size:24px;margin:18px 0 12px}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.f label,.f .lbl{font-size:14px;font-weight:500}
+.f input,.f select,.f textarea{width:100%;min-height:48px;border:1.5px solid var(--line);background:#fffaf1;border-radius:12px;padding:11px 13px;font-size:16px}
+.f textarea{min-height:76px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(31,91,99,.15)}
+.f .err{display:none;font-size:13px;color:#a8361f}
+.f.bad input,.f.bad select,.f.bad textarea{border-color:#c4553c}.f.bad .err{display:block}
+.seg{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg label{display:flex;align-items:center;justify-content:center;min-height:46px;cursor:pointer;font-weight:500;transition:background .3s,color .3s}
+.seg input{position:absolute;opacity:0}
+.seg input:checked+span{color:#fff}
+.seg label:has(input:checked){background:var(--teal);color:#fff}
+.seg input:focus-visible+span{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+.alert{display:none;background:#f9ddd3;color:#80281a;border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:12px}
+.alert.show{display:block}
+.demo-note{font-size:13px;color:var(--mute);margin-top:10px}
+.swing{display:none;width:18px;height:24px;transform-origin:50% 8%;animation:swing 1s ease-in-out infinite}
+.loading .swing{display:inline-block}
+@keyframes swing{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(14deg)}}
+.done-box{text-align:center;padding:30px 4px}
+.done-box svg{width:60px;height:80px;margin:0 auto 14px}
+.done-box h3{font-size:30px}
+.done-box dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;text-align:left;max-width:320px;margin:18px auto;font-size:15px}
+.done-box dt{color:var(--mute)}.done-box dd{margin:0;font-weight:500}
+.done-box .demo{background:#efe5d3;border-radius:12px;padding:12px 14px;font-size:14px}
+
+.toast{position:fixed;left:50%;bottom:24px;z-index:95;transform:translate(-50%,16px);background:var(--navy);color:#f4ecdd;padding:12px 20px;border-radius:999px;font-size:14.5px;opacity:0;pointer-events:none;transition:opacity .35s,transform .45s var(--ease);max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1000px){
+  .nav,.top .btn{display:none}
+  .burger{display:grid}
+  .try-grid{grid-template-columns:1fr 1fr}
+  .item.big{grid-column:1/-1;grid-row:auto}
+  .item.big .photo{min-height:0;aspect-ratio:16/10;flex:none}
+  .story .grid2,.order .grid2,.contacts .grid2{grid-template-columns:1fr}
+  .story .framed{max-width:520px;margin:30px auto 0 30px}
+  .mlist{columns:1}
+  .taped{position:relative;right:auto;top:auto;width:200px;margin:0 0 20px auto}
+  .book h2,.book .note{max-width:none}
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(140px,34vw,240px)}
+  .g1,.g3,.g5{grid-column:span 2;grid-row:span 1}.g2,.g4,.g6,.g7{grid-column:span 1;grid-row:span 1}
+  .g7{grid-column:span 2}
+}
+@media (max-width:600px){
+  .wrap{width:min(100% - 32px,1240px)}
+  .hero:after{background:linear-gradient(0deg,rgba(8,18,24,.92) 20%,rgba(8,18,24,.4) 60%,rgba(8,18,24,.15))}
+  .hero .btn{flex:1 1 auto}
+  .try-grid{grid-template-columns:1fr}
+  .inside{grid-template-columns:1fr}
+  .inside figure:last-child .photo{aspect-ratio:4/3}
+  .book{padding:34px 18px 120px 46px;background:linear-gradient(90deg,transparent 34px,rgba(216,105,74,.35) 34px 36px,transparent 36px),repeating-linear-gradient(180deg,transparent 0 33px,rgba(31,91,99,.13) 33px 34px),radial-gradient(120% 80% at 50% 0%,#f8f1e3,#efe3cc)}
+  .book:before{left:8px;width:12px}
+  .taped{width:160px}
+  .stamp{width:92px;height:92px;font-size:9.5px;bottom:18px}
+  .info{grid-template-columns:1fr}
+  .log li{grid-template-columns:1fr;gap:2px}
+  .small-photo{left:-14px;top:-18px;border-width:6px}
+  .story .framed{margin:24px 0 0 14px}
+  .framed .tagnote{right:-6px;font-size:18px}
+  footer ul{columns:1}
+  .lb .p,.lb .n{top:auto;bottom:16px;transform:none}.lb .p{left:calc(50% - 60px)}.lb .n{right:calc(50% - 60px)}
+  .facade{min-height:72vh}
+}
+@media (max-height:520px) and (orientation:landscape){
+  .hero .copy{padding:80px 0 24px}.hero h1{font-size:clamp(30px,5vw,44px);margin-bottom:10px}.hero .lead{font-size:15px}.hero .cta{margin-top:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation:none!important;transition-duration:.01ms!important}
+  .js .intro{display:none}
+  .js .rv:not(.in){opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- the brand mark: a cast brass anchor with a rope, drawn once and reused -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6d999"/><stop offset=".35" stop-color="#c99a52"/><stop offset=".6" stop-color="#8a6230"/><stop offset=".85" stop-color="#e0b56d"/><stop offset="1" stop-color="#a77a3d"/></linearGradient>
+    <linearGradient id="ropeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3cfa7"/><stop offset="1" stop-color="#b8996a"/></linearGradient>
+  </defs>
+  <symbol id="anchor" viewBox="0 0 120 160">
+    <circle cx="60" cy="16" r="10" fill="none" stroke="url(#brass)" stroke-width="6" class="dr"/>
+    <path d="M24 36 H96" stroke="url(#brass)" stroke-width="8" stroke-linecap="round" class="dr"/>
+    <circle cx="22" cy="36" r="6" fill="url(#brass)"/><circle cx="98" cy="36" r="6" fill="url(#brass)"/>
+    <path d="M60 26 V140" stroke="url(#brass)" stroke-width="10" stroke-linecap="round" class="dr"/>
+    <path d="M60 50 V136" stroke="#fff3d0" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"/>
+    <path d="M16 100 C18 128 36 146 60 148 C84 146 102 128 104 100" fill="none" stroke="url(#brass)" stroke-width="9" stroke-linecap="round" class="dr"/>
+    <path d="M6 108 L16 86 L28 106 Z M92 106 L104 86 L114 108 Z" fill="url(#brass)"/>
+    <circle cx="60" cy="146" r="7" fill="url(#brass)"/>
+    <path d="M60 24 C84 34 40 48 64 60 C86 72 38 84 62 98 C80 108 50 118 56 132" fill="none" stroke="url(#ropeG)" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="7 3" class="dr"/>
+  </symbol>
+</svg>
+
+<!-- intro: silence, the anchor, a fall of light, the sea, foam. Skippable; once per visit; off under reduced motion -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="sea"><img src="https://images.unsplash.com/photo-1566342088293-38debd381c63?auto=format&fit=crop&w=1600&q=78" srcset="https://images.unsplash.com/photo-1566342088293-38debd381c63?auto=format&fit=crop&w=800&q=78 800w, https://images.unsplash.com/photo-1566342088293-38debd381c63?auto=format&fit=crop&w=1600&q=78 1600w, https://images.unsplash.com/photo-1566342088293-38debd381c63?auto=format&fit=crop&w=2400&q=78 2400w" sizes="100vw" alt="Місячне світло на темних хвилях нічного моря" loading="eager" fetchpriority="high" decoding="async" data-photo="night-sea" data-author="Davide Sibilio" data-big="https://images.unsplash.com/photo-1566342088293-38debd381c63?auto=format&fit=crop&w=1800&q=78"></div>
+  <div class="light"></div>
+  <div class="mark"><svg viewBox="0 0 120 160"><use href="#anchor"/></svg></div>
+  <div class="word">Старий Якір<small>кав’ярня портового міста</small></div>
+  <div class="hush"></div>
+  <div class="foam"></div>
+  <button class="skip" id="skip" type="button">Пропустити</button>
+</div>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Старий Якір — на початок"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg><span><b>Старий Якір</b><small>кав’ярня · порт</small></span></a>
+    <nav aria-label="Головне меню"><ul class="nav">
+      <li><a href="#try">Що спробувати</a></li><li><a href="#story">Історія</a></li><li><a href="#menu">Меню</a></li><li><a href="#log">Галерея</a></li><li><a href="#contacts">Контакти</a></li>
+    </ul></nav>
+    <button class="iconbtn" id="sound" type="button" aria-pressed="false" aria-label="Увімкнути шум моря" title="Шум моря"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg></button>
+    <button class="iconbtn" id="cartBtn" type="button" aria-label="Кошик, 0 позицій" aria-haspopup="dialog" aria-controls="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.4 11H6.4z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="count" id="count">0</span></button>
+    <a class="btn small" href="#menu">Замовити</a>
+    <button class="iconbtn burger" id="burger" type="button" aria-label="Відкрити меню" aria-expanded="false" aria-controls="navDrawer"><i></i></button>
+  </div>
+</header>
+<div class="drawer-nav" id="navDrawer" aria-label="Меню сайту">
+  <a href="#try">Що спробувати</a><a href="#story">Історія місця</a><a href="#menu">Меню</a><a href="#log">Галерея</a><a href="#contacts">Контакти</a>
+  <a class="btn" href="#menu">Замовити</a>
+</div>
+
+<main id="home">
+  <section class="hero" aria-labelledby="h1">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1610970182773-ea35a6ed6586?auto=format&fit=crop&w=1800&q=78" srcset="https://images.unsplash.com/photo-1610970182773-ea35a6ed6586?auto=format&fit=crop&w=900&q=78 900w, https://images.unsplash.com/photo-1610970182773-ea35a6ed6586?auto=format&fit=crop&w=1800&q=78 1800w, https://images.unsplash.com/photo-1610970182773-ea35a6ed6586?auto=format&fit=crop&w=2400&q=78 2400w" sizes="100vw" alt="Гості за дерев’яними столами просто біля моря вдень" loading="eager" fetchpriority="high" decoding="async" data-photo="hero" data-author="Sho K" data-big="https://images.unsplash.com/photo-1610970182773-ea35a6ed6586?auto=format&fit=crop&w=1800&q=78"></div>
+    <div class="wrap copy">
+      <span class="sign"><i></i>Причал № 7 · відчинено з 8:00<i></i></span>
+      <h1 id="h1" style="margin-top:18px">Кава з присмаком <em>солі й далеких рейсів</em></h1>
+      <p class="lead">Маленька кав’ярня біля гавані: еспресо для тих, хто зранку виходить у море, теплі круасани для тих, хто нікуди не поспішає, і вікна на воду для всіх.</p>
+      <div class="cta"><a class="btn" href="#menu">Подивитися меню</a><a class="btn ghost" href="#try">Що спробувати</a></div>
+    </div>
+  </section>
+
+  <!-- ============ what to try ============ -->
+  <section class="band chart" id="try" aria-labelledby="h-try">
+    <div class="wrap">
+      <div class="head rv"><div><p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Що спробувати</p><h2 id="h-try">Те, по що <em>повертаються</em></h2></div><p class="lead" style="max-width:380px;color:var(--mute)">П’ять позицій, які бариста радить першим. Додавайте в кошик — оформимо замовлення з собою.</p></div>
+      <div class="try-grid" id="tryGrid">
+        <article class="item big rv"><div class="photo"><span class="badge">фірмова</span><img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=1000&q=78" srcset="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=1000&q=78 1000w, https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=2000&q=78 2000w" sizes="(max-width:600px) 100vw, 50vw" alt="Капучино в керамічній чашці" loading="lazy" decoding="async" data-photo="cappuccino" data-author="Nathan Dumlao" data-big="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=1800&q=78"></div><div class="body"><h3>Капучино «Причальний»</h3><p>Еспресо на суміші Бразилія — Ефіопія, молоко 3,2% і щіпка морської солі на піні.</p><div class="row"><span class="price">85 ₴</span><button class="add" type="button" data-add="cap">+ У кошик</button></div></div></article>
+        <article class="item rv"><div class="photo"><img src="https://images.unsplash.com/photo-1763207291707-e2cf471ed72b?auto=format&fit=crop&w=700&q=78" srcset="https://images.unsplash.com/photo-1763207291707-e2cf471ed72b?auto=format&fit=crop&w=350&q=78 350w, https://images.unsplash.com/photo-1763207291707-e2cf471ed72b?auto=format&fit=crop&w=700&q=78 700w, https://images.unsplash.com/photo-1763207291707-e2cf471ed72b?auto=format&fit=crop&w=1400&q=78 1400w" sizes="(max-width:600px) 100vw, 50vw" alt="Гора свіжих круасанів на дерев’яній поверхні" loading="lazy" decoding="async" data-photo="croissants" data-author="Richard Bell" data-big="https://images.unsplash.com/photo-1763207291707-e2cf471ed72b?auto=format&fit=crop&w=1800&q=78"></div><div class="body"><h3>Круасан на маслі</h3><p>Печемо щоранку, 27 шарів, хрусткий до останньої крихти.</p><div class="row"><span class="price">70 ₴</span><button class="add" type="button" data-add="cro">+ У кошик</button></div></div></article>
+        <article class="item rv"><div class="photo"><img src="https://images.unsplash.com/photo-1766350731223-79313d2e68e5?auto=format&fit=crop&w=700&q=78" srcset="https://images.unsplash.com/photo-1766350731223-79313d2e68e5?auto=format&fit=crop&w=350&q=78 350w, https://images.unsplash.com/photo-1766350731223-79313d2e68e5?auto=format&fit=crop&w=700&q=78 700w, https://images.unsplash.com/photo-1766350731223-79313d2e68e5?auto=format&fit=crop&w=1400&q=78 1400w" sizes="(max-width:600px) 100vw, 50vw" alt="Булочка з корицею поруч із кавою і гілочкою шипшини" loading="lazy" decoding="async" data-photo="cinnamon" data-author="Ezgi Deliklitas" data-big="https://images.unsplash.com/photo-1766350731223-79313d2e68e5?auto=format&fit=crop&w=1800&q=78"></div><div class="body"><h3>Булочка «Боцман»</h3><p>Кориця, кардамон і апельсинова цедра. Найкраще — з фільтр-кавою.</p><div class="row"><span class="price">75 ₴</span><button class="add" type="button" data-add="bun">+ У кошик</button></div></div></article>
+        <article class="item rv"><div class="photo"><img src="https://images.unsplash.com/photo-1761027101486-d0403a229f88?auto=format&fit=crop&w=700&q=78" srcset="https://images.unsplash.com/photo-1761027101486-d0403a229f88?auto=format&fit=crop&w=350&q=78 350w, https://images.unsplash.com/photo-1761027101486-d0403a229f88?auto=format&fit=crop&w=700&q=78 700w, https://images.unsplash.com/photo-1761027101486-d0403a229f88?auto=format&fit=crop&w=1400&q=78 1400w" sizes="(max-width:600px) 100vw, 50vw" alt="Тост з авокадо, яйцем пашот і перцем чилі" loading="lazy" decoding="async" data-photo="avotoast" data-author="Salman Sidheek" data-big="https://images.unsplash.com/photo-1761027101486-d0403a229f88?auto=format&fit=crop&w=1800&q=78"></div><div class="body"><h3>Тост «Штиль»</h3><p>Житній хліб, авокадо, яйце пашот і трохи чилі.</p><div class="row"><span class="price">195 ₴</span><button class="add" type="button" data-add="toast">+ У кошик</button></div></div></article>
+        <article class="item rv"><div class="photo"><img src="https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?auto=format&fit=crop&w=700&q=78" srcset="https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?auto=format&fit=crop&w=350&q=78 350w, https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?auto=format&fit=crop&w=700&q=78 700w, https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?auto=format&fit=crop&w=1400&q=78 1400w" sizes="(max-width:600px) 100vw, 50vw" alt="Свіже еспресо ллється з холдера кавомашини" loading="lazy" decoding="async" data-photo="espresso" data-author="Scott K" data-big="https://images.unsplash.com/photo-1776548736734-0654a4d8b7ec?auto=format&fit=crop&w=1800&q=78"></div><div class="body"><h3>Еспресо «Вахта»</h3><p>Подвійний, щільний, з карамельною кислинкою — щоб прокинутися до світанку.</p><div class="row"><span class="price">55 ₴</span><button class="add" type="button" data-add="esp">+ У кошик</button></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="rope" aria-hidden="true" style="margin-top:-6px;margin-bottom:-6px;position:relative;z-index:2"><svg viewBox="0 0 120 160"><use href="#anchor"/></svg></div>
+
+  <!-- ============ story ============ -->
+  <section class="band story" id="story" aria-labelledby="h-story">
+    <div class="wrap grid2">
+      <div class="rv" style="position:relative">
+        <div class="framed"><div class="photo"><img src="https://images.unsplash.com/photo-1636095643796-28270e862979?auto=format&fit=crop&w=900&q=78" srcset="https://images.unsplash.com/photo-1636095643796-28270e862979?auto=format&fit=crop&w=450&q=78 450w, https://images.unsplash.com/photo-1636095643796-28270e862979?auto=format&fit=crop&w=900&q=78 900w, https://images.unsplash.com/photo-1636095643796-28270e862979?auto=format&fit=crop&w=1800&q=78 1800w" sizes="(max-width:600px) 100vw, 50vw" alt="Чорно-біле фото: човни біля старого пірсу" loading="lazy" decoding="async" data-photo="pier-bw" data-author="Duncan Meyer" data-big="https://images.unsplash.com/photo-1636095643796-28270e862979?auto=format&fit=crop&w=1800&q=78"></div><span class="tagnote">Старий пірс — звідси все почалося</span></div>
+        <div class="small-photo"><img src="https://images.unsplash.com/photo-1793484897536-87a6852238eb?auto=format&fit=crop&w=500&q=78" srcset="https://images.unsplash.com/photo-1793484897536-87a6852238eb?auto=format&fit=crop&w=320&q=78 320w, https://images.unsplash.com/photo-1793484897536-87a6852238eb?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1793484897536-87a6852238eb?auto=format&fit=crop&w=1000&q=78 1000w" sizes="(max-width:600px) 100vw, 50vw" alt="Човни в тихій гавані перед прибережним містечком і горами" loading="lazy" decoding="async" data-photo="harbor" data-author="David DINTSH" data-big="https://images.unsplash.com/photo-1793484897536-87a6852238eb?auto=format&fit=crop&w=1800&q=78"></div>
+      </div>
+      <div class="rv">
+        <p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Історія місця</p>
+        <h2 id="h-story">Колись тут видавали <em>квитки на пароплав</em></h2>
+        <p class="lead" style="margin-top:18px;color:var(--mute)">Ми відкрилися в будівлі старої портової каси. Від неї залишилися латунна табличка над входом, дубова стійка і звичка нікого не квапити.</p>
+        <ul class="log">
+          <li><b>Причал</b><p>Біля стійки висить карта рейсів, на якій відвідувачі позначають, звідки приїхали. Шпильок уже більше, ніж країн, які ми можемо назвати.</p></li>
+          <li><b>Якір</b><p>Справжній якір над дверима знайшли під час ремонту в підвалі. Тепер він — наш знак і привід для фото.</p></li>
+          <li><b>Зміна</b><p>Перша кава — о восьмій, коли рибалки повертаються з ранкового улову. Остання — коли на набережній вмикаються ліхтарі.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ facade ============ -->
+  <section class="facade" aria-labelledby="h-facade">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1779442563698-11fad08a733e?auto=format&fit=crop&w=1800&q=78" srcset="https://images.unsplash.com/photo-1779442563698-11fad08a733e?auto=format&fit=crop&w=900&q=78 900w, https://images.unsplash.com/photo-1779442563698-11fad08a733e?auto=format&fit=crop&w=1800&q=78 1800w, https://images.unsplash.com/photo-1779442563698-11fad08a733e?auto=format&fit=crop&w=2400&q=78 2400w" sizes="100vw" alt="Фасад кав’ярні зі столиками надворі та бежевими парасолями" loading="lazy" decoding="async" data-photo="facade" data-author="Margo Evardson" data-big="https://images.unsplash.com/photo-1779442563698-11fad08a733e?auto=format&fit=crop&w=1800&q=78"></div>
+    <div class="wrap">
+      <div class="rv" style="max-width:560px"><p class="plate-label" style="color:var(--brass-l)"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Нас легко знайти</p><h2 id="h-facade" style="color:#f4ecdd">Бежеві парасолі <em>біля самої води</em></h2></div>
+      <div class="brassplate rv"><b>Кав’ярня</b><span>«Старий Якір»</span><small>Портова вулиця, 7 · адреса-заглушка</small></div>
+    </div>
+  </section>
+
+  <!-- ============ inside ============ -->
+  <section class="band" aria-labelledby="h-inside">
+    <div class="wrap">
+      <div class="head rv"><div><p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Всередині</p><h2 id="h-inside">Тепле світло, <em>дерево і тиша</em></h2></div></div>
+      <div class="inside">
+        <figure class="rv"><div class="photo"><img src="https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=1100&q=78" srcset="https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=550&q=78 550w, https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=1100&q=78 1100w, https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=2200&q=78 2200w" sizes="(max-width:600px) 100vw, 50vw" alt="Інтер’єр кав’ярні з підвісними лампами над дерев’яним столом" loading="lazy" decoding="async" data-photo="hall-bulbs" data-author="Clifford" data-big="https://images.unsplash.com/photo-1511081692775-05d0f180a065?auto=format&fit=crop&w=1800&q=78"></div><figcaption>Великий стіл під лампами — для компаній і настільних ігор</figcaption></figure>
+        <figure class="rv"><div class="photo"><img src="https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?auto=format&fit=crop&w=800&q=78" srcset="https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?auto=format&fit=crop&w=400&q=78 400w, https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?auto=format&fit=crop&w=800&q=78 800w, https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?auto=format&fit=crop&w=1600&q=78 1600w" sizes="(max-width:600px) 100vw, 50vw" alt="Зал зі столом, стільцями і великим вікном" loading="lazy" decoding="async" data-photo="hall-window" data-author="Dmitrii Filatov" data-big="https://images.unsplash.com/photo-1728761390316-935ffeb3fbcc?auto=format&fit=crop&w=1800&q=78"></div><figcaption>Столик біля вікна — займайте зранку</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ menu: travel notebook ============ -->
+  <section class="menu-sec" id="menu" aria-labelledby="h-menu">
+    <div class="wrap">
+      <div class="book rv">
+        <span class="stain" aria-hidden="true"></span>
+        <figure class="taped" style="margin:0"><div class="photo"><img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=78" srcset="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=320&q=78 320w, https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1000&q=78 1000w" sizes="(max-width:600px) 100vw, 50vw" alt="Лате, мелена кава і кавові зерна, вигляд згори" loading="lazy" decoding="async" data-photo="flatlay" data-author="Nathan Dumlao" data-big="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1800&q=78"></div><span>зерна тижня</span></figure>
+        <p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Меню</p>
+        <h2 id="h-menu">Записник <em>мандрівника</em></h2>
+        <p class="note">Ціни — демонстраційні. Натисніть «+», щоб додати в кошик.</p>
+        <div class="ribbons" role="tablist" aria-label="Розділи меню" id="ribbons">
+          <button role="tab" id="r-coffee" aria-selected="true" aria-controls="mlist" data-c="coffee">Кава</button>
+          <button role="tab" id="r-other" aria-selected="false" aria-controls="mlist" tabindex="-1" data-c="other">Не кава</button>
+          <button role="tab" id="r-break" aria-selected="false" aria-controls="mlist" tabindex="-1" data-c="break">Сніданки</button>
+          <button role="tab" id="r-bake" aria-selected="false" aria-controls="mlist" tabindex="-1" data-c="bake">Випічка</button>
+        </div>
+        <ul class="mlist" id="mlist" role="tabpanel" aria-labelledby="r-coffee" tabindex="0">
+          <!-- filled from MENU in the script; the coffee list is here for browsers without scripts -->
+          <li><div class="r"><b>Еспресо «Вахта»</b><span class="dots"></span><span class="p">55 ₴</span></div><p>Подвійний, щільний, з карамельною кислинкою.</p></li>
+          <li><div class="r"><b>Капучино «Причальний»</b><span class="dots"></span><span class="p">85 ₴</span></div><p>З щіпкою морської солі на піні.</p></li>
+          <li><div class="r"><b>Флет вайт</b><span class="dots"></span><span class="p">90 ₴</span></div><p>Подвійний ристрето і тонка шовкова піна.</p></li>
+          <li><div class="r"><b>Раф «Туман над гаванню»</b><span class="dots"></span><span class="p">110 ₴</span></div><p>Вершки, ваніль, морська сіль.</p></li>
+          <li><div class="r"><b>Фільтр дня</b><span class="dots"></span><span class="p">70 ₴</span></div><p>Запитайте бариста про зерно тижня.</p></li>
+          <li><div class="r"><b>Еспресо-тонік</b><span class="dots"></span><span class="p">95 ₴</span></div><p>Тонік, апельсин, розмарин — літо в склянці.</p></li>
+        </ul>
+        <span class="stamp" aria-hidden="true">Старий<br>Якір<br>· порт ·</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ gallery: logbook ============ -->
+  <section class="band chart" id="log" aria-labelledby="h-log">
+    <div class="wrap">
+      <div class="head rv"><div><p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Судновий журнал</p><h2 id="h-log">День у <em>кав’ярні</em></h2></div><p class="lead" style="max-width:360px;color:var(--mute)">Натисніть на фото, щоб роздивитися. Гортайте стрілками або свайпом.</p></div>
+      <div class="gal" id="gal">
+        <button type="button" class="g1 rv" data-i="0" data-cap="08:10 · Перші гості на березі"><img src="https://images.unsplash.com/photo-1743803983331-5547515bba98?auto=format&fit=crop&w=1100&q=78" srcset="https://images.unsplash.com/photo-1743803983331-5547515bba98?auto=format&fit=crop&w=550&q=78 550w, https://images.unsplash.com/photo-1743803983331-5547515bba98?auto=format&fit=crop&w=1100&q=78 1100w, https://images.unsplash.com/photo-1743803983331-5547515bba98?auto=format&fit=crop&w=2200&q=78 2200w" sizes="(max-width:600px) 100vw, 50vw" alt="Кафе на березі зі столиками, стільцями і парасолями" loading="lazy" decoding="async" data-photo="beach-cafe" data-author="Zoshua Colah" data-big="https://images.unsplash.com/photo-1743803983331-5547515bba98?auto=format&fit=crop&w=1800&q=78"><span>08:10 · Перші гості на березі</span></button>
+        <button type="button" class="g2 rv" data-i="1" data-cap="08:30 · Бариста на вахті"><img src="https://images.unsplash.com/photo-1532713107108-dfb5d8d2fc42?auto=format&fit=crop&w=900&q=78" srcset="https://images.unsplash.com/photo-1532713107108-dfb5d8d2fc42?auto=format&fit=crop&w=450&q=78 450w, https://images.unsplash.com/photo-1532713107108-dfb5d8d2fc42?auto=format&fit=crop&w=900&q=78 900w, https://images.unsplash.com/photo-1532713107108-dfb5d8d2fc42?auto=format&fit=crop&w=1800&q=78 1800w" sizes="(max-width:600px) 100vw, 50vw" alt="Бариста наливає молоко в каву, малюючи візерунок" loading="lazy" decoding="async" data-photo="barista" data-author="Brent Gorwin" data-big="https://images.unsplash.com/photo-1532713107108-dfb5d8d2fc42?auto=format&fit=crop&w=1800&q=78"><span>08:30 · Бариста на вахті</span></button>
+        <button type="button" class="g3 rv" data-i="2" data-cap="10:00 · Зал наповнюється"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=78" srcset="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=400&q=78 400w, https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=78 800w, https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1600&q=78 1600w" sizes="(max-width:600px) 100vw, 50vw" alt="Гості всередині затишної кав’ярні" loading="lazy" decoding="async" data-photo="inside" data-author="Petr Sevcovic" data-big="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1800&q=78"><span>10:00 · Зал наповнюється</span></button>
+        <button type="button" class="g4 rv" data-i="3" data-cap="11:20 · Книжка і лате"><img src="https://images.unsplash.com/photo-1542372147193-a7aca54189cd?auto=format&fit=crop&w=500&q=78" srcset="https://images.unsplash.com/photo-1542372147193-a7aca54189cd?auto=format&fit=crop&w=320&q=78 320w, https://images.unsplash.com/photo-1542372147193-a7aca54189cd?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1542372147193-a7aca54189cd?auto=format&fit=crop&w=1000&q=78 1000w" sizes="(max-width:600px) 100vw, 50vw" alt="Лате, круасан і книжка на столику кав’ярні" loading="lazy" decoding="async" data-photo="book" data-author="Rizky Subagja" data-big="https://images.unsplash.com/photo-1542372147193-a7aca54189cd?auto=format&fit=crop&w=1800&q=78"><span>11:20 · Книжка і лате</span></button>
+        <button type="button" class="g5 rv" data-i="4" data-cap="12:00 · Пізній сніданок"><img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=78" srcset="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=400&q=78 400w, https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=800&q=78 800w, https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=78 1600w" sizes="(max-width:600px) 100vw, 50vw" alt="Сніданок: вафлі, яйця і сік на столі" loading="lazy" decoding="async" data-photo="breakfast" data-author="Rachel Park" data-big="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1800&q=78"><span>12:00 · Пізній сніданок</span></button>
+        <button type="button" class="g6 rv" data-i="5" data-cap="17:40 · Набережна перед заходом"><img src="https://images.unsplash.com/photo-1775167131023-87e78597c4ca?auto=format&fit=crop&w=800&q=78" srcset="https://images.unsplash.com/photo-1775167131023-87e78597c4ca?auto=format&fit=crop&w=400&q=78 400w, https://images.unsplash.com/photo-1775167131023-87e78597c4ca?auto=format&fit=crop&w=800&q=78 800w, https://images.unsplash.com/photo-1775167131023-87e78597c4ca?auto=format&fit=crop&w=1600&q=78 1600w" sizes="(max-width:600px) 100vw, 50vw" alt="Будинки на набережній уздовж тихої затоки зі скелястим берегом" loading="lazy" decoding="async" data-photo="bay" data-author="Howard Walsh" data-big="https://images.unsplash.com/photo-1775167131023-87e78597c4ca?auto=format&fit=crop&w=1800&q=78"><span>17:40 · Набережна перед заходом</span></button>
+        <button type="button" class="g7 rv" data-i="6" data-cap="18:15 · Остання кава дня"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=78" srcset="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=320&q=78 320w, https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1000&q=78 1000w" sizes="(max-width:600px) 100vw, 50vw" alt="Бариста малює латте-арт у чашці" loading="lazy" decoding="async" data-photo="latte-art" data-author="Fahmi Fakhrudin" data-big="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=1800&q=78"><span>18:15 · Остання кава дня</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ order teaser ============ -->
+  <section class="band order" id="order" aria-labelledby="h-order">
+    <div class="wrap grid2">
+      <div class="photo rv"><img src="https://images.unsplash.com/photo-1528699633788-424224dc89b5?auto=format&fit=crop&w=1000&q=78" srcset="https://images.unsplash.com/photo-1528699633788-424224dc89b5?auto=format&fit=crop&w=500&q=78 500w, https://images.unsplash.com/photo-1528699633788-424224dc89b5?auto=format&fit=crop&w=1000&q=78 1000w, https://images.unsplash.com/photo-1528699633788-424224dc89b5?auto=format&fit=crop&w=2000&q=78 2000w" sizes="(max-width:600px) 100vw, 50vw" alt="Різна випічка з кавою та напоями на столі" loading="lazy" decoding="async" data-photo="bread" data-author="João Marcelo Martins" data-big="https://images.unsplash.com/photo-1528699633788-424224dc89b5?auto=format&fit=crop&w=1800&q=78"></div>
+      <div class="rv">
+        <p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>З собою</p>
+        <h2 id="h-order">Замовте заздалегідь — <em>заберіть без черги</em></h2>
+        <ol class="steps"><li>Додайте каву і випічку з меню або «Що спробувати».</li><li>Відкрийте кошик, вкажіть ім’я, телефон і час.</li><li>Заберіть на стійці з якорем або замовте доставку набережною.</li></ol>
+        <button class="btn" type="button" id="openCart2">Відкрити кошик</button>
+        <p class="demo-note">Демо-версія: замовлення нікуди не надсилається, оплата не підключена.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ contacts ============ -->
+  <section class="band dark contacts" id="contacts" aria-labelledby="h-contacts">
+    <div class="wrap grid2">
+      <div class="rv">
+        <p class="plate-label"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Контакти</p>
+        <h2 id="h-contacts">Кидайте якір <em>у нас</em></h2>
+        <div class="info">
+          <div><h3>Адреса</h3><p>Портова вулиця, 7<br><span style="color:#9fb0b4">(адреса-заглушка)</span></p></div>
+          <div><h3>Телефон</h3><p>+380 00 000 00 00<br><span style="color:#9fb0b4">тимчасовий номер</span></p></div>
+          <div><h3>Години</h3><div class="hours"><span>Пн–Пт</span><span>08:00–21:00</span><span>Сб–Нд</span><span>09:00–22:00</span></div></div>
+          <div><h3>Пошта</h3><p>ahoy@staryi-yakir.example</p></div>
+          <div style="grid-column:1/-1"><h3>Карти й соцмережі</h3><div class="links"><button type="button" data-l="Google Maps">Google Maps</button><button type="button" data-l="Instagram">Instagram</button><button type="button" data-l="Telegram">Telegram</button><button type="button" data-l="Facebook">Facebook</button></div></div>
+        </div>
+      </div>
+      <div class="photo rv"><img src="https://images.unsplash.com/photo-1669135316766-5c2a2a4f2e02?auto=format&fit=crop&w=900&q=78" srcset="https://images.unsplash.com/photo-1669135316766-5c2a2a4f2e02?auto=format&fit=crop&w=450&q=78 450w, https://images.unsplash.com/photo-1669135316766-5c2a2a4f2e02?auto=format&fit=crop&w=900&q=78 900w, https://images.unsplash.com/photo-1669135316766-5c2a2a4f2e02?auto=format&fit=crop&w=1800&q=78 1800w" sizes="(max-width:600px) 100vw, 50vw" alt="Гавань з човнами і будинками на березі" loading="lazy" decoding="async" data-photo="contact" data-author="Delano Ramdas" data-big="https://images.unsplash.com/photo-1669135316766-5c2a2a4f2e02?auto=format&fit=crop&w=1800&q=78"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Старий Якір</b><div style="margin-top:6px">Вигадана кав’ярня. Демонстраційний сайт: назва, історія, меню, ціни, адреса й телефон не справжні.</div></div>
+    <div>Дизайн і розробка: Білогор С.В. · 2026</div>
+    <details><summary>Фотографії: Unsplash (ліцензія Unsplash) — автори</summary><ul><li><a href="https://unsplash.com/photos/moonlight-on-ocean-waves-at-night-quOy9JPjEKs" rel="noopener" target="_blank">Davide Sibilio</a> — Місячне світло на темних хвилях нічного моря</li><li><a href="https://unsplash.com/photos/people-sitting-on-brown-wooden-picnic-table-near-sea-during-daytime-et0v7wY9meI" rel="noopener" target="_blank">Sho K</a> — Гості за дерев’яними столами просто біля моря вдень</li><li><a href="https://unsplash.com/photos/cafe-exterior-with-outdoor-seating-and-beige-umbrellas-1jIs3w-Ahwg" rel="noopener" target="_blank">Margo Evardson</a> — Фасад кав’ярні зі столиками надворі та бежевими парасолями</li><li><a href="https://unsplash.com/photos/a-black-and-white-photo-of-boats-docked-at-a-pier-KGepaz9s1xY" rel="noopener" target="_blank">Duncan Meyer</a> — Чорно-біле фото: човни біля старого пірсу</li><li><a href="https://unsplash.com/photos/boats-in-coastal-harbor-with-mountains--ujm4oI8p8g" rel="noopener" target="_blank">David DINTSH</a> — Човни в тихій гавані перед прибережним містечком і горами</li><li><a href="https://unsplash.com/photos/cafe-interior-with-hanging-bulbs-and-table-VobvKmG-StA" rel="noopener" target="_blank">Clifford</a> — Інтер’єр кав’ярні з підвісними лампами над дерев’яним столом</li><li><a href="https://unsplash.com/photos/a-dining-room-with-a-table-and-chairs-and-a-large-window-j6ERcKXdlXw" rel="noopener" target="_blank">Dmitrii Filatov</a> — Зал зі столом, стільцями і великим вікном</li><li><a href="https://unsplash.com/photos/cappuccino-coffee-in-mug-tA90pRfL2gM" rel="noopener" target="_blank">Nathan Dumlao</a> — Капучино в керамічній чашці</li><li><a href="https://unsplash.com/photos/a-pile-of-freshly-baked-croissants-on-a-wooden-surface-ikkTOvSkdEg" rel="noopener" target="_blank">Richard Bell</a> — Гора свіжих круасанів на дерев’яній поверхні</li><li><a href="https://unsplash.com/photos/cinnamon-roll-with-coffee-and-rosehip-branch-2TjheStF70o" rel="noopener" target="_blank">Ezgi Deliklitas</a> — Булочка з корицею поруч із кавою і гілочкою шипшини</li><li><a href="https://unsplash.com/photos/avocado-toast-with-poached-egg-and-chili-garnish-ot4-VLeEEas" rel="noopener" target="_blank">Salman Sidheek</a> — Тост з авокадо, яйцем пашот і перцем чилі</li><li><a href="https://unsplash.com/photos/fresh-espresso-pouring-from-a-coffee-machine-portafilter-YkS-mhaOjLI" rel="noopener" target="_blank">Scott K</a> — Свіже еспресо ллється з холдера кавомашини</li><li><a href="https://unsplash.com/photos/flat-lay-photography-of-coffee-latte-ground-coffee-and-coffee-beans-Y3AqmbmtLQI" rel="noopener" target="_blank">Nathan Dumlao</a> — Лате, мелена кава і кавові зерна, вигляд згори</li><li><a href="https://unsplash.com/photos/beachside-cafe-with-tables-chairs-and-umbrellas-mZLZT-uU0Gs" rel="noopener" target="_blank">Zoshua Colah</a> — Кафе на березі зі столиками, стільцями і парасолями</li><li><a href="https://unsplash.com/photos/man-pouring-latte-on-coffee-vhQUnmnOLys" rel="noopener" target="_blank">Brent Gorwin</a> — Бариста наливає молоко в каву, малюючи візерунок</li><li><a href="https://unsplash.com/photos/people-inside-cafe-qE1jxYXiwOA" rel="noopener" target="_blank">Petr Sevcovic</a> — Гості всередині затишної кав’ярні</li><li><a href="https://unsplash.com/photos/latte-croissant-and-book-on-cafe-table-1k7TnX5GAww" rel="noopener" target="_blank">Rizky Subagja</a> — Лате, круасан і книжка на столику кав’ярні</li><li><a href="https://unsplash.com/photos/breakfast-spread-with-waffles-eggs-and-juice-hrlvr2ZlUNk" rel="noopener" target="_blank">Rachel Park</a> — Сніданок: вафлі, яйця і сік на столі</li><li><a href="https://unsplash.com/photos/waterfront-buildings-line-a-calm-bay-with-rocky-shore-D5hMqSd_Pbc" rel="noopener" target="_blank">Howard Walsh</a> — Будинки на набережній уздовж тихої затоки зі скелястим берегом</li><li><a href="https://unsplash.com/photos/person-making-latte-art-nzyzAUsbV0M" rel="noopener" target="_blank">Fahmi Fakhrudin</a> — Бариста малює латте-арт у чашці</li><li><a href="https://unsplash.com/photos/assorted-bread-with-coffee-and-drinks-pDC7vQrW-EM" rel="noopener" target="_blank">João Marcelo Martins</a> — Різна випічка з кавою та напоями на столі</li><li><a href="https://unsplash.com/photos/a-body-of-water-with-boats-in-it-and-buildings-around-it-sXP-qk_ITQ0" rel="noopener" target="_blank">Delano Ramdas</a> — Гавань з човнами і будинками на березі</li></ul></details>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Перегляд фото" aria-hidden="true">
+  <button class="lbtn x" id="lbX" type="button" aria-label="Закрити">✕</button>
+  <button class="lbtn p" id="lbP" type="button" aria-label="Попереднє фото">←</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lbtn n" id="lbN" type="button" aria-label="Наступне фото">→</button>
+</div>
+
+<!-- cart and order (demo) -->
+<div class="shade" id="shade"></div>
+<aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+  <header><h2 id="cartTitle">Кошик</h2><button class="x" id="cartX" type="button" aria-label="Закрити кошик">✕</button></header>
+  <div class="scroll" id="cartScroll">
+    <div id="lines"></div>
+    <form class="co" id="co" novalidate hidden>
+      <h3>Оформлення</h3>
+      <div class="f"><label for="o-name">Ім’я</label><input id="o-name" autocomplete="name" required><span class="err">Вкажіть ім’я</span></div>
+      <div class="f"><label for="o-phone">Телефон</label><input id="o-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" required><span class="err">Потрібен номер для підтвердження</span></div>
+      <div class="f"><span class="lbl" id="l-way">Як отримати</span><div class="seg" role="radiogroup" aria-labelledby="l-way"><label><input type="radio" name="way" value="pickup" checked><span>Самовивіз</span></label><label><input type="radio" name="way" value="delivery"><span>Доставка</span></label></div></div>
+      <div class="f" id="addrF" hidden><label for="o-addr">Адреса доставки</label><input id="o-addr" autocomplete="street-address" placeholder="Вулиця, будинок, під’їзд"><span class="err">Вкажіть адресу</span></div>
+      <div class="f"><label for="o-time">Коли</label><select id="o-time"></select></div>
+      <div class="f"><label for="o-note">Коментар <span style="color:var(--mute);font-weight:400">(необов’язково)</span></label><textarea id="o-note" placeholder="Без цукру, рослинне молоко…"></textarea></div>
+      <div class="alert" id="alert" role="alert"></div>
+    </form>
+    <div class="done-box" id="doneBox" hidden role="status" aria-live="polite">
+      <svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>
+      <h3 id="doneTitle">Замовлення прийнято</h3>
+      <dl id="doneList"></dl>
+      <p class="demo">Це демо-сайт: замовлення не створене, дані нікуди не надіслані й не збережені. На робочому сайті тут було б підтвердження від кав’ярні.</p>
+      <button class="btn ghost" type="button" id="newOrder" style="margin-top:16px">Нове замовлення</button>
+    </div>
+  </div>
+  <div class="totals" id="totals">
+    <div class="t"><span>Позицій</span><span id="tCount">0</span></div>
+    <div class="t" id="tDelRow" hidden><span>Доставка</span><span>60 ₴</span></div>
+    <div class="t g"><span>Разом</span><span id="tSum">0 ₴</span></div>
+    <button class="btn" type="button" id="toCheckout">Оформити замовлення</button>
+    <button class="btn" type="submit" form="co" id="place" hidden><svg class="swing" viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg><span id="placeLabel">Підтвердити замовлення</span></button>
+    <p class="demo-note" style="text-align:center">Демо: нічого не надсилається і не оплачується.</p>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   Старий Якір — demo café site. Plain JS, no libraries; nothing is sent anywhere.
+   Menu: MENU below. Photos: images.unsplash.com (see ATTRIBUTION.md).
+   ========================================================= */
+{
+  window.__ykReady = true;
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ss = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = n => n.toLocaleString('uk-UA').replace(/ /g, ' ') + ' ₴';
+
+  /* ---------- intro ---------- */
+  const intro = $('#intro');
+  const endIntro = () => { if (!intro.isConnected || intro.classList.contains('out')) return; intro.classList.add('out'); ss.set('yk-intro', '1'); setTimeout(() => intro.remove(), 520); };
+  if (reduce || ss.get('yk-intro')) intro.remove();
+  else { $('#skip').addEventListener('click', endIntro); setTimeout(endIntro, 3600); addEventListener('keydown', e => e.key === 'Escape' && endIntro(), { once: true }); }
+
+  /* ---------- header, nav drawer, active section ---------- */
+  const top = $('#top'), burger = $('#burger'), nd = $('#navDrawer');
+  const onScroll = () => top.classList.toggle('solid', scrollY > 40); addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setNav = v => { nd.classList.toggle('on', v); burger.setAttribute('aria-expanded', v); burger.setAttribute('aria-label', v ? 'Закрити меню' : 'Відкрити меню'); document.body.style.overflow = v ? 'hidden' : ''; if (v) setTimeout(() => nd.querySelector('a').focus(), 60); };
+  burger.onclick = () => setNav(!nd.classList.contains('on'));
+  $$('#navDrawer a').forEach(a => a.addEventListener('click', () => setNav(false)));
+  addEventListener('resize', () => { if (innerWidth > 1000 && nd.classList.contains('on')) setNav(false); });
+  const navLinks = $$('.nav a');
+  const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('on', a.hash === '#' + e.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
+  navLinks.forEach(a => { const s = $(a.hash); s && spy.observe(s); });
+
+  /* ---------- reveal ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .05 });
+  if (reduce) $$('.rv').forEach(el => el.classList.add('in')); else $$('.rv').forEach((el, i) => { if (el.closest('.try-grid,.gal')) el.style.transitionDelay = (i % 4) * 80 + 'ms'; io.observe(el); });
+
+  /* ---------- sea sound: made in the browser, starts only on click ---------- */
+  let ac = null, gain = null;
+  $('#sound').addEventListener('click', e => {
+    const b = e.currentTarget, on = b.getAttribute('aria-pressed') !== 'true';
+    try {
+      if (!ac) {
+        ac = new (window.AudioContext || window.webkitAudioContext)();
+        const len = ac.sampleRate * 4, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0); let last = 0;
+        for (let i = 0; i < len; i++) { last = (last + .02 * (Math.random() * 2 - 1)) / 1.02; d[i] = last * 3.2; }   // brown noise = distant surf
+        const src = ac.createBufferSource(); src.buffer = buf; src.loop = true;
+        const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900;
+        gain = ac.createGain(); gain.gain.value = 0;
+        const swell = ac.createGain(); swell.gain.value = .5; const lfo = ac.createOscillator(); lfo.frequency.value = .09; const depth = ac.createGain(); depth.gain.value = .35;
+        lfo.connect(depth).connect(swell.gain); src.connect(lp).connect(swell).connect(gain).connect(ac.destination); src.start(); lfo.start();
+      }
+      ac.resume(); gain.gain.setTargetAtTime(on ? .5 : 0, ac.currentTime, .6);
+      b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Вимкнути шум моря' : 'Увімкнути шум моря');
+      toast(on ? 'Шум моря увімкнено' : 'Шум моря вимкнено');
+    } catch (err) { toast('Звук недоступний у цьому браузері'); }
+  });
+
+  /* ---------- catalogue (demo prices) ---------- */
+  const P = id => $(`[data-photo="${id}"]`)?.currentSrc || '';
+  const CAT = {
+    cap: { n: 'Капучино «Причальний»', p: 85, ph: 'cappuccino' }, cro: { n: 'Круасан на маслі', p: 70, ph: 'croissants' },
+    bun: { n: 'Булочка «Боцман»', p: 75, ph: 'cinnamon' }, toast: { n: 'Тост «Штиль»', p: 195, ph: 'avotoast' }, esp: { n: 'Еспресо «Вахта»', p: 55, ph: 'espresso' }
+  };
+  const MENU = {
+    coffee: [['esp', 'Еспресо «Вахта»', 'Подвійний, щільний, з карамельною кислинкою.', 55], ['cap', 'Капучино «Причальний»', 'З щіпкою морської солі на піні.', 85], ['fw', 'Флет вайт', 'Подвійний ристрето і тонка шовкова піна.', 90], ['raf', 'Раф «Туман над гаванню»', 'Вершки, ваніль, морська сіль.', 110], ['filt', 'Фільтр дня', 'Запитайте бариста про зерно тижня.', 70], ['tonic', 'Еспресо-тонік', 'Тонік, апельсин, розмарин — літо в склянці.', 95]],
+    other: [['cocoa', 'Какао «Кают-компанія»', 'Бельгійський шоколад, кориця, маршмелоу.', 95], ['tea', 'Чай з чебрецем', 'Чайник на двох, мед окремо.', 80], ['lemon', 'Лимонад «Бриз»', 'Лимон, лайм, м’ята, газована вода.', 90], ['matcha', 'Матча-лате', 'Японська матча, молоко на вибір.', 115]],
+    break: [['toast', 'Тост «Штиль»', 'Житній хліб, авокадо, яйце пашот, чилі.', 195], ['waffle', 'Вафлі «Якірна стоянка»', 'Ягоди, вершковий крем, кленовий сироп.', 185], ['omelet', 'Омлет рибалки', 'Три яйця, копчений лосось, кріп, тост.', 230], ['granola', 'Гранола з йогуртом', 'Мед, горіхи, сезонні фрукти.', 150]],
+    bake: [['cro', 'Круасан на маслі', 'Печемо щоранку, 27 шарів.', 70], ['bun', 'Булочка «Боцман»', 'Кориця, кардамон, апельсинова цедра.', 75], ['pain', 'Пан-о-шоколя', 'Листкове тісто і два бруски шоколаду.', 80], ['tart', 'Лимонний тарт', 'Пісочне тісто, лимонний крем, безе.', 110]]
+  };
+  Object.values(MENU).flat().forEach(([id, n, , p]) => { if (!CAT[id]) CAT[id] = { n, p, ph: '' }; });
+
+  const list = $('#mlist'), ribs = $$('#ribbons [role=tab]');
+  function showMenu(c, focus) {
+    ribs.forEach(r => { const on = r.dataset.c === c; r.setAttribute('aria-selected', on); r.tabIndex = on ? 0 : -1; if (on) { list.setAttribute('aria-labelledby', r.id); focus && r.focus(); } });
+    list.innerHTML = MENU[c].map(([id, n, d, p]) => `<li><div class="r"><b>${esc(n)}</b><span class="dots"></span><span class="p">${fmt(p)}</span><button class="plus" type="button" data-add="${id}" aria-label="Додати ${esc(n)} в кошик">+</button></div><p>${esc(d)}</p></li>`).join('');
+    list.classList.remove('panel-fade'); void list.offsetWidth; list.classList.add('panel-fade');
+  }
+  showMenu('coffee');
+  ribs.forEach((r, i) => { r.onclick = () => r.getAttribute('aria-selected') !== 'true' && showMenu(r.dataset.c);
+    r.onkeydown = e => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); showMenu(ribs[(i + d + ribs.length) % ribs.length].dataset.c, true); } }; });
+
+  /* ---------- cart: saved in this browser (if allowed), nothing leaves the page ---------- */
+  const KEY = 'yk-cart-v1'; let cart = {};
+  try { const raw = JSON.parse(localStorage.getItem(KEY) || '{}'); for (const k in raw) if (CAT[k] && raw[k] > 0) cart[k] = Math.min(20, raw[k] | 0); } catch (e) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cart)); } catch (e) {} };
+  const way = () => ($('input[name=way]:checked') || {}).value;
+  const totals = () => { const n = Object.values(cart).reduce((a, b) => a + b, 0), s = Object.entries(cart).reduce((a, [k, q]) => a + CAT[k].p * q, 0), del = way() === 'delivery' && n ? 60 : 0; return { n, s, del, all: s + del }; };
+  function renderCart() {
+    const t = totals(), keys = Object.keys(cart);
+    $('#count').textContent = t.n; $('#cartBtn').setAttribute('aria-label', `Кошик, ${t.n} позицій`);
+    $('#lines').innerHTML = keys.length ? keys.map(k => { const it = CAT[k], q = cart[k], ph = it.ph && P(it.ph);
+      return `<div class="line"><div class="th">${ph ? `<img src="${ph}" alt="">` : '<svg viewBox="0 0 120 160" style="width:60%;margin:8px auto;opacity:.5"><use href="#anchor"/></svg>'}</div>
+        <div><b>${esc(it.n)}</b><div style="font-size:13.5px;color:var(--mute)">${fmt(it.p)} / шт</div></div><div class="sum">${fmt(it.p * q)}</div>
+        <div class="ctl"><div class="qty"><button type="button" data-q="-1" data-k="${k}" aria-label="Менше: ${esc(it.n)}">−</button><span aria-live="polite">${q}</span><button type="button" data-q="1" data-k="${k}" aria-label="Більше: ${esc(it.n)}">+</button></div><button class="rm" type="button" data-rm="${k}">Прибрати</button></div></div>`; }).join('')
+      : `<div class="empty"><svg viewBox="0 0 120 160" aria-hidden="true"><use href="#anchor"/></svg>Кошик порожній — якір ще не кинуто.<br><button class="btn small" type="button" id="goMenu" style="margin-top:16px">До меню</button></div>`;
+    $('#tCount').textContent = t.n; $('#tSum').textContent = fmt(t.all); $('#tDelRow').hidden = !t.del;
+    $('#toCheckout').disabled = !t.n; if (!t.n && !$('#co').hidden) backToCart();
+    const g = $('#goMenu'); if (g) g.onclick = () => { openCart(false); $('#menu').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); };
+    save();
+  }
+  const bump = () => { const c = $('#count'); c.classList.add('pop'); setTimeout(() => c.classList.remove('pop'), 350); };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-add]'); if (!b) return;
+    const k = b.dataset.add; cart[k] = Math.min(20, (cart[k] || 0) + 1); renderCart(); bump();
+    b.classList.add('done'); const old = b.textContent; if (b.classList.contains('add')) b.textContent = '✓ Додано'; setTimeout(() => { b.classList.remove('done'); if (b.classList.contains('add')) b.textContent = old; }, 1200);
+    toast(`«${CAT[k].n}» у кошику`);
+  });
+  $('#lines').addEventListener('click', e => {
+    const q = e.target.closest('[data-q]'), r = e.target.closest('[data-rm]');
+    if (q) { const k = q.dataset.k; cart[k] = (cart[k] || 0) + +q.dataset.q; if (cart[k] <= 0) delete cart[k]; else cart[k] = Math.min(20, cart[k]); }
+    if (r) { delete cart[r.dataset.rm]; toast('Позицію прибрано'); }
+    if (q || r) { renderCart(); const f = $(`#lines [data-k="${(q || r).dataset.k || (q || r).dataset.rm}"]`); (f || $('#cartX')).focus(); }
+  });
+  const cartEl = $('#cart'), shade = $('#shade'); let lastF = null;
+  function openCart(v) { if (v) lastF = document.activeElement; cartEl.classList.toggle('on', v); shade.classList.toggle('on', v); cartEl.setAttribute('aria-hidden', !v); document.body.style.overflow = v ? 'hidden' : ''; if (v) setTimeout(() => $('#cartX').focus(), 60); else lastF && lastF.focus && lastF.focus(); }
+  $('#cartBtn').onclick = () => openCart(true); $('#openCart2').onclick = () => openCart(true); $('#cartX').onclick = shade.onclick = () => openCart(false);
+  addEventListener('keydown', e => { if (e.key === 'Escape') { if (cartEl.classList.contains('on')) openCart(false); else if (nd.classList.contains('on')) { setNav(false); burger.focus(); } } });
+  cartEl.addEventListener('keydown', e => { if (e.key !== 'Tab') return; const f = $$('button:not([disabled]):not([hidden]),input,select,textarea', cartEl).filter(x => x.offsetParent); if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); } else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); } });
+
+  /* ---------- checkout (demo) ---------- */
+  const co = $('#co'), phone = $('#o-phone'), timeSel = $('#o-time'), alertBox = $('#alert');
+  function fillTimes() {   // "як скоро" + 30-min slots until closing today
+    const now = new Date(), wd = now.getDay(), close = (wd === 0 || wd === 6) ? 22 : 21, open = (wd === 0 || wd === 6) ? 9 : 8; let h = Math.max(open, now.getHours() + (now.getMinutes() < 30 ? .5 : 1)) + .5;
+    let html = (now.getHours() >= open && now.getHours() + now.getMinutes() / 60 < close - .5) ? '<option value="asap">Якнайшвидше (~20 хв)</option>' : '';
+    for (; h <= close - .5; h += .5) html += `<option>${Math.floor(h)}:${h % 1 ? '30' : '00'}</option>`;
+    timeSel.innerHTML = html || '<option value="">Сьогодні вже зачинено — оформіть на завтра по телефону</option>';
+  }
+  function toCheckout() { fillTimes(); $('#lines').hidden = true; co.hidden = false; $('#toCheckout').hidden = true; $('#place').hidden = false; $('#cartTitle').textContent = 'Оформлення'; setTimeout(() => $('#o-name').focus(), 50); }
+  function backToCart() { $('#lines').hidden = false; co.hidden = true; $('#doneBox').hidden = true; $('#totals').hidden = false; $('#toCheckout').hidden = false; $('#place').hidden = true; $('#cartTitle').textContent = 'Кошик'; }
+  $('#toCheckout').onclick = toCheckout;
+  $$('input[name=way]').forEach(r => r.addEventListener('change', () => { $('#addrF').hidden = way() !== 'delivery'; renderCart(); }));
+  phone.addEventListener('input', () => { let v = phone.value.replace(/[^\d+]/g, ''); if (/^0\d/.test(v)) v = '+38' + v; else if (/^380/.test(v)) v = '+' + v; else if (v && v[0] !== '+') v = '+' + v;
+    const m = v.match(/^\+380(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/); phone.value = m ? ['+380', m[1], m[2], m[3], m[4]].filter(Boolean).join(' ') : v; });
+  const rules = { 'o-name': el => el.value.trim().length >= 2, 'o-phone': el => el.value.replace(/\D/g, '').length >= 10, 'o-addr': el => way() !== 'delivery' || el.value.trim().length >= 5 };
+  const check = id => { const el = $('#' + id), ok = rules[id](el); el.closest('.f').classList.toggle('bad', !ok); el.setAttribute('aria-invalid', !ok); return ok; };
+  Object.keys(rules).forEach(id => $('#' + id).addEventListener('input', () => $('#' + id).closest('.f').classList.contains('bad') && check(id)));
+  co.addEventListener('submit', e => {
+    e.preventDefault(); alertBox.classList.remove('show');
+    const bad = Object.keys(rules).filter(id => !check(id)); if (bad.length) { $('#' + bad[0]).focus(); return; }
+    const t = totals();
+    if (!timeSel.value) { alertBox.textContent = 'На сьогодні вільного часу вже немає. Зателефонуйте нам, щоб замовити на завтра.'; alertBox.classList.add('show'); return; }
+    if (way() === 'delivery' && t.s < 300) { alertBox.textContent = `Доставка — від 300 ₴. Додайте ще на ${fmt(300 - t.s)} або оберіть самовивіз.`; alertBox.classList.add('show'); return; }
+    const btn = $('#place'); btn.disabled = true; btn.classList.add('loading'); $('#placeLabel').textContent = 'Передаємо на стійку…';
+    setTimeout(() => {   // simulated; nothing is sent
+      btn.disabled = false; btn.classList.remove('loading'); $('#placeLabel').textContent = 'Підтвердити замовлення';
+      const no = 'Я-' + String(Math.floor(1000 + Math.random() * 9000));
+      $('#doneTitle').textContent = `${$('#o-name').value.trim().split(' ')[0]}, замовлення ${no} прийнято`;
+      $('#doneList').innerHTML = [['Позицій', t.n], ['Разом', fmt(t.all)], ['Отримання', way() === 'delivery' ? 'доставка' : 'самовивіз'], ['Коли', timeSel.selectedOptions[0].textContent]].map(([a, b]) => `<dt>${a}</dt><dd>${esc(b)}</dd>`).join('');
+      co.hidden = true; $('#totals').hidden = true; $('#doneBox').hidden = false; $('#cartTitle').textContent = 'Готово'; $('#newOrder').focus();
+      cart = {}; renderCart(); $('#lines').hidden = true;
+    }, reduce ? 300 : 1500);
+  });
+  $('#newOrder').onclick = () => { co.reset(); $('#addrF').hidden = true; $$('.f', co).forEach(f => f.classList.remove('bad')); backToCart(); renderCart(); openCart(false); };
+  renderCart();
+
+  /* ---------- gallery ---------- */
+  const shots = $$('#gal button'), lb = $('#lb'), lbImg = $('#lbImg'); let cur = 0, back = null;
+  const show = i => { cur = (i + shots.length) % shots.length; const im = $('img', shots[cur]); lbImg.src = im.dataset.big || im.currentSrc || im.src; lbImg.alt = im.alt; $('#lbCap').innerHTML = `${esc(shots[cur].dataset.cap)}<small>Фото: ${esc(im.dataset.author || '')} / Unsplash</small>`; };
+  const openLb = i => { back = document.activeElement; show(i); lb.classList.add('on'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; setTimeout(() => $('#lbX').focus(), 40); };
+  const closeLb = () => { lb.classList.remove('on'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; back && back.focus(); };
+  shots.forEach(b => b.onclick = () => openLb(+b.dataset.i));
+  $('#lbX').onclick = closeLb; $('#lbP').onclick = () => show(cur - 1); $('#lbN').onclick = () => show(cur + 1);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  addEventListener('keydown', e => { if (!lb.classList.contains('on')) return; if (e.key === 'Escape') closeLb(); else if (e.key === 'ArrowRight') show(cur + 1); else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'Tab') { const f = [$('#lbX'), $('#lbP'), $('#lbN')], k = f.indexOf(document.activeElement); e.preventDefault(); f[(k + (e.shiftKey ? 2 : 1)) % 3].focus(); } });
+  let tx = 0; lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); }, { passive: true });
+
+  /* ---------- demo links ---------- */
+  $$('.links button').forEach(b => b.onclick = () => toast(`Демо: тут буде посилання на ${b.dataset.l}`));
+  function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 2400); }
+}
+</script>
+</body>
+</html>
