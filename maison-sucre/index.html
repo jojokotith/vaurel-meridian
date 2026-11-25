@@ -10,6 +10,12 @@
 <meta property="og:description" content="Авторські десерти ручної роботи. Демонстраційний сайт.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f3dcd9'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' text-anchor='middle' fill='%233b2620'%3EMs%3C/text%3E%3C/svg%3E">
+<script>
+/* JS is running: allow intro/scroll animations. Safety net: if the main script never starts
+   (blocked scripts in an in-app file preview, an old browser), show everything after 2.5 s. */
+document.documentElement.classList.add('js');
+setTimeout(function(){ if(!window.__msReady){ var d=document.documentElement; d.classList.remove('js'); d.classList.add('loaded'); } }, 2500);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
@@ -52,7 +58,8 @@ h2 em,h1 em{font-style:italic;color:var(--rose-d);font-weight:400}
 
 /* photo frame with graceful fallback (if a photo can't load, a soft tinted card with its name stays) */
 .ph{position:relative;overflow:hidden;background:linear-gradient(140deg,#f6e3df,#ecd3c9 55%,#e3c2b7)}
-.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .8s;opacity:0}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .8s}
+.js .ph img:not(.ok){opacity:0}
 .ph img.ok{opacity:1}
 .ph.noimg img{display:none}
 .ph.noimg:after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;font:italic 400 clamp(20px,2.4vw,30px)/1.1 var(--serif);color:var(--choc-2)}
@@ -87,19 +94,22 @@ h2 em,h1 em{font-style:italic;color:var(--rose-d);font-weight:400}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
 .hero h1{font-size:clamp(52px,7.2vw,112px);line-height:.96;margin:22px 0 26px}
 .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
-.hero h1 .ln>span{display:inline-block;transform:translateY(105%);transition:transform 1.3s var(--ease)}
-.loaded .hero h1 .ln>span{transform:none}
+.hero h1 .ln>span{display:inline-block;transition:transform 1.3s var(--ease)}
+.js .hero h1 .ln>span{transform:translateY(105%)}
+.js.loaded .hero h1 .ln>span{transform:none}
 .hero h1 .ln:nth-child(2)>span{transition-delay:.12s}.hero h1 .ln:nth-child(3)>span{transition-delay:.24s}
 .hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
 .hero .facts{display:flex;gap:34px;margin-top:46px;padding-top:26px;border-top:1px solid var(--line);max-width:520px}
 .hero .facts b{display:block;font:500 26px/1 var(--serif)}
 .hero .facts span{font-size:12.5px;color:var(--mute)}
-.fade-up{opacity:0;transform:translateY(18px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
-.loaded .fade-up{opacity:1;transform:none}
+.fade-up{transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.js .fade-up{opacity:0;transform:translateY(18px)}
+.js.loaded .fade-up{opacity:1;transform:none}
 .loaded .fade-up.d1{transition-delay:.35s}.loaded .fade-up.d2{transition-delay:.5s}.loaded .fade-up.d3{transition-delay:.65s}
 .art{position:relative;justify-self:end;width:min(100%,520px)}
-.arch{aspect-ratio:4/5;border-radius:999px 999px 28px 28px;box-shadow:0 50px 90px -40px rgba(59,38,32,.45);clip-path:inset(100% 0 0 0 round 999px 999px 28px 28px);transition:clip-path 1.6s var(--ease) .15s}
-.loaded .arch{clip-path:inset(0 0 0 0 round 999px 999px 28px 28px)}
+.arch{aspect-ratio:4/5;border-radius:999px 999px 28px 28px;box-shadow:0 50px 90px -40px rgba(59,38,32,.45);transition:clip-path 1.6s var(--ease) .15s}
+.js .arch{clip-path:inset(100% 0 0 0 round 999px 999px 28px 28px)}
+.js.loaded .arch{clip-path:inset(0 0 0 0 round 999px 999px 28px 28px)}
 .arch img{transform:scale(1.12)}
 .loaded .arch img{transform:scale(1.02)}
 .seal{position:absolute;left:-46px;top:16%;width:132px;height:132px;border-radius:50%;background:var(--milk);display:grid;place-items:center;box-shadow:0 20px 40px -20px rgba(59,38,32,.35)}
@@ -126,7 +136,8 @@ h2 em,h1 em{font-style:italic;color:var(--rose-d);font-weight:400}
 .head h2{margin-top:16px}
 
 /* reveal on scroll */
-.rv{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv{transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.js .rv:not(.in){opacity:0;transform:translateY(28px)}
 .rv.in{opacity:1;transform:none}
 
 /* catalog */
@@ -347,7 +358,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
       </div>
       <div class="art">
         <div class="arch ph" data-label="Фірмовий торт">
-          <img data-id="1535141192574-5d4897c12636" data-w="900" alt="Триярусний ванільний торт із полуницею та лохиною" fetchpriority="high">
+          <img data-id="1535141192574-5d4897c12636" src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=450&q=80 450w, https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80 900w, https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=1800&q=80 1800w" sizes="(max-width: 600px) 100vw, 50vw" data-w="900" alt="Триярусний ванільний торт із полуницею та лохиною" fetchpriority="high">
         </div>
         <div class="seal fade-up d2" aria-hidden="true">
           <svg viewBox="0 0 132 132"><defs><path id="c" d="M66 66m-50 0a50 50 0 1 1 100 0a50 50 0 1 1-100 0"/></defs>
@@ -355,7 +366,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
           <i>Ms</i>
         </div>
         <div class="tag-card fade-up d3">
-          <div class="ph" data-label=""><img data-id="1761637604698-0f9e9d3278ee" data-w="160" alt=""></div>
+          <div class="ph" data-label=""><img data-id="1761637604698-0f9e9d3278ee" src="https://images.unsplash.com/photo-1761637604698-0f9e9d3278ee?auto=format&fit=crop&w=160&q=80" srcset="https://images.unsplash.com/photo-1761637604698-0f9e9d3278ee?auto=format&fit=crop&w=80&q=80 80w, https://images.unsplash.com/photo-1761637604698-0f9e9d3278ee?auto=format&fit=crop&w=160&q=80 160w, https://images.unsplash.com/photo-1761637604698-0f9e9d3278ee?auto=format&fit=crop&w=320&q=80 320w" sizes="(max-width: 600px) 100vw, 50vw" data-w="160" alt=""></div>
           <div><small>Торт тижня</small><b>Малина &amp; троянда</b></div>
         </div>
       </div>
@@ -383,7 +394,98 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
           <button data-f="eclair" aria-pressed="false">Еклери</button>
         </div>
       </div>
-      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="grid" id="grid" aria-live="polite">
+    <article class="card rv" data-c="cake">
+      <div class="ph" data-label="Noir Cerise"><span class="badge">Авторський торт</span><img data-id="1606890737304-57a1ca8a5b62" data-w="700" alt="Авторський торт «Noir Cerise»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Noir Cerise</h3><p>Шоколадний бісквіт, вишневий конфітюр і крем на бельгійському шоколаді 70%.</p>
+        <div class="row"><div class="price"><b>від 1 850 ₴</b><small>за 1 кг · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="0">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="cake">
+      <div class="ph" data-label="Velours"><span class="badge">Авторський торт</span><img data-id="1602351447937-745cb720612f" data-w="700" alt="Авторський торт «Velours»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Velours</h3><p>Мусовий торт із ганашем і карамелізованим фундуком, дзеркальна глазур.</p>
+        <div class="row"><div class="price"><b>від 1 990 ₴</b><small>за 1 кг · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="1">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="cake">
+      <div class="ph" data-label="Figue &amp; Miel"><span class="badge">Авторський торт</span><img data-id="1565661834013-d196ca46e14e" src="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=800&q=80" srcset="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=400&q=80 400w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=1600&q=80 1600w" data-w="700" alt="Авторський торт «Figue &amp; Miel»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Figue &amp; Miel</h3><p>Медові коржі, крем на маскарпоне та свіжий інжир. Яруси для великих свят.</p>
+        <div class="row"><div class="price"><b>від 2 100 ₴</b><small>за 1 кг · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="2">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="bento">
+      <div class="ph" data-label="Rose Petite"><span class="badge">Бенто-торт</span><img data-id="1621303837174-89787a7d4729" data-w="700" alt="Бенто-торт «Rose Petite»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Rose Petite</h3><p>Маленький торт на двох: ванільний бісквіт, полуниця та ніжний крем-чиз.</p>
+        <div class="row"><div class="price"><b>від 690 ₴</b><small>за шт · ~450 г · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="3">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="bento">
+      <div class="ph" data-label="Fleur"><span class="badge">Бенто-торт</span><img data-id="1659271940584-25589f320198" data-w="700" alt="Бенто-торт «Fleur»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1659271940584-25589f320198?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1659271940584-25589f320198?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1659271940584-25589f320198?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1659271940584-25589f320198?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Fleur</h3><p>Бенто з живими їстівними квітами та малиновим конфі — для теплих слів.</p>
+        <div class="row"><div class="price"><b>від 750 ₴</b><small>за шт · ~450 г · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="4">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="bento">
+      <div class="ph" data-label="Cerise Rose"><span class="badge">Бенто-торт</span><img data-id="1569289522127-c0452f372d46" data-w="700" alt="Бенто-торт «Cerise Rose»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1569289522127-c0452f372d46?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1569289522127-c0452f372d46?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1569289522127-c0452f372d46?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1569289522127-c0452f372d46?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Cerise Rose</h3><p>Рожевий бенто з вишнею та мигдальним бісквітом, на підставці в подарунок.</p>
+        <div class="row"><div class="price"><b>від 720 ₴</b><small>за шт · ~450 г · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="5">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="cupcake">
+      <div class="ph" data-label="Noisette"><span class="badge">Капкейки</span><img data-id="1603532648955-039310d9ed75" data-w="700" alt="Капкейки «Noisette»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Noisette</h3><p>Шоколадний капкейк із горіховим кремом і трюфелем із фундука.</p>
+        <div class="row"><div class="price"><b>від 120 ₴</b><small>за шт · від 6 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="6">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="cupcake">
+      <div class="ph" data-label="Framboise"><span class="badge">Капкейки</span><img data-id="1599785209707-a456fc1337bb" data-w="700" alt="Капкейки «Framboise»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Framboise</h3><p>Ванільний капкейк із малиновою начинкою та рожевою шапочкою крему.</p>
+        <div class="row"><div class="price"><b>від 110 ₴</b><small>за шт · від 6 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="7">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="cupcake">
+      <div class="ph" data-label="Classique"><span class="badge">Капкейки</span><img data-id="1614707267537-b85aaf00c4b7" data-w="700" alt="Капкейки «Classique»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Classique</h3><p>Ніжний вершковий капкейк з ягідною серединкою — улюбленець дитячих свят.</p>
+        <div class="row"><div class="price"><b>від 100 ₴</b><small>за шт · від 6 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="8">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="macaron">
+      <div class="ph" data-label="Palette"><span class="badge">Макаронс</span><img data-id="1569864358642-9d1684040f43" data-w="700" alt="Макаронс «Palette»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Palette</h3><p>Сет із шести смаків: фісташка, малина, лимон, ваніль, шоколад, лаванда.</p>
+        <div class="row"><div class="price"><b>від 390 ₴</b><small>за 12 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="9">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="macaron">
+      <div class="ph" data-label="Pastel"><span class="badge">Макаронс</span><img data-id="1558326567-98ae2405596b" data-w="700" alt="Макаронс «Pastel»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1558326567-98ae2405596b?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Pastel</h3><p>Пастельна коробка до чаю чи в подарунок, з листівкою від руки.</p>
+        <div class="row"><div class="price"><b>від 360 ₴</b><small>за 12 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="10">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="macaron">
+      <div class="ph" data-label="Trio"><span class="badge">Макаронс</span><img data-id="1612198790700-0ff08cb726e5" data-w="700" alt="Макаронс «Trio»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1612198790700-0ff08cb726e5?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1612198790700-0ff08cb726e5?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1612198790700-0ff08cb726e5?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1612198790700-0ff08cb726e5?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Trio</h3><p>Три великі макаронс із подвійною начинкою — пробний сет для знайомства.</p>
+        <div class="row"><div class="price"><b>від 135 ₴</b><small>за 3 шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="11">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="eclair">
+      <div class="ph" data-label="Chocolat Baies"><span class="badge">Еклери</span><img data-id="1784841399281-40c323e95339" data-w="700" alt="Еклери «Chocolat Baies»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1784841399281-40c323e95339?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1784841399281-40c323e95339?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1784841399281-40c323e95339?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1784841399281-40c323e95339?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Chocolat Baies</h3><p>Заварне тісто, шоколадний крем-патисьєр і свіжі ягоди зверху.</p>
+        <div class="row"><div class="price"><b>від 95 ₴</b><small>за шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="12">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="eclair">
+      <div class="ph" data-label="Blanc"><span class="badge">Еклери</span><img data-id="1774119649906-c82806125e23" data-w="700" alt="Еклери «Blanc»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1774119649906-c82806125e23?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1774119649906-c82806125e23?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1774119649906-c82806125e23?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1774119649906-c82806125e23?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Blanc</h3><p>Еклер із ванільним кремом і декором з білого шоколаду.</p>
+        <div class="row"><div class="price"><b>від 90 ₴</b><small>за шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="13">Замовити</button></div></div>
+    </article>
+    <article class="card rv" data-c="eclair">
+      <div class="ph" data-label="Caramel Salé"><span class="badge">Еклери</span><img data-id="1774119638721-41203a2877c3" data-w="700" alt="Еклери «Caramel Salé»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1774119638721-41203a2877c3?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1774119638721-41203a2877c3?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1774119638721-41203a2877c3?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1774119638721-41203a2877c3?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div>
+      <div class="body"><h3>Caramel Salé</h3><p>Солона карамель, хрустке печиво та глянцева глазур.</p>
+        <div class="row"><div class="price"><b>від 95 ₴</b><small>за шт · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="14">Замовити</button></div></div>
+    </article>
+      </div>
       <p class="note">Ціни демонстраційні та вказані для прикладу.</p>
     </div>
   </section>
@@ -392,8 +494,8 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
   <section class="sec about" id="about">
     <div class="wrap">
       <div class="collage rv">
-        <div class="ph a" data-label="Наша кухня"><img data-id="1769596717694-dc2a0a55e5d3" data-w="900" alt="Кондитери готують десерти на професійній кухні" loading="lazy"></div>
-        <div class="ph b" data-label="Випічка"><img data-id="1597528662465-55ece5734101" data-w="500" alt="Круасани та шоколадна випічка на дерев’яній дошці зі скалкою і віночком" loading="lazy"></div>
+        <div class="ph a" data-label="Наша кухня"><img data-id="1769596717694-dc2a0a55e5d3" src="https://images.unsplash.com/photo-1769596717694-dc2a0a55e5d3?auto=format&fit=crop&w=900&q=80" srcset="https://images.unsplash.com/photo-1769596717694-dc2a0a55e5d3?auto=format&fit=crop&w=450&q=80 450w, https://images.unsplash.com/photo-1769596717694-dc2a0a55e5d3?auto=format&fit=crop&w=900&q=80 900w, https://images.unsplash.com/photo-1769596717694-dc2a0a55e5d3?auto=format&fit=crop&w=1800&q=80 1800w" sizes="(max-width: 600px) 100vw, 50vw" data-w="900" alt="Кондитери готують десерти на професійній кухні" loading="lazy"></div>
+        <div class="ph b" data-label="Випічка"><img data-id="1597528662465-55ece5734101" src="https://images.unsplash.com/photo-1597528662465-55ece5734101?auto=format&fit=crop&w=500&q=80" srcset="https://images.unsplash.com/photo-1597528662465-55ece5734101?auto=format&fit=crop&w=250&q=80 250w, https://images.unsplash.com/photo-1597528662465-55ece5734101?auto=format&fit=crop&w=500&q=80 500w, https://images.unsplash.com/photo-1597528662465-55ece5734101?auto=format&fit=crop&w=1000&q=80 1000w" sizes="(max-width: 600px) 100vw, 50vw" data-w="500" alt="Круасани та шоколадна випічка на дерев’яній дошці зі скалкою і віночком" loading="lazy"></div>
         <div class="stamp">«Десерт — це маленьке свято, яке можна подарувати»</div>
       </div>
       <div class="rv">
@@ -418,7 +520,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
         <div class="rv"><span class="eyebrow">Наші роботи</span><h2>Галерея <em>натхнення</em></h2></div>
         <p class="lead rv" style="max-width:380px">Натисніть на фото, щоб роздивитися деталі. Гортайте стрілками або свайпом.</p>
       </div>
-      <div class="masonry" id="masonry"></div>
+      <div class="masonry" id="masonry"><button type="button" class="rv" data-i="0" aria-label="Відкрити фото: Весільний торт у квітах"><div class="ph" data-label="Весільний торт у квітах"><img data-id="1525257831700-183b9b8bf5c4" data-w="700" alt="Весільний торт у квітах" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1525257831700-183b9b8bf5c4?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1525257831700-183b9b8bf5c4?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1525257831700-183b9b8bf5c4?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1525257831700-183b9b8bf5c4?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="1" aria-label="Відкрити фото: Макаронс шести смаків"><div class="ph" data-label="Макаронс шести смаків"><img data-id="1569864358642-9d1684040f43" data-w="700" alt="Макаронс шести смаків" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="2" aria-label="Відкрити фото: Білий торт із полуницею"><div class="ph" data-label="Білий торт із полуницею"><img data-id="1623428454614-abaf00244e52" data-w="700" alt="Білий торт із полуницею" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1623428454614-abaf00244e52?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1623428454614-abaf00244e52?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1623428454614-abaf00244e52?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1623428454614-abaf00244e52?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="3" aria-label="Відкрити фото: Вітрина з тартами"><div class="ph" data-label="Вітрина з тартами"><img data-id="1776797142667-dcee509ff200" data-w="700" alt="Вітрина з тартами" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1776797142667-dcee509ff200?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1776797142667-dcee509ff200?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1776797142667-dcee509ff200?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1776797142667-dcee509ff200?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="4" aria-label="Відкрити фото: Мусовий торт із ганашем"><div class="ph" data-label="Мусовий торт із ганашем"><img data-id="1602351447937-745cb720612f" data-w="700" alt="Мусовий торт із ганашем" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="5" aria-label="Відкрити фото: Три смаки макаронс"><div class="ph" data-label="Три смаки макаронс"><img data-id="1558024920-b41e1887dc32" data-w="700" alt="Три смаки макаронс" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1558024920-b41e1887dc32?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1558024920-b41e1887dc32?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1558024920-b41e1887dc32?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1558024920-b41e1887dc32?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="6" aria-label="Відкрити фото: Торт із трояндами"><div class="ph" data-label="Торт із трояндами"><img data-id="1761671613315-53157f91d0f8" data-w="700" alt="Торт із трояндами" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1761671613315-53157f91d0f8?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1761671613315-53157f91d0f8?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1761671613315-53157f91d0f8?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1761671613315-53157f91d0f8?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="7" aria-label="Відкрити фото: Випічка до сніданку"><div class="ph" data-label="Випічка до сніданку"><img data-id="1483695028939-5bb13f8648b0" data-w="700" alt="Випічка до сніданку" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button><button type="button" class="rv" data-i="8" aria-label="Відкрити фото: Шоколад и вишня"><div class="ph" data-label="Шоколад и вишня"><img data-id="1606890737304-57a1ca8a5b62" data-w="700" alt="Шоколад и вишня" loading="lazy" sizes="(max-width:900px) 50vw, 33vw" srcset="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=350&amp;q=80 350w, https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80 700w, https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=1400&amp;q=80 1400w" src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&amp;fit=crop&amp;w=700&amp;q=80" decoding="async"></div></button></div>
     </div>
   </section>
 
@@ -457,7 +559,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
         </div>
       </form>
       <aside class="side rv">
-        <div class="ph" data-label="Торт на замовлення"><img data-id="1565661834013-d196ca46e14e" data-w="800" alt="Триярусний торт, прикрашений свіжим інжиром" loading="lazy"></div>
+        <div class="ph" data-label="Торт на замовлення"><img data-id="1565661834013-d196ca46e14e" src="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=800&q=80" srcset="https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=400&q=80 400w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1565661834013-d196ca46e14e?auto=format&fit=crop&w=1600&q=80 1600w" sizes="(max-width:900px) 100vw, 40vw" data-w="800" alt="Триярусний торт, прикрашений свіжим інжиром" loading="lazy"></div>
         <div>
           <h3 style="font-size:32px;margin-top:22px">Як відбувається замовлення</h3>
           <ol class="how">
@@ -528,6 +630,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
    Photos: Unsplash (free licence). Replace with the client's own before launch.
    ========================================================= */
 (() => {
+  window.__msReady = true;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const src = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
@@ -536,12 +639,13 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
   function wire(img) {
     const id = img.dataset.id, w = +img.dataset.w || 800, box = img.closest('.ph');
     if (!id) return;
-    img.srcset = `${src(id, Math.round(w / 2))} ${Math.round(w / 2)}w, ${src(id, w)} ${w}w, ${src(id, w * 2)} ${w * 2}w`;
-    img.sizes = img.sizes || '(max-width: 600px) 100vw, 50vw';
-    img.src = src(id, w);
-    img.decoding = 'async';
+    if (!img.getAttribute('src')) {   // sources are already in the HTML; this only fills any that are missing
+      img.srcset = `${src(id, Math.round(w / 2))} ${Math.round(w / 2)}w, ${src(id, w)} ${w}w, ${src(id, w * 2)} ${w * 2}w`;
+      img.sizes = img.sizes || '(max-width: 600px) 100vw, 50vw';
+      img.src = src(id, w);
+    }
     const ok = () => img.classList.add('ok'), bad = () => box && box.classList.add('noimg');
-    if (img.complete && img.naturalWidth) ok(); else { img.addEventListener('load', ok, { once: true }); img.addEventListener('error', bad, { once: true }); }
+    if (img.complete) img.naturalWidth ? ok() : bad(); else { img.addEventListener('load', ok, { once: true }); img.addEventListener('error', bad, { once: true }); }
   }
 
   /* ---------- catalog data (names, descriptions and prices are demo content) ---------- */
@@ -564,13 +668,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
   ];
   const fmt = n => n.toLocaleString('uk-UA').replace(/ /g, ' ') + ' ₴';
   const grid = $('#grid');
-  grid.innerHTML = ITEMS.map((it, i) => `
-    <article class="card rv" data-c="${it.c}">
-      <div class="ph" data-label="${it.n}"><span class="badge">${it.t}</span><img data-id="${it.id}" data-w="700" alt="${it.t} «${it.n}»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw"></div>
-      <div class="body"><h3>${it.n}</h3><p>${it.d}</p>
-        <div class="row"><div class="price"><b>від ${fmt(it.p)}</b><small>${it.u} · демо-ціна</small></div>
-        <button class="btn ghost small" type="button" data-order="${i}">Замовити</button></div></div>
-    </article>`).join('');
+  // catalog markup is static in the HTML above (works even if scripts are blocked)
 
   /* ---------- gallery data ---------- */
   const GAL = [
@@ -585,7 +683,7 @@ footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
     { id: '1606890737304-57a1ca8a5b62', n: 'Шоколад и вишня', t: 'Авторський торт' }
   ];
   const mas = $('#masonry');
-  mas.innerHTML = GAL.map((g, i) => `<button type="button" class="rv" data-i="${i}" aria-label="Відкрити фото: ${g.n}"><div class="ph" data-label="${g.n}"><img data-id="${g.id}" data-w="700" alt="${g.n}" loading="lazy" sizes="(max-width:900px) 50vw, 33vw"></div></button>`).join('');
+  // gallery markup is static in the HTML above
 
   $$('img[data-id]').forEach(wire);
 
