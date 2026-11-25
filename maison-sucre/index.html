@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maison Sucré — авторська кондитерська (демо)</title>
+<meta name="description" content="Maison Sucré — авторські торти, бенто, макаронс, еклери та капкейки. Демонстраційний сайт кондитерської.">
+<meta name="theme-color" content="#f7f0e8">
+<meta property="og:title" content="Maison Sucré — солодкі моменти, створені з любов’ю">
+<meta property="og:description" content="Авторські десерти ручної роботи. Демонстраційний сайт.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f3dcd9'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='34' text-anchor='middle' fill='%233b2620'%3EMs%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --cream:#f7f0e8; --milk:#fffaf4; --blush:#f3dcd9; --rose:#d9a3a5; --rose-d:#b9787c;
+  --choc:#3b2620; --choc-2:#5a3d33; --mute:#8a756c; --line:rgba(59,38,32,.14);
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif; --sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:22px; --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--choc);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--rose-d);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+section{scroll-margin-top:84px}
+.eyebrow{font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--rose-d);display:inline-flex;align-items:center;gap:12px}
+.eyebrow:before{content:"";width:26px;height:1px;background:currentColor}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(40px,5.4vw,72px)}
+h2 em,h1 em{font-style:italic;color:var(--rose-d);font-weight:400}
+.lead{font-size:clamp(16px,1.3vw,18px);color:var(--choc-2);max-width:520px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:16px 28px;background:var(--choc);color:var(--milk);font:500 14px/1 var(--sans);letter-spacing:.06em;text-decoration:none;transition:transform .5s var(--ease),background .4s,box-shadow .5s}
+.btn:hover{background:#2a1a15;transform:translateY(-2px);box-shadow:0 18px 40px -18px rgba(59,38,32,.55)}
+.btn:active{transform:scale(.98)}
+.btn .arr{display:inline-block;transition:transform .5s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.ghost{background:transparent;color:var(--choc);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost:hover{background:var(--milk);box-shadow:inset 0 0 0 1px var(--choc)}
+.btn.small{padding:11px 18px;font-size:13px}
+
+/* photo frame with graceful fallback (if a photo can't load, a soft tinted card with its name stays) */
+.ph{position:relative;overflow:hidden;background:linear-gradient(140deg,#f6e3df,#ecd3c9 55%,#e3c2b7)}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .8s;opacity:0}
+.ph img.ok{opacity:1}
+.ph.noimg img{display:none}
+.ph.noimg:after{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;font:italic 400 clamp(20px,2.4vw,30px)/1.1 var(--serif);color:var(--choc-2)}
+
+/* ============ nav ============ */
+.nav{position:fixed;inset:0 0 auto;z-index:50;transition:background .5s,box-shadow .5s,padding .5s;padding:22px 0}
+.nav.solid{background:rgba(247,240,232,.86);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);padding:12px 0}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;flex-direction:column;text-decoration:none;line-height:1}
+.logo b{font:italic 500 28px/1 var(--serif);letter-spacing:.01em}
+.logo small{font:500 9.5px/1 var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--mute);margin-top:6px}
+.links{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+.links a{text-decoration:none;font-size:14px;color:var(--choc-2);position:relative;padding:6px 0}
+.links a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--choc);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+.links a:hover:after,.links a.on:after{transform:scaleX(1);transform-origin:left}
+.burger{display:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--milk);place-items:center}
+.burger span,.burger span:before,.burger span:after{display:block;width:18px;height:1.5px;background:var(--choc);position:relative;transition:transform .4s,background .4s}
+.burger span:before,.burger span:after{content:"";position:absolute;left:0}
+.burger span:before{top:-6px}.burger span:after{top:6px}
+.burger[aria-expanded=true] span{background:transparent}
+.burger[aria-expanded=true] span:before{transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded=true] span:after{transform:translateY(-6px) rotate(-45deg)}
+.mmenu{position:fixed;inset:0;z-index:45;background:var(--cream);display:flex;flex-direction:column;justify-content:center;padding:100px 28px 40px;gap:6px;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.mmenu.on{opacity:1;visibility:visible}
+.mmenu a{font:italic 400 40px/1.2 var(--serif);text-decoration:none;border-bottom:1px solid var(--line);padding:8px 0;display:flex;justify-content:space-between;align-items:baseline}
+.mmenu a small{font:500 11px var(--sans);letter-spacing:.2em;color:var(--mute);font-style:normal}
+.mmenu .btn{margin-top:26px;align-self:flex-start}
+
+/* ============ hero ============ */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:120px 0 70px;overflow:hidden}
+.hero:before{content:"";position:absolute;right:-12vw;top:-18vh;width:70vw;height:70vw;max-width:980px;max-height:980px;border-radius:50%;background:radial-gradient(circle,rgba(243,220,217,.95),rgba(243,220,217,0) 68%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(52px,7.2vw,112px);line-height:.96;margin:22px 0 26px}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block;transform:translateY(105%);transition:transform 1.3s var(--ease)}
+.loaded .hero h1 .ln>span{transform:none}
+.hero h1 .ln:nth-child(2)>span{transition-delay:.12s}.hero h1 .ln:nth-child(3)>span{transition-delay:.24s}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.hero .facts{display:flex;gap:34px;margin-top:46px;padding-top:26px;border-top:1px solid var(--line);max-width:520px}
+.hero .facts b{display:block;font:500 26px/1 var(--serif)}
+.hero .facts span{font-size:12.5px;color:var(--mute)}
+.fade-up{opacity:0;transform:translateY(18px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.loaded .fade-up{opacity:1;transform:none}
+.loaded .fade-up.d1{transition-delay:.35s}.loaded .fade-up.d2{transition-delay:.5s}.loaded .fade-up.d3{transition-delay:.65s}
+.art{position:relative;justify-self:end;width:min(100%,520px)}
+.arch{aspect-ratio:4/5;border-radius:999px 999px 28px 28px;box-shadow:0 50px 90px -40px rgba(59,38,32,.45);clip-path:inset(100% 0 0 0 round 999px 999px 28px 28px);transition:clip-path 1.6s var(--ease) .15s}
+.loaded .arch{clip-path:inset(0 0 0 0 round 999px 999px 28px 28px)}
+.arch img{transform:scale(1.12)}
+.loaded .arch img{transform:scale(1.02)}
+.seal{position:absolute;left:-46px;top:16%;width:132px;height:132px;border-radius:50%;background:var(--milk);display:grid;place-items:center;box-shadow:0 20px 40px -20px rgba(59,38,32,.35)}
+.seal svg{position:absolute;inset:0;animation:spin 22s linear infinite}
+.seal i{font:italic 500 34px/1 var(--serif);color:var(--rose-d)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tag-card{position:absolute;right:-18px;bottom:9%;background:var(--milk);border-radius:18px;padding:14px 18px 14px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 24px 50px -24px rgba(59,38,32,.4);max-width:260px}
+.tag-card .ph{width:54px;height:54px;border-radius:12px;flex:none}
+.tag-card small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.tag-card b{font:500 19px/1.15 var(--serif)}
+.scroll-cue{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none}
+.scroll-cue i{width:1px;height:38px;background:linear-gradient(var(--choc),transparent);animation:drip 2.4s ease-in-out infinite;transform-origin:top}
+@keyframes drip{0%{transform:scaleY(0)}55%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);background:var(--milk);overflow:hidden;padding:18px 0}
+.marquee div{display:flex;gap:42px;width:max-content;animation:mq 38s linear infinite;font:italic 400 30px/1 var(--serif);white-space:nowrap}
+.marquee span:nth-child(even){color:var(--rose);font-style:normal;font-size:20px;align-self:center}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ sections ============ */
+.sec{padding:clamp(90px,12vw,150px) 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:46px;flex-wrap:wrap}
+.head h2{margin-top:16px}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* catalog */
+.filters{display:flex;gap:6px;flex-wrap:wrap;position:relative;background:var(--milk);padding:6px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line)}
+.filters button{position:relative;z-index:1;border:0;background:none;border-radius:999px;padding:10px 18px;font-size:14px;color:var(--choc-2);transition:color .4s;white-space:nowrap}
+.filters button[aria-pressed=true]{color:var(--milk)}
+.filters .pill{position:absolute;z-index:0;top:6px;left:0;height:calc(100% - 12px);border-radius:999px;background:var(--choc);transition:transform .6s var(--ease),width .6s var(--ease)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px 26px}
+.card{display:flex;flex-direction:column;transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.card.hide{display:none}
+.card.out{opacity:0;transform:translateY(16px) scale(.98)}
+.card .ph{aspect-ratio:4/5;border-radius:var(--r)}
+.card:hover .ph img{transform:scale(1.06)}
+.card .badge{position:absolute;left:14px;top:14px;z-index:1;background:rgba(255,250,244,.9);border-radius:999px;padding:6px 12px;font-size:11.5px;letter-spacing:.08em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.card .body{padding:18px 4px 0;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:28px}
+.card p{margin:8px 0 16px;font-size:14.5px;color:var(--choc-2);flex:1}
+.card .row{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:14px}
+.price b{font:500 22px/1 var(--serif)}
+.price small{display:block;font-size:11px;color:var(--mute);margin-top:4px;letter-spacing:.04em}
+.note{font-size:12.5px;color:var(--mute);margin-top:34px}
+
+/* about */
+.about{background:var(--milk)}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center}
+.collage{position:relative;padding:0 8% 12% 0}
+.collage .a{aspect-ratio:4/5;border-radius:180px 180px var(--r) var(--r)}
+.collage .b{position:absolute;right:0;bottom:0;width:48%;aspect-ratio:1;border-radius:50%;border:10px solid var(--milk)}
+.collage .stamp{position:absolute;left:-14px;bottom:18%;background:var(--choc);color:var(--milk);border-radius:18px;padding:16px 20px;font:italic 400 22px/1.15 var(--serif);max-width:210px;box-shadow:0 20px 40px -20px rgba(59,38,32,.6)}
+.about p{color:var(--choc-2)}
+.steps{list-style:none;padding:0;margin:34px 0 0;display:grid;gap:4px}
+.steps li{display:grid;grid-template-columns:54px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps b{font:italic 400 30px/1 var(--serif);color:var(--rose-d)}
+.steps strong{font-weight:600;display:block;font-size:15.5px}
+.steps span{font-size:14px;color:var(--mute)}
+
+/* gallery */
+.masonry{columns:3;column-gap:18px}
+.masonry button{display:block;width:100%;border:0;padding:0;margin:0 0 18px;border-radius:18px;break-inside:avoid;background:none;position:relative;overflow:hidden}
+.masonry .ph{border-radius:18px}
+.masonry button:nth-child(3n+1) .ph{aspect-ratio:4/5}.masonry button:nth-child(3n+2) .ph{aspect-ratio:1}.masonry button:nth-child(3n) .ph{aspect-ratio:3/4}
+.masonry button:after{content:"＋";position:absolute;right:14px;bottom:14px;width:42px;height:42px;border-radius:50%;background:var(--milk);display:grid;place-items:center;font-size:18px;opacity:0;transform:scale(.7);transition:opacity .4s,transform .5s var(--ease)}
+.masonry button:hover:after,.masonry button:focus-visible:after{opacity:1;transform:none}
+.masonry button:hover img{transform:scale(1.07)}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(36,23,19,.94);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;touch-action:pan-y}
+.lb.on{opacity:1;visibility:visible}
+.lb figure{margin:0;max-width:min(1100px,92vw);display:flex;flex-direction:column;align-items:center;gap:14px}
+.lb .ph{background:transparent;max-height:78vh;border-radius:14px}
+.lb img{max-height:78vh;width:auto;max-width:92vw;object-fit:contain;transform:scale(.96);transition:transform .6s var(--ease),opacity .4s}
+.lb.on img.ok{transform:none}
+.lb figcaption{color:#f1e4dc;font:italic 400 22px/1.2 var(--serif);text-align:center}
+.lb figcaption small{display:block;font:400 12px var(--sans);letter-spacing:.2em;color:#b9a79e;margin-top:6px;font-style:normal}
+.lb .x,.lb .nv{position:absolute;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;border-radius:50%;width:52px;height:52px;display:grid;place-items:center;font-size:20px;transition:background .3s}
+.lb .x:hover,.lb .nv:hover{background:rgba(255,255,255,.16)}
+.lb .x{top:22px;right:22px}.lb .prev{left:22px;top:50%;transform:translateY(-50%)}.lb .next{right:22px;top:50%;transform:translateY(-50%)}
+
+/* order */
+.order .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,70px);align-items:start}
+.form{background:var(--milk);border-radius:28px;padding:clamp(24px,4vw,46px);box-shadow:0 40px 80px -50px rgba(59,38,32,.45)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--cream);border-radius:14px;padding:14px 16px;font-size:15.5px;transition:border-color .3s,background .3s,box-shadow .3s;width:100%}
+.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233b2620' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--rose-d);background:#fff;box-shadow:0 0 0 4px rgba(217,163,165,.25)}
+.field .err{font-size:12.5px;color:#a4473f;min-height:0;display:none}
+.field.bad input,.field.bad select{border-color:#c46a62}
+.field.bad .err{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:1px solid var(--line);background:var(--cream);border-radius:999px;padding:8px 14px;font-size:13px;transition:all .3s}
+.chips button[aria-pressed=true]{background:var(--choc);color:var(--milk);border-color:var(--choc)}
+.form .send{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px}
+.form .send small{color:var(--mute);font-size:12.5px;max-width:300px}
+.done{display:none;text-align:center;padding:30px 10px}
+.done .ok{width:84px;height:84px;margin:0 auto 20px;border-radius:50%;background:var(--blush);display:grid;place-items:center}
+.done h3{font-size:40px}
+.done p{color:var(--choc-2);max-width:440px;margin:12px auto 24px}
+.form.sent .fbody{display:none}.form.sent .done{display:block;animation:pop .8s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}}
+.side .ph{aspect-ratio:4/5;border-radius:var(--r)}
+.how{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:14px;counter-reset:h}
+.how li{counter-increment:h;display:flex;gap:14px;font-size:14.5px;color:var(--choc-2)}
+.how li:before{content:counter(h);flex:none;width:30px;height:30px;border-radius:50%;background:var(--blush);display:grid;place-items:center;font:italic 500 17px/1 var(--serif);color:var(--choc)}
+
+/* contacts */
+.contacts{background:var(--choc);color:#f3e7df}
+.contacts .eyebrow{color:var(--rose)}
+.contacts h2 em{color:var(--rose)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,70px);align-items:stretch;margin-top:46px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:30px 24px;align-content:start}
+.info h3{font:500 12px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#bfa79c;margin-bottom:12px}
+.info p{margin:0;font-size:16px}
+.info a{text-decoration:none;border-bottom:1px solid rgba(243,231,223,.3);transition:border-color .3s}
+.info a:hover{border-color:#f3e7df}
+.hours{display:grid;grid-template-columns:auto auto;gap:4px 18px;font-size:15px}
+.hours span:nth-child(odd){color:#bfa79c}
+.socials{display:flex;gap:10px;flex-wrap:wrap}
+.socials button{border:1px solid rgba(243,231,223,.25);background:none;color:#f3e7df;border-radius:999px;padding:10px 16px;font-size:13.5px;display:inline-flex;gap:8px;align-items:center;transition:background .3s,border-color .3s}
+.socials button:hover{background:rgba(243,231,223,.08);border-color:#f3e7df}
+.socials svg{width:16px;height:16px}
+.map{position:relative;border-radius:var(--r);overflow:hidden;min-height:320px;background:#4a3129}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .pin{position:absolute;left:54%;top:46%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center}
+.map .pin b{background:var(--milk);color:var(--choc);font:italic 500 18px/1 var(--serif);padding:10px 14px;border-radius:12px;white-space:nowrap;box-shadow:0 14px 30px -12px rgba(0,0,0,.5)}
+.map .pin i{width:14px;height:14px;border-radius:50%;background:var(--rose);margin-top:8px;box-shadow:0 0 0 8px rgba(217,163,165,.25);animation:pulse 2.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 16px rgba(217,163,165,0)}}
+.map small{position:absolute;left:16px;bottom:14px;font-size:11.5px;color:#bfa79c;letter-spacing:.08em}
+
+footer{background:#2c1c17;color:#bfa79c;padding:34px 0;font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer b{font:italic 500 22px/1 var(--serif);color:#f3e7df}
+
+.toast{position:fixed;left:50%;bottom:26px;z-index:90;transform:translate(-50%,20px);background:var(--choc);color:var(--milk);padding:14px 22px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .4s,transform .5s var(--ease);max-width:calc(100% - 32px);text-align:center;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ============ responsive ============ */
+@media (max-width:1080px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero .wrap{gap:36px}
+  .seal{left:-20px;width:112px;height:112px}
+}
+@media (max-width:900px){
+  .links,.nav .btn{display:none}
+  .burger{display:grid}
+  .hero{padding-top:110px}
+  .hero .wrap{grid-template-columns:1fr}
+  .art{justify-self:center;width:min(100%,460px);order:-1}
+  .hero h1{margin-top:16px}
+  .about .wrap,.order .wrap,.cgrid{grid-template-columns:1fr}
+  .collage{max-width:520px}
+  .masonry{columns:2}
+  .side{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start}
+  .head{align-items:flex-start}
+  .filters{max-width:100%;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap}
+  .filters::-webkit-scrollbar{display:none}
+}
+@media (max-width:600px){
+  .wrap{width:min(100% - 32px,1240px)}
+  .grid{grid-template-columns:1fr;gap:40px}
+  .card .ph{aspect-ratio:5/4}
+  .hero{min-height:auto;padding:96px 0 60px}
+  .art{width:86%}
+  .seal{width:92px;height:92px;left:-14px}
+  .seal i{font-size:26px}
+  .tag-card{right:-10px;padding:10px 12px 10px 10px;max-width:220px}
+  .tag-card .ph{width:44px;height:44px}
+  .tag-card b{font-size:16px}
+  .hero .facts{gap:22px}
+  .hero .facts b{font-size:22px}
+  .scroll-cue{display:none}
+  .fgrid{grid-template-columns:1fr}
+  .side{grid-template-columns:1fr}
+  .side .ph{aspect-ratio:16/10}
+  .info{grid-template-columns:1fr}
+  .masonry{column-gap:12px}.masonry button{margin-bottom:12px}
+  .lb .nv{top:auto;bottom:22px;transform:none}
+  .lb .prev{left:calc(50% - 64px)}.lb .next{right:calc(50% - 64px)}
+  .collage .stamp{left:0;font-size:18px;padding:12px 16px}
+  .marquee div{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation:none!important;transition-duration:.01ms!important}
+  .rv,.fade-up{opacity:1;transform:none}
+  .hero h1 .ln>span{transform:none}
+  .arch{clip-path:none}
+}
+</style>
+</head>
+<body>
+<a class="sr" href="#order" style="z-index:100" onfocus="this.classList.remove('sr')" onblur="this.classList.add('sr')">Перейти до форми замовлення</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Maison Sucré — нагору"><b>Maison Sucré</b><small>pâtisserie · демо</small></a>
+    <nav aria-label="Головне меню">
+      <ul class="links">
+        <li><a href="#catalog">Колекція</a></li>
+        <li><a href="#about">Про нас</a></li>
+        <li><a href="#gallery">Наші роботи</a></li>
+        <li><a href="#order">Замовлення</a></li>
+        <li><a href="#contacts">Контакти</a></li>
+      </ul>
+    </nav>
+    <a class="btn small" href="#order">Замовити торт <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="mmenu"><span></span></button>
+  </div>
+</header>
+<div class="mmenu" id="mmenu" aria-label="Меню">
+  <a href="#catalog">Колекція <small>01</small></a>
+  <a href="#about">Про нас <small>02</small></a>
+  <a href="#gallery">Наші роботи <small>03</small></a>
+  <a href="#order">Індивідуальне замовлення <small>04</small></a>
+  <a href="#contacts">Контакти <small>05</small></a>
+  <a class="btn" href="#order">Замовити торт <span class="arr">→</span></a>
+</div>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Maison Sucré">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow fade-up">Авторська кондитерська</span>
+        <h1><span class="ln"><span>Солодкі моменти,</span></span><span class="ln"><span>створені</span></span><span class="ln"><span><em>з любов’ю</em></span></span></h1>
+        <p class="lead fade-up d1">Торти, бенто, макаронс і еклери ручної роботи — з вершкового масла, бельгійського шоколаду та сезонних ягід. Кожен десерт ми створюємо під ваш привід.</p>
+        <div class="cta fade-up d2">
+          <a class="btn" href="#catalog">Переглянути колекцію <span class="arr">→</span></a>
+          <a class="btn ghost" href="#order">Індивідуальне замовлення</a>
+        </div>
+        <div class="facts fade-up d3">
+          <div><b>5</b><span>ліній десертів</span></div>
+          <div><b>від 48 год</b><span>на торт під замовлення</span></div>
+          <div><b>100%</b><span>ручна робота</span></div>
+        </div>
+      </div>
+      <div class="art">
+        <div class="arch ph" data-label="Фірмовий торт">
+          <img data-id="1535141192574-5d4897c12636" data-w="900" alt="Триярусний ванільний торт із полуницею та лохиною" fetchpriority="high">
+        </div>
+        <div class="seal fade-up d2" aria-hidden="true">
+          <svg viewBox="0 0 132 132"><defs><path id="c" d="M66 66m-50 0a50 50 0 1 1 100 0a50 50 0 1 1-100 0"/></defs>
+            <text font-family="Manrope,sans-serif" font-size="10" fill="#3b2620"><textPath href="#c" textLength="312" lengthAdjust="spacing">MAISON SUCRÉ · FAIT MAIN · PÂTISSERIE · </textPath></text></svg>
+          <i>Ms</i>
+        </div>
+        <div class="tag-card fade-up d3">
+          <div class="ph" data-label=""><img data-id="1761637604698-0f9e9d3278ee" data-w="160" alt=""></div>
+          <div><small>Торт тижня</small><b>Малина &amp; троянда</b></div>
+        </div>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#catalog" aria-label="Гортати до колекції"><span>гортайте</span><i></i></a>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div>
+    <span>Авторські торти</span><span>✦</span><span>Бенто</span><span>✦</span><span>Капкейки</span><span>✦</span><span>Макаронс</span><span>✦</span><span>Еклери</span><span>✦</span><span>Весільні торти</span><span>✦</span>
+    <span>Авторські торти</span><span>✦</span><span>Бенто</span><span>✦</span><span>Капкейки</span><span>✦</span><span>Макаронс</span><span>✦</span><span>Еклери</span><span>✦</span><span>Весільні торти</span><span>✦</span>
+  </div></div>
+
+  <!-- ============ CATALOG ============ -->
+  <section class="sec" id="catalog">
+    <div class="wrap">
+      <div class="head">
+        <div class="rv"><span class="eyebrow">Колекція</span><h2>Десерти, які <em>запам’ятовують</em></h2></div>
+        <div class="filters rv" id="filters" role="group" aria-label="Фільтр каталогу">
+          <span class="pill" aria-hidden="true"></span>
+          <button data-f="all" aria-pressed="true">Усі</button>
+          <button data-f="cake" aria-pressed="false">Авторські торти</button>
+          <button data-f="bento" aria-pressed="false">Бенто</button>
+          <button data-f="cupcake" aria-pressed="false">Капкейки</button>
+          <button data-f="macaron" aria-pressed="false">Макаронс</button>
+          <button data-f="eclair" aria-pressed="false">Еклери</button>
+        </div>
+      </div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <p class="note">Ціни демонстраційні та вказані для прикладу.</p>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="sec about" id="about">
+    <div class="wrap">
+      <div class="collage rv">
+        <div class="ph a" data-label="Наша кухня"><img data-id="1769596717694-dc2a0a55e5d3" data-w="900" alt="Кондитери готують десерти на професійній кухні" loading="lazy"></div>
+        <div class="ph b" data-label="Випічка"><img data-id="1597528662465-55ece5734101" data-w="500" alt="Круасани та шоколадна випічка на дерев’яній дошці зі скалкою і віночком" loading="lazy"></div>
+        <div class="stamp">«Десерт — це маленьке свято, яке можна подарувати»</div>
+      </div>
+      <div class="rv">
+        <span class="eyebrow">Про нас</span>
+        <h2 style="margin:16px 0 24px">Маленька майстерня <em>великого смаку</em></h2>
+        <p>Maison Sucré з’явилася з домашньої кухні та старого зошита з французькими рецептами. Спершу ми пекли для друзів, потім для друзів друзів — а одного дня зрозуміли, що хочемо дарувати це відчуття свята кожному.</p>
+        <p>Сьогодні це невелика майстерня, де кожен торт збирають вручну. Ми не тримаємо вітрину «про всяк випадок»: десерти готуються під конкретне замовлення, тому приїжджають до вас свіжими, а не зі складу.</p>
+        <ul class="steps">
+          <li><b>01</b><div><strong>Чесні інгредієнти</strong><span>Вершкове масло 82%, натуральна ваніль, бельгійський шоколад, сезонні ягоди.</span></div></li>
+          <li><b>02</b><div><strong>Дизайн під ваш привід</strong><span>Обговорюємо ідею, смак і оформлення — та надсилаємо ескіз до початку роботи.</span></div></li>
+          <li><b>03</b><div><strong>Баланс, а не цукор</strong><span>Ми прибираємо зайву солодкість, щоб розкрився смак ягід, горіхів і шоколаду.</span></div></li>
+          <li><b>04</b><div><strong>Дбайлива доставка</strong><span>Термокороб і доставка до точного часу — торт приїде таким, як на фото.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="sec" id="gallery">
+    <div class="wrap">
+      <div class="head">
+        <div class="rv"><span class="eyebrow">Наші роботи</span><h2>Галерея <em>натхнення</em></h2></div>
+        <p class="lead rv" style="max-width:380px">Натисніть на фото, щоб роздивитися деталі. Гортайте стрілками або свайпом.</p>
+      </div>
+      <div class="masonry" id="masonry"></div>
+    </div>
+  </section>
+
+  <!-- ============ ORDER ============ -->
+  <section class="sec order" id="order" style="background:linear-gradient(var(--cream),var(--blush) 140%)">
+    <div class="wrap">
+      <form class="form rv" id="form" novalidate>
+        <div class="fbody">
+          <span class="eyebrow">Індивідуальне замовлення</span>
+          <h2 style="margin:14px 0 28px;font-size:clamp(36px,4.4vw,58px)">Розкажіть про <em>ваше свято</em></h2>
+          <div class="fgrid">
+            <div class="field"><label for="f-name">Ім’я</label><input id="f-name" name="name" autocomplete="name" placeholder="Як до вас звертатися" required><span class="err">Будь ласка, вкажіть ім’я</span></div>
+            <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380 __ ___ __ __" required><span class="err">Потрібен номер, щоб ми могли передзвонити</span></div>
+            <div class="field"><label for="f-type">Тип десерту</label>
+              <select id="f-type" name="type" required>
+                <option value="">Оберіть…</option>
+                <option>Авторський торт</option><option>Бенто-торт</option><option>Капкейки</option><option>Макаронс</option><option>Еклери</option><option>Весільний торт</option><option>Сет для заходу</option>
+              </select><span class="err">Оберіть тип десерту</span></div>
+            <div class="field"><label for="f-date">Дата свята</label><input id="f-date" name="date" type="date"><span class="err">Для торта під замовлення потрібно щонайменше 2 дні</span></div>
+            <div class="field full"><label id="l-occ">Привід</label>
+              <div class="chips" id="occ" role="group" aria-labelledby="l-occ">
+                <button type="button" aria-pressed="false">День народження</button><button type="button" aria-pressed="false">Весілля</button><button type="button" aria-pressed="false">Дитяче свято</button><button type="button" aria-pressed="false">Корпоратив</button><button type="button" aria-pressed="false">Просто так</button>
+              </div></div>
+            <div class="field full"><label for="f-wish">Побажання</label><textarea id="f-wish" name="wish" placeholder="Смак, кількість гостей, кольорова гама, напис…"></textarea></div>
+          </div>
+          <div class="send">
+            <button class="btn" type="submit">Надіслати заявку <span class="arr">→</span></button>
+            <small>Це демо-сайт: заявка нікуди не надсилається і не зберігається.</small>
+          </div>
+        </div>
+        <div class="done" role="status" aria-live="polite">
+          <div class="ok"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#3b2620" stroke-width="1.6"><path d="M5 12.5l4.2 4.2L19 7"/></svg></div>
+          <h3 id="doneTitle">Дякуємо!</h3>
+          <p id="doneText"></p>
+          <button class="btn ghost" type="button" id="again">Оформити ще одну заявку</button>
+        </div>
+      </form>
+      <aside class="side rv">
+        <div class="ph" data-label="Торт на замовлення"><img data-id="1565661834013-d196ca46e14e" data-w="800" alt="Триярусний торт, прикрашений свіжим інжиром" loading="lazy"></div>
+        <div>
+          <h3 style="font-size:32px;margin-top:22px">Як відбувається замовлення</h3>
+          <ol class="how">
+            <li>Ви залишаєте заявку — ми передзвонюємо протягом робочого дня.</li>
+            <li>Погоджуємо смак, розмір і дизайн, надсилаємо ескіз і точну ціну.</li>
+            <li>Після передоплати готуємо десерт до потрібної дати.</li>
+            <li>Самовивіз або доставка в термокоробі до точного часу.</li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTS ============ -->
+  <section class="sec contacts" id="contacts">
+    <div class="wrap">
+      <div class="rv"><span class="eyebrow">Контакти</span><h2 style="margin-top:16px">Заходьте <em>на каву та десерт</em></h2></div>
+      <div class="cgrid">
+        <div class="info rv">
+          <div><h3>Адреса</h3><p>вул. Мигдальна, 7<br>Київ <span style="color:#bfa79c">(демо-адреса)</span></p></div>
+          <div><h3>Телефон</h3><p><a href="tel:+380000000000">+380 00 000 00 00</a><br><span style="color:#bfa79c">тимчасовий номер</span></p></div>
+          <div><h3>Графік роботи</h3><div class="hours"><span>Пн–Пт</span><span>09:00–20:00</span><span>Сб–Нд</span><span>10:00–19:00</span></div></div>
+          <div><h3>E-mail</h3><p><a href="mailto:hello@maison-sucre.example">hello@maison-sucre.example</a></p></div>
+          <div style="grid-column:1/-1"><h3>Ми в соцмережах</h3>
+            <div class="socials">
+              <button type="button" data-net="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>Instagram</button>
+              <button type="button" data-net="Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/></svg>Telegram</button>
+              <button type="button" data-net="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 5.5 5"/></svg>TikTok</button>
+            </div></div>
+        </div>
+        <div class="map rv" role="img" aria-label="Схема розташування кондитерської (ілюстрація)">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="600" height="400" fill="#4a3129"/>
+            <path d="M-20 300 C120 260 200 330 320 280 S520 200 640 240" stroke="#5f4137" stroke-width="46" fill="none"/>
+            <g stroke="#6b4a3f" stroke-width="10" fill="none" stroke-linecap="round">
+              <path d="M0 120 L600 90"/><path d="M0 200 L600 215"/><path d="M140 0 L180 400"/><path d="M330 0 L310 400"/><path d="M470 0 L520 400"/><path d="M0 40 L260 0"/>
+            </g>
+            <g fill="#553830"><rect x="30" y="135" width="90" height="50" rx="8"/><rect x="200" y="125" width="100" height="70" rx="8"/><rect x="345" y="110" width="110" height="80" rx="8"/><rect x="490" y="100" width="100" height="90" rx="8"/><rect x="200" y="30" width="110" height="50" rx="8"/><rect x="345" y="20" width="100" height="55" rx="8"/></g>
+            <circle cx="420" cy="330" r="36" fill="#56603f" opacity=".55"/><circle cx="90" cy="60" r="28" fill="#56603f" opacity=".45"/>
+          </svg>
+          <div class="pin"><b>Maison Sucré</b><i></i></div>
+          <small>Ілюстрація. На робочому сайті тут буде карта Google або Apple.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Maison Sucré</b><div style="margin-top:8px">Вигаданий бренд. Демонстраційний сайт: ціни, адреса та телефон не справжні.</div></div>
+    <div style="text-align:right">Фото: Unsplash · Дизайн і розробка: Білогор С.В.<br>© 2026</div>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Перегляд фотографії" aria-hidden="true">
+  <button class="x" id="lbX" aria-label="Закрити">✕</button>
+  <button class="nv prev" id="lbP" aria-label="Попереднє фото">←</button>
+  <figure><div class="ph" id="lbPh" data-label=""><img id="lbImg" alt=""></div><figcaption id="lbCap"></figcaption></figure>
+  <button class="nv next" id="lbN" aria-label="Наступне фото">→</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   Maison Sucré — demo patisserie site. Plain JS, no libraries.
+   Photos: Unsplash (free licence). Replace with the client's own before launch.
+   ========================================================= */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const src = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+  /* photos: responsive sources + soft fallback card if one can't load */
+  function wire(img) {
+    const id = img.dataset.id, w = +img.dataset.w || 800, box = img.closest('.ph');
+    if (!id) return;
+    img.srcset = `${src(id, Math.round(w / 2))} ${Math.round(w / 2)}w, ${src(id, w)} ${w}w, ${src(id, w * 2)} ${w * 2}w`;
+    img.sizes = img.sizes || '(max-width: 600px) 100vw, 50vw';
+    img.src = src(id, w);
+    img.decoding = 'async';
+    const ok = () => img.classList.add('ok'), bad = () => box && box.classList.add('noimg');
+    if (img.complete && img.naturalWidth) ok(); else { img.addEventListener('load', ok, { once: true }); img.addEventListener('error', bad, { once: true }); }
+  }
+
+  /* ---------- catalog data (names, descriptions and prices are demo content) ---------- */
+  const ITEMS = [
+    { c: 'cake', t: 'Авторський торт', n: 'Noir Cerise', d: 'Шоколадний бісквіт, вишневий конфітюр і крем на бельгійському шоколаді 70%.', p: 1850, u: 'за 1 кг', id: '1606890737304-57a1ca8a5b62' },
+    { c: 'cake', t: 'Авторський торт', n: 'Velours', d: 'Мусовий торт із ганашем і карамелізованим фундуком, дзеркальна глазур.', p: 1990, u: 'за 1 кг', id: '1602351447937-745cb720612f' },
+    { c: 'cake', t: 'Авторський торт', n: 'Figue & Miel', d: 'Медові коржі, крем на маскарпоне та свіжий інжир. Яруси для великих свят.', p: 2100, u: 'за 1 кг', id: '1565661834013-d196ca46e14e' },
+    { c: 'bento', t: 'Бенто-торт', n: 'Rose Petite', d: 'Маленький торт на двох: ванільний бісквіт, полуниця та ніжний крем-чиз.', p: 690, u: 'за шт · ~450 г', id: '1621303837174-89787a7d4729' },
+    { c: 'bento', t: 'Бенто-торт', n: 'Fleur', d: 'Бенто з живими їстівними квітами та малиновим конфі — для теплих слів.', p: 750, u: 'за шт · ~450 г', id: '1659271940584-25589f320198' },
+    { c: 'bento', t: 'Бенто-торт', n: 'Cerise Rose', d: 'Рожевий бенто з вишнею та мигдальним бісквітом, на підставці в подарунок.', p: 720, u: 'за шт · ~450 г', id: '1569289522127-c0452f372d46' },
+    { c: 'cupcake', t: 'Капкейки', n: 'Noisette', d: 'Шоколадний капкейк із горіховим кремом і трюфелем із фундука.', p: 120, u: 'за шт · від 6 шт', id: '1603532648955-039310d9ed75' },
+    { c: 'cupcake', t: 'Капкейки', n: 'Framboise', d: 'Ванільний капкейк із малиновою начинкою та рожевою шапочкою крему.', p: 110, u: 'за шт · від 6 шт', id: '1599785209707-a456fc1337bb' },
+    { c: 'cupcake', t: 'Капкейки', n: 'Classique', d: 'Ніжний вершковий капкейк з ягідною серединкою — улюбленець дитячих свят.', p: 100, u: 'за шт · від 6 шт', id: '1614707267537-b85aaf00c4b7' },
+    { c: 'macaron', t: 'Макаронс', n: 'Palette', d: 'Сет із шести смаків: фісташка, малина, лимон, ваніль, шоколад, лаванда.', p: 390, u: 'за 12 шт', id: '1569864358642-9d1684040f43' },
+    { c: 'macaron', t: 'Макаронс', n: 'Pastel', d: 'Пастельна коробка до чаю чи в подарунок, з листівкою від руки.', p: 360, u: 'за 12 шт', id: '1558326567-98ae2405596b' },
+    { c: 'macaron', t: 'Макаронс', n: 'Trio', d: 'Три великі макаронс із подвійною начинкою — пробний сет для знайомства.', p: 135, u: 'за 3 шт', id: '1612198790700-0ff08cb726e5' },
+    { c: 'eclair', t: 'Еклери', n: 'Chocolat Baies', d: 'Заварне тісто, шоколадний крем-патисьєр і свіжі ягоди зверху.', p: 95, u: 'за шт', id: '1784841399281-40c323e95339' },
+    { c: 'eclair', t: 'Еклери', n: 'Blanc', d: 'Еклер із ванільним кремом і декором з білого шоколаду.', p: 90, u: 'за шт', id: '1774119649906-c82806125e23' },
+    { c: 'eclair', t: 'Еклери', n: 'Caramel Salé', d: 'Солона карамель, хрустке печиво та глянцева глазур.', p: 95, u: 'за шт', id: '1774119638721-41203a2877c3' }
+  ];
+  const fmt = n => n.toLocaleString('uk-UA').replace(/ /g, ' ') + ' ₴';
+  const grid = $('#grid');
+  grid.innerHTML = ITEMS.map((it, i) => `
+    <article class="card rv" data-c="${it.c}">
+      <div class="ph" data-label="${it.n}"><span class="badge">${it.t}</span><img data-id="${it.id}" data-w="700" alt="${it.t} «${it.n}»" loading="lazy" sizes="(max-width:600px) 100vw, (max-width:1080px) 50vw, 33vw"></div>
+      <div class="body"><h3>${it.n}</h3><p>${it.d}</p>
+        <div class="row"><div class="price"><b>від ${fmt(it.p)}</b><small>${it.u} · демо-ціна</small></div>
+        <button class="btn ghost small" type="button" data-order="${i}">Замовити</button></div></div>
+    </article>`).join('');
+
+  /* ---------- gallery data ---------- */
+  const GAL = [
+    { id: '1525257831700-183b9b8bf5c4', n: 'Весільний торт у квітах', t: 'Весілля' },
+    { id: '1569864358642-9d1684040f43', n: 'Макаронс шести смаків', t: 'Макаронс' },
+    { id: '1623428454614-abaf00244e52', n: 'Білий торт із полуницею', t: 'Урочистість' },
+    { id: '1776797142667-dcee509ff200', n: 'Вітрина з тартами', t: 'Майстерня' },
+    { id: '1602351447937-745cb720612f', n: 'Мусовий торт із ганашем', t: 'Авторський торт' },
+    { id: '1558024920-b41e1887dc32', n: 'Три смаки макаронс', t: 'Макаронс' },
+    { id: '1761671613315-53157f91d0f8', n: 'Торт із трояндами', t: 'Весілля' },
+    { id: '1483695028939-5bb13f8648b0', n: 'Випічка до сніданку', t: 'Майстерня' },
+    { id: '1606890737304-57a1ca8a5b62', n: 'Шоколад и вишня', t: 'Авторський торт' }
+  ];
+  const mas = $('#masonry');
+  mas.innerHTML = GAL.map((g, i) => `<button type="button" class="rv" data-i="${i}" aria-label="Відкрити фото: ${g.n}"><div class="ph" data-label="${g.n}"><img data-id="${g.id}" data-w="700" alt="${g.n}" loading="lazy" sizes="(max-width:900px) 50vw, 33vw"></div></button>`).join('');
+
+  $$('img[data-id]').forEach(wire);
+
+  /* ---------- page load: intro animation ---------- */
+  requestAnimationFrame(() => setTimeout(() => document.documentElement.classList.add('loaded'), 60));
+
+  /* ---------- nav: solid on scroll, active link, mobile menu ---------- */
+  const nav = $('#nav'), burger = $('#burger'), mm = $('#mmenu');
+  const onScroll = () => nav.classList.toggle('solid', scrollY > 30);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const setMenu = v => { mm.classList.toggle('on', v); burger.setAttribute('aria-expanded', v); burger.setAttribute('aria-label', v ? 'Закрити меню' : 'Відкрити меню'); document.body.style.overflow = v ? 'hidden' : ''; };
+  burger.addEventListener('click', () => setMenu(!mm.classList.contains('on')));
+  $$('#mmenu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && mm.classList.contains('on')) { setMenu(false); burger.focus(); } });
+  addEventListener('resize', () => { if (innerWidth > 900 && mm.classList.contains('on')) setMenu(false); });
+  const navLinks = $$('.links a'), secs = navLinks.map(a => $(a.getAttribute('href')));
+  const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
+  secs.forEach(s => s && spy.observe(s));
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+  const observe = () => $$('.rv:not(.in)').forEach((el, i) => { el.style.transitionDelay = (el.closest('.grid,.masonry') ? (i % 3) * 90 : 0) + 'ms'; io.observe(el); });
+  if (reduce || !('IntersectionObserver' in window)) $$('.rv').forEach(el => el.classList.add('in')); else observe();
+
+  /* ---------- catalog filter with a sliding pill ---------- */
+  const fwrap = $('#filters'), pill = $('.pill', fwrap), fbtns = $$('button', fwrap);
+  const placePill = b => { pill.style.width = b.offsetWidth + 'px'; pill.style.transform = `translateX(${b.offsetLeft}px)`; };
+  let fTimer;
+  fbtns.forEach(b => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-pressed') === 'true') return;
+    fbtns.forEach(x => x.setAttribute('aria-pressed', x === b)); placePill(b);
+    if (fwrap.scrollWidth > fwrap.clientWidth) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduce ? 'auto' : 'smooth' });
+    const f = b.dataset.f, cards = $$('.card', grid);
+    clearTimeout(fTimer);
+    cards.forEach(c => c.classList.add('out'));
+    fTimer = setTimeout(() => {
+      cards.forEach(c => { const show = f === 'all' || c.dataset.c === f; c.classList.toggle('hide', !show); c.classList.add('in'); });
+      requestAnimationFrame(() => requestAnimationFrame(() => cards.forEach(c => c.classList.remove('out'))));
+    }, reduce ? 0 : 280);
+  }));
+  const pillInit = () => placePill(fbtns.find(b => b.getAttribute('aria-pressed') === 'true'));
+  addEventListener('resize', pillInit); addEventListener('load', pillInit);
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(pillInit); pillInit();
+
+  /* ---------- "Заказать" on a card: prefill the form ---------- */
+  const TYPE = { cake: 'Авторський торт', bento: 'Бенто-торт', cupcake: 'Капкейки', macaron: 'Макаронс', eclair: 'Еклери' };
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('[data-order]'); if (!b) return;
+    const it = ITEMS[+b.dataset.order];
+    $('#form').classList.remove('sent');
+    $('#f-type').value = TYPE[it.c]; $('#f-type').closest('.field').classList.remove('bad');
+    const w = $('#f-wish'); if (!w.value.includes(it.n)) w.value = (`Хочу замовити «${it.n}». ` + w.value).trim();
+    $('#order').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    setTimeout(() => $('#f-name').focus({ preventScroll: true }), reduce ? 0 : 700);
+    toast(`«${it.n}» додано до заявки`);
+  });
+
+  /* ---------- lightbox ---------- */
+  const lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap'), lbPh = $('#lbPh');
+  let cur = 0, lastFocus = null;
+  function show(i) {
+    cur = (i + GAL.length) % GAL.length; const g = GAL[cur];
+    lbPh.classList.remove('noimg'); lbPh.dataset.label = g.n; lbImg.classList.remove('ok');
+    lbImg.onload = () => lbImg.classList.add('ok'); lbImg.onerror = () => lbPh.classList.add('noimg');
+    lbImg.src = src(g.id, Math.min(1800, Math.round(innerWidth * (devicePixelRatio || 1)))); lbImg.alt = g.n;
+    lbCap.innerHTML = `${g.n}<small>${g.t.toUpperCase()} · ${cur + 1} / ${GAL.length}</small>`;
+  }
+  const open = i => { lastFocus = document.activeElement; show(i); lb.classList.add('on'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; setTimeout(() => $('#lbX').focus(), 50); };
+  const close = () => { lb.classList.remove('on'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
+  mas.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) open(+b.dataset.i); });
+  $('#lbX').onclick = close; $('#lbP').onclick = () => show(cur - 1); $('#lbN').onclick = () => show(cur + 1);
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+  addEventListener('keydown', e => {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') close(); else if (e.key === 'ArrowRight') show(cur + 1); else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'Tab') { const f = [$('#lbX'), $('#lbP'), $('#lbN')]; const k = f.indexOf(document.activeElement); e.preventDefault(); f[(k + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus(); }
+  });
+  let sx = 0, sy = 0;
+  lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  lb.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(cur + (dx < 0 ? 1 : -1)); }, { passive: true });
+
+  /* ---------- order form (demo: validates, shows a clear message, sends nothing) ---------- */
+  const form = $('#form'), phone = $('#f-phone'), date = $('#f-date');
+  const d0 = new Date(); d0.setDate(d0.getDate() + 2); const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;   // local date, not UTC
+  date.min = iso(d0);
+  $$('#occ button').forEach(b => b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));
+  phone.addEventListener('input', () => { // keep digits, + and spaces; gentle formatting for +380
+    let v = phone.value.replace(/[^\d+]/g, '');
+    if (/^0\d/.test(v)) v = '+38' + v;            // local Ukrainian format 067… → +38 067…
+    else if (/^380/.test(v)) v = '+' + v;
+    else if (v && v[0] !== '+') v = '+' + v;
+    const m = v.match(/^\+380(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+    phone.value = m ? ['+380', m[1], m[2], m[3], m[4]].filter(Boolean).join(' ') : v;
+  });
+  const checks = {
+    'f-name': el => el.value.trim().length >= 2,
+    'f-phone': el => el.value.replace(/\D/g, '').length >= 10,
+    'f-type': el => !!el.value,
+    'f-date': el => !el.value || el.value >= el.min
+  };
+  const validate = id => { const el = $('#' + id), ok = checks[id](el); el.closest('.field').classList.toggle('bad', !ok); el.setAttribute('aria-invalid', !ok); return ok; };
+  Object.keys(checks).forEach(id => { const el = $('#' + id); el.addEventListener('blur', () => el.value && validate(id)); el.addEventListener('input', () => el.closest('.field').classList.contains('bad') && validate(id)); el.addEventListener('change', () => el.closest('.field').classList.contains('bad') && validate(id)); });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const bad = Object.keys(checks).filter(id => !validate(id));
+    if (bad.length) { $('#' + bad[0]).focus(); toast('Перевірте виділені поля'); return; }
+    const name = $('#f-name').value.trim().split(' ')[0], type = $('#f-type').value.toLowerCase();
+    const when = date.value ? ` на ${new Date(date.value + 'T12:00').toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}` : '';
+    $('#doneTitle').textContent = `Дякуємо, ${name}!`;
+    $('#doneText').textContent = `Вашу заявку на «${type}»${when} прийнято — у робочій версії сайту менеджер передзвонив би вам протягом дня. Це демо: дані нікуди не надіслано і не збережено.`;
+    form.classList.add('sent'); form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); $('#again').focus({ preventScroll: true });
+  });
+  $('#again').addEventListener('click', () => { form.reset(); $$('#occ button').forEach(b => b.setAttribute('aria-pressed', 'false')); $$('.field', form).forEach(f => f.classList.remove('bad')); form.classList.remove('sent'); $('#f-name').focus(); });
+
+  /* ---------- socials: demo note instead of a dead link ---------- */
+  $$('.socials button').forEach(b => b.addEventListener('click', () => toast(`Демо: тут буде посилання на ваш ${b.dataset.net}`)));
+
+  /* ---------- toast ---------- */
+  function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 2600); }
+})();
+</script>
+</body>
+</html>
