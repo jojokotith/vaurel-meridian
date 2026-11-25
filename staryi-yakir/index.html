@@ -105,7 +105,8 @@ h1 em,h2 em{font-style:italic;font-weight:400;color:var(--brass-d)}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto}
 .brand svg{width:30px;height:40px;flex:none;transition:transform .8s var(--ease)}
 .brand:hover svg{transform:rotate(-8deg)}
-.brand b{display:block;font:italic 500 22px/1 var(--serif)}
+.brand b{display:block;font:italic 500 22px/1 var(--serif);white-space:nowrap}
+@media(max-width:400px){.brand b{font-size:19px}.brand small{letter-spacing:.16em}.top .wrap{gap:10px}}
 .brand small{display:block;font:500 10.5px/1 var(--sign);letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin-top:5px}
 .nav{display:flex;gap:24px;list-style:none;margin:0;padding:0}
 .nav a{text-decoration:none;font-size:15px;opacity:.85;padding:8px 0;transition:opacity .3s}
