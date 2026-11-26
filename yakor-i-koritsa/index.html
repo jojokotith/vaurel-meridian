@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Якорь и корица — кофейня у старой гавани</title>
+  <meta name="description" content="Демонстрационный сайт кофейни у старой гавани: меню, витрина дня, галерея и онлайн-заказ.">
+  <meta name="theme-color" content="#0f3b4c">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>
+    (function () {
+      var d = document.documentElement, show = true;
+      d.classList.add('js');
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) show = false;
+        if (localStorage.getItem('anchor-cinnamon:intro')) show = false;
+      } catch (e) {}
+      d.classList.add(show ? 'intro-on' : 'intro-off');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Фирменные знаки: якорь с лапами-завитками (как булочка с корицей) и роза ветров -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="anchor" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="17" r="10"/>
+        <path d="M60 27 V140"/>
+        <path d="M34 44 H86"/>
+        <path d="M22 100 C26 124 42 140 60 140 C78 140 94 124 98 100"/>
+        <path d="M22 100 C12 100 8 88 16 84 C22 81 27 88 22 92"/>
+        <path d="M98 100 C108 100 112 88 104 84 C98 81 93 88 98 92"/>
+      </g>
+    </symbol>
+    <symbol id="rose" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor">
+        <circle cx="50" cy="50" r="44" stroke-width="1"/>
+        <circle cx="50" cy="50" r="36" stroke-width=".7" stroke-dasharray="1.5 3"/>
+      </g>
+      <path d="M50 6 L55 45 L50 50 L45 45Z M50 94 L45 55 L50 50 L55 55Z" fill="currentColor"/>
+      <path d="M6 50 L45 45 L50 50 L45 55Z M94 50 L55 55 L50 50 L55 45Z" fill="currentColor" opacity=".55"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- ===================== ЗАСТАВКА ===================== -->
+  <!-- Фото: Unsplash, photo-1518837695005-2083093ee35b -->
+  <div class="intro" id="intro" aria-label="Заставка">
+    <img class="intro__bg" src="assets/photos/intro-sea.jpg" alt="">
+    <div class="intro__ray" aria-hidden="true"></div>
+    <div class="intro__mid" aria-hidden="true">
+      <svg class="intro__anchor" viewBox="0 0 120 160">
+        <g fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle style="--i:0" pathLength="1" cx="60" cy="17" r="10"/>
+          <path style="--i:1" pathLength="1" d="M60 27 V140"/>
+          <path style="--i:2" pathLength="1" d="M34 44 H86"/>
+          <path style="--i:3" pathLength="1" d="M22 100 C26 124 42 140 60 140 C78 140 94 124 98 100"/>
+          <path style="--i:4" pathLength="1" d="M22 100 C12 100 8 88 16 84 C22 81 27 88 22 92"/>
+          <path style="--i:4" pathLength="1" d="M98 100 C108 100 112 88 104 84 C98 81 93 88 98 92"/>
+        </g>
+      </svg>
+      <p class="intro__name">Якорь и корица</p>
+      <p class="intro__tag">кофейня у старой гавани</p>
+    </div>
+    <svg class="intro__foam" viewBox="0 0 1440 1000" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 80 C120 30 240 120 360 70 S600 20 720 70 S960 130 1080 70 S1320 20 1440 70 V1000 H0Z" fill="#f4f8f4"/>
+      <path d="M0 60 C140 20 260 100 380 60 S620 10 740 55 S980 110 1100 55 S1330 10 1440 50" fill="none" stroke="#bfe7e1" stroke-width="10" opacity=".8"/>
+    </svg>
+    <button class="intro__skip" type="button" id="introSkip">Пропустить заставку</button>
+  </div>
+
+  <!-- ===================== ШАПКА ===================== -->
+  <header class="header" id="header">
+    <div class="wrap header__in">
+      <a class="logo" href="#top" aria-label="Якорь и корица — на главную">
+        <span class="logo__mark" aria-hidden="true"><svg><use href="#anchor"/></svg></span>
+        <span class="logo__words"><span class="logo__name" data-cafe="name">Якорь и корица</span><span class="logo__tag" data-cafe="tagline">кофейня у старой гавани</span></span>
+      </a>
+      <nav class="nav" aria-label="Разделы">
+        <ul class="nav__list" id="navList">
+          <li><a href="#story">История</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="#showcase">Витрина</a></li>
+          <li><a href="#gallery">Атмосфера</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="btn btn--coral header__order" type="button" data-open-cart>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14l-1.3 10.2a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8Z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/></svg>
+        <span class="header__order-t">Заказать</span>
+        <span class="count" data-cart-count hidden>0</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navList">
+        <span class="sr-only" id="burgerText">Открыть меню</span>
+        <span class="burger__l" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== ГЛАВНЫЙ ЭКРАН ===================== -->
+    <section class="hero chart" id="top" aria-labelledby="heroTitle">
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="kicker up" style="--d:0"><svg aria-hidden="true"><use href="#anchor"/></svg> Старая гавань · с 7:30 утра</p>
+          <h1 class="hero__title up" id="heroTitle" tabindex="-1" style="--d:1">Бросьте якорь<br>у&nbsp;<span class="mark-line">нашей стойки</span></h1>
+          <p class="hero__lead up" style="--d:2">Кофе, который обжаривают у окна, булочки с корицей из утренней печи и вид на лодки, которые возвращаются с уловом.
+            Заглядывайте на минуту — останетесь на весь вечер.</p>
+          <div class="hero__cta up" style="--d:3">
+            <a class="btn btn--sea" href="#menu">Посмотреть меню</a>
+            <button class="btn btn--coral" type="button" data-open-cart>Заказать</button>
+          </div>
+        </div>
+        <div class="hero__media up" style="--d:1">
+          <figure class="sail">
+            <!-- Фото: Unsplash, photo-1527004013197-933c4bb611b3 -->
+            <img src="assets/photos/hero-1200.jpg" srcset="assets/photos/hero-1200.jpg 1200w, assets/photos/hero-2200.jpg 2200w"
+                 sizes="(max-width: 900px) 100vw, 58vw" alt="Старая рыбацкая гавань: красные деревянные дома на скалах у воды, за ними горы" fetchpriority="high">
+            <div class="sail__shine" aria-hidden="true"></div>
+          </figure>
+          <div class="tag-hang">
+            <svg class="tag-hang__rope" viewBox="0 0 40 70" aria-hidden="true"><path d="M20 0 C10 20 30 40 20 70" fill="none" stroke="#8b5e3c" stroke-width="3" stroke-dasharray="5 3"/></svg>
+            <div class="luggage">
+              <span class="luggage__hole" aria-hidden="true"></span>
+              <span class="luggage__label">Сегодня</span>
+              <span class="luggage__time" data-today>—</span>
+              <span class="luggage__state"><span class="dot" data-open-dot></span><span data-state>—</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <svg class="waves" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+        <path class="waves__a" d="M0 40 C180 10 360 70 540 40 S900 10 1080 40 S1260 70 1440 40 V80 H0Z"/>
+        <path class="waves__b" d="M0 52 C200 30 380 78 560 52 S920 26 1100 52 S1300 76 1440 52 V80 H0Z"/>
+      </svg>
+    </section>
+
+    <!-- ===================== ИСТОРИЯ ===================== -->
+    <section class="story" id="story" aria-labelledby="storyTitle">
+      <svg class="story__rose" aria-hidden="true"><use href="#rose"/></svg>
+      <div class="wrap story__grid">
+        <div class="story__collage reveal">
+          <figure class="photo photo--tall">
+            <!-- Unsplash, photo-1476514525535-07fb3b4ae5f1 -->
+            <img src="assets/photos/story-boat.jpg" width="1000" height="1200" loading="lazy" decoding="async" alt="Нос старой деревянной лодки на спокойной воде, впереди горы">
+          </figure>
+          <figure class="photo photo--small">
+            <!-- Unsplash, photo-1511537190424-bbbab87ac5eb -->
+            <img src="assets/photos/story-roaster.jpg" width="900" height="700" loading="lazy" decoding="async" alt="Кофейные зёрна остывают в лотке барабанного обжарочного аппарата">
+            <figcaption>Обжарка — по вторникам</figcaption>
+          </figure>
+        </div>
+        <div class="story__text">
+          <p class="kicker reveal">Судовой журнал</p>
+          <h2 class="title reveal" id="storyTitle">Кофейня, которая <em>пришла с моря</em></h2>
+          <p class="reveal">Наш основатель — бывший кок торгового судна. Двадцать лет он варил кофе в качку и пёк булочки с корицей для команды,
+            а когда сошёл на берег, открыл маленькую кофейню в бывшем лодочном сарае у старой гавани.</p>
+          <p class="reveal">Над дверью висит якорь с того самого судна, а рецепт булочек записан в судовом журнале — он до сих пор лежит у кассы.</p>
+          <ol class="route reveal" aria-label="День кофейни">
+            <li><span class="route__time">07:30</span><span class="route__text"><b>Отдаём швартовы.</b> Печь разогрета, первые круассаны и эспрессо для рыбаков.</span></li>
+            <li><span class="route__time">13:00</span><span class="route__text"><b>Полный штиль.</b> Обеды, боулы и рыбный суп из утреннего улова.</span></li>
+            <li><span class="route__time">19:00</span><span class="route__text"><b>Огни гавани.</b> Пледы на террасе, какао и долгие разговоры.</span></li>
+          </ol>
+          <p class="fine reveal">История демонстрационная: кофейня, её основатель и город вымышлены.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== МЕНЮ ===================== -->
+    <section class="menu" id="menu" aria-labelledby="menuTitle">
+      <div class="rope-line" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="menu__head">
+          <p class="kicker kicker--light reveal">Меню</p>
+          <h2 class="title reveal" id="menuTitle">Сегодня <em>в камбузе</em></h2>
+          <p class="lead reveal">Позиции и цены демонстрационные. Нажмите «+», чтобы добавить в заказ.</p>
+        </div>
+        <div class="menu__grid">
+          <div class="cats" role="tablist" aria-label="Категории меню" aria-orientation="vertical" id="cats"></div>
+          <div class="menu__panel" id="menuPanel" role="tabpanel" tabindex="0"></div>
+        </div>
+        <ul class="legend" aria-label="Обозначения">
+          <li><span class="badge badge--sign" aria-hidden="true">★</span> фирменное</li>
+          <li><span class="badge badge--veg" aria-hidden="true">вег</span> вегетарианское</li>
+          <li><span class="badge badge--new" aria-hidden="true">new</span> новинка</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== ВИТРИНА ДНЯ ===================== -->
+    <section class="showcase" id="showcase" aria-labelledby="showTitle">
+      <div class="wrap">
+        <div class="show__head">
+          <div>
+            <p class="kicker reveal">Витрина дня</p>
+            <h2 class="title reveal" id="showTitle">Только что <em>с полки</em></h2>
+          </div>
+          <p class="lead reveal">Три вещи, ради которых к нам приходят с другого конца набережной.</p>
+        </div>
+        <div class="shelf" id="shelf"></div>
+      </div>
+    </section>
+
+    <!-- ===================== АТМОСФЕРА ===================== -->
+    <section class="gallery" id="gallery" aria-labelledby="galTitle">
+      <div class="wrap">
+        <div class="gal__head">
+          <div>
+            <p class="kicker reveal">Внутри и снаружи</p>
+            <h2 class="title reveal" id="galTitle">Место, где <em>время швартуется</em></h2>
+          </div>
+          <div class="filters reveal" role="group" aria-label="Показать фото" id="galFilters">
+            <button type="button" data-f="all" aria-pressed="true">Всё</button>
+            <button type="button" data-f="outside" aria-pressed="false">Снаружи</button>
+            <button type="button" data-f="inside" aria-pressed="false">Внутри</button>
+            <button type="button" data-f="details" aria-pressed="false">Детали</button>
+          </div>
+        </div>
+        <ul class="masonry" id="masonry" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section class="contacts" id="contacts" aria-labelledby="contactsTitle">
+      <div class="wrap contacts__grid">
+        <div class="pass reveal">
+          <div class="pass__top">
+            <span>Посадочный талон</span>
+            <svg aria-hidden="true"><use href="#anchor"/></svg>
+          </div>
+          <div class="pass__body">
+            <p class="kicker">Контакты</p>
+            <h2 class="title" id="contactsTitle">Заходите <em>на борт</em></h2>
+            <dl class="info">
+              <div><dt>Адрес</dt><dd><span data-contact="address"></span><small data-contact="addressNote"></small></dd></div>
+              <div><dt>Телефон</dt><dd><span class="phone"><span data-contact="phone"></span><button class="chip" type="button" data-copy-phone>Скопировать</button></span><small data-contact="phoneNote"></small></dd></div>
+              <div><dt>Часы</dt><dd><dl class="hours" data-hours></dl></dd></div>
+            </dl>
+            <div class="socials" id="socials" aria-label="Соцсети"></div>
+          </div>
+          <div class="pass__stub" aria-hidden="true"><span data-contact="pier"></span></div>
+        </div>
+        <figure class="map reveal">
+          <svg viewBox="0 0 560 460" role="img" aria-labelledby="mapTitle">
+            <title id="mapTitle">Схема гавани в стиле морской карты: набережная, причалы и отметка кофейни. Иллюстрация, не настоящая карта.</title>
+            <rect width="560" height="460" fill="#e7f2ef"/>
+            <g fill="none" stroke="#2fb5a9" stroke-opacity=".35">
+              <path d="M0 300 C120 270 220 330 330 290 S480 230 560 250"/>
+              <path d="M0 340 C120 310 230 370 340 330 S490 270 560 290" stroke-dasharray="4 6"/>
+              <path d="M0 380 C140 350 240 410 350 370 S500 310 560 330" stroke-dasharray="2 8"/>
+            </g>
+            <path d="M0 0 H560 V220 C470 200 420 240 360 232 C300 224 260 190 200 200 C140 210 80 250 0 240Z" fill="#f1e4cc"/>
+            <path d="M0 240 C80 250 140 210 200 200 C260 190 300 224 360 232 C420 240 470 200 560 220" fill="none" stroke="#8b5e3c" stroke-width="2.5"/>
+            <g stroke="#8b5e3c" stroke-width="7" stroke-linecap="round"><path d="M150 214 V280"/><path d="M250 202 V262"/><path d="M380 236 V300"/></g>
+            <g fill="#8b5e3c" opacity=".25"><rect x="40" y="120" width="60" height="40" rx="4"/><rect x="120" y="100" width="70" height="50" rx="4"/><rect x="220" y="120" width="50" height="40" rx="4"/><rect x="420" y="110" width="80" height="50" rx="4"/></g>
+            <path d="M0 70 H560" stroke="#8b5e3c" stroke-opacity=".35" stroke-width="10"/>
+            <text x="16" y="60" font-family="IBM Plex Mono, monospace" font-size="12" fill="#5c4330">НАБЕРЕЖНАЯ РЫБАКОВ</text>
+            <g transform="translate(300 172)">
+              <circle r="34" fill="#ef7254" opacity=".18"/><circle r="20" fill="#ef7254"/>
+              <g transform="translate(-9 -12) scale(.15)" color="#fff"><use href="#anchor" width="120" height="160"/></g>
+            </g>
+            <text x="330" y="160" font-family="Golos Text, sans-serif" font-size="15" font-weight="700" fill="#0f3b4c">Якорь и корица</text>
+            <text x="150" y="300" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0f3b4c" text-anchor="middle">П-2</text>
+            <text x="250" y="282" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0f3b4c" text-anchor="middle">П-3</text>
+            <text x="380" y="320" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0f3b4c" text-anchor="middle">П-4</text>
+            <g transform="translate(470 340)" color="#0f3b4c" opacity=".7"><use href="#rose" x="-40" y="-40" width="80" height="80"/></g>
+            <text x="20" y="440" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0f3b4c" opacity=".7">СХЕМА · НЕ ДЛЯ НАВИГАЦИИ</text>
+          </svg>
+          <figcaption>Схема-иллюстрация. Для рабочей версии подключите настоящую карту.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div class="footer__brand"><svg aria-hidden="true"><use href="#anchor"/></svg><span data-cafe="name">Якорь и корица</span></div>
+      <p>Демонстрационный сайт: название, адрес, телефон, история и цены вымышлены. Заказы не отправляются.
+        Фотографии — Unsplash, список в ATTRIBUTION.md.</p>
+      <div class="footer__links">
+        <button class="text-btn" type="button" id="replayIntro">Показать заставку</button>
+        <a class="text-btn" href="#top">Наверх ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Плавающая корзина -->
+  <button class="fab" type="button" data-open-cart hidden>
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14l-1.3 10.2a2 2 0 0 1-2 1.8H8.3a2 2 0 0 1-2-1.8Z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/></svg>
+    <span>Заказ · <span data-cart-total>0 ₴</span></span>
+    <span class="fab__n" data-cart-count>0</span>
+  </button>
+
+  <!-- ===================== КОРЗИНА ===================== -->
+  <dialog class="drawer" id="cart" aria-labelledby="cartTitle">
+    <div class="drawer__in">
+      <div class="drawer__head">
+        <button class="round" type="button" id="cartBack" aria-label="Назад к корзине" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <h2 class="drawer__title" id="cartTitle" tabindex="-1">Ваш заказ</h2>
+        <button class="round" type="button" data-close aria-label="Закрыть корзину"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+
+      <div class="view" data-view="cart">
+        <div class="drawer__body">
+          <ul class="lines" id="lines"></ul>
+          <div class="empty" id="empty" hidden>
+            <svg aria-hidden="true"><use href="#anchor"/></svg>
+            <p class="empty__t">Пока ничего не на борту</p>
+            <p>Добавьте кофе или выпечку из меню — и вернитесь сюда.</p>
+            <button class="btn btn--sea" type="button" data-goto-menu>Открыть меню</button>
+          </div>
+        </div>
+        <div class="drawer__foot" id="cartFoot">
+          <div class="sum"><span>Итого</span><strong data-cart-total>0 ₴</strong></div>
+          <button class="btn btn--coral btn--wide" type="button" id="toCheckout">Оформить заказ</button>
+          <p class="tiny">Демо: оплата и доставка не подключены.</p>
+        </div>
+      </div>
+
+      <div class="view" data-view="checkout" hidden>
+        <form class="form" id="orderForm" novalidate>
+          <div class="drawer__body">
+            <p class="demo" role="note"><b>Демо-версия.</b> Заказ никуда не отправляется, введённые данные не сохраняются.</p>
+            <div class="errors" id="errors" role="alert" tabindex="-1" hidden></div>
+            <div class="field">
+              <label for="fName">Имя <span class="req" aria-hidden="true">*</span></label>
+              <input id="fName" name="name" type="text" autocomplete="name" maxlength="60" required aria-describedby="fNameErr">
+              <p class="err" id="fNameErr"></p>
+            </div>
+            <div class="field">
+              <label for="fPhone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+380 67 123 45 67" aria-describedby="fPhoneHint fPhoneErr">
+              <p class="hint" id="fPhoneHint">Украинский номер: +380… или 0…</p>
+              <p class="err" id="fPhoneErr"></p>
+            </div>
+            <div class="field">
+              <label for="fComment">Комментарий</label>
+              <textarea id="fComment" name="comment" rows="3" maxlength="300" placeholder="Например: на овсяном молоке, заберу в 8:15" aria-describedby="fCommentHint"></textarea>
+              <p class="hint" id="fCommentHint">Необязательно, до 300 символов</p>
+            </div>
+          </div>
+          <div class="drawer__foot">
+            <div class="sum"><span>К оплате в кофейне</span><strong data-cart-total>0 ₴</strong></div>
+            <button class="btn btn--coral btn--wide" type="submit" id="submitBtn"><span class="spinner" aria-hidden="true"></span><span class="btn__t">Отправить заказ</span></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="view" data-view="done" hidden>
+        <div class="drawer__body done">
+          <svg class="done__ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
+          <h3 class="done__t">Заказ принят на борт</h3>
+          <p class="done__n">Номер: <b id="doneNum"></b></p>
+          <p class="demo" role="note">Так выглядит подтверждение. <b>В демо-версии заказ никуда не отправлен</b>, а данные не сохранены.</p>
+          <div class="done__sum" id="doneSum"></div>
+          <button class="btn btn--sea btn--wide" type="button" data-close>Вернуться на сайт</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Просмотр фото -->
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lbCap">
+    <figure class="lb">
+      <img id="lbImg" src="assets/photos/in-hall-1400.jpg" alt="">
+      <figcaption><b id="lbCap"></b><span id="lbText"></span><span class="lb__n" id="lbN"></span></figcaption>
+    </figure>
+    <button class="round lb__close" type="button" data-lb="close" aria-label="Закрыть просмотр"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="round lb__prev" type="button" data-lb="prev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="round lb__next" type="button" data-lb="next" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

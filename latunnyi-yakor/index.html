@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Латунный якорь — кофейня у старого причала</title>
+  <meta name="description" content="Демонстрационный сайт кофейни у старого порта: меню, витрина дня, галерея и заказ онлайн.">
+  <meta name="theme-color" content="#0c2230">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="assets/photos/hero-1100.jpg" imagesrcset="assets/photos/hero-1100.jpg 1100w, assets/photos/hero-2200.jpg 2200w" imagesizes="100vw">
+  <script>
+    (function () {
+      var d = document.documentElement, show = true;
+      d.classList.add('js');
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) show = false;
+        if (localStorage.getItem('brass-anchor:intro-seen')) show = false;
+      } catch (e) {}
+      d.classList.add(show ? 'intro-on' : 'intro-off');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Oswald:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Фирменный якорь: один символ на весь сайт -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="anchor" viewBox="0 0 120 160">
+      <g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="60" cy="16" r="10"/>
+        <path d="M60 26 V140"/>
+        <path d="M30 40 H90"/>
+        <path d="M16 100 C20 126 40 142 60 142 C80 142 100 126 104 100"/>
+        <path d="M8 110 L16 94 L28 106 M112 110 L104 94 L92 106"/>
+      </g>
+      <circle cx="26" cy="40" r="5" fill="currentColor"/><circle cx="94" cy="40" r="5" fill="currentColor"/>
+      <path d="M60 46 C80 54 40 64 60 74 C80 84 40 94 60 104" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="5 4" opacity=".7"/>
+    </symbol>
+    <symbol id="compass" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor">
+        <circle cx="50" cy="50" r="46" stroke-width="1"/><circle cx="50" cy="50" r="38" stroke-width=".6" stroke-dasharray="2 3"/>
+        <path d="M50 4 V96 M4 50 H96 M17 17 L83 83 M83 17 L17 83" stroke-width=".5" opacity=".6"/>
+      </g>
+      <path d="M50 8 L56 50 L50 92 L44 50Z" fill="currentColor" opacity=".55"/>
+      <path d="M8 50 L50 44 L92 50 L50 56Z" fill="currentColor" opacity=".35"/>
+      <text x="50" y="3" font-size="8" text-anchor="middle" fill="currentColor" font-family="Oswald, sans-serif">С</text>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- ===================== ЗАСТАВКА ===================== -->
+  <div class="intro" id="intro" role="dialog" aria-label="Заставка" aria-modal="false">
+    <img class="intro__photo" src="assets/photos/hero-1100.jpg" srcset="assets/photos/hero-1100.jpg 1100w, assets/photos/hero-2200.jpg 2200w" sizes="100vw" alt="">
+    <div class="intro__beam" aria-hidden="true"></div>
+    <div class="intro__center" aria-hidden="true">
+      <svg class="intro__anchor" viewBox="0 0 120 160" width="120" height="160">
+        <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle style="--i:0" pathLength="1" cx="60" cy="16" r="10"/>
+          <path style="--i:1" pathLength="1" d="M60 26 V140"/>
+          <path style="--i:2" pathLength="1" d="M30 40 H90"/>
+          <path style="--i:3" pathLength="1" d="M16 100 C20 126 40 142 60 142 C80 142 100 126 104 100"/>
+          <path style="--i:4" pathLength="1" d="M8 110 L16 94 L28 106 M112 110 L104 94 L92 106"/>
+          <path style="--i:5" pathLength="1" class="rope" d="M60 46 C80 54 40 64 60 74 C80 84 40 94 60 104" stroke-width="2"/>
+        </g>
+        <circle class="dot" cx="26" cy="40" r="4.5" fill="currentColor"/><circle class="dot" cx="94" cy="40" r="4.5" fill="currentColor"/>
+      </svg>
+      <p class="intro__name">Латунный якорь</p>
+      <p class="intro__tag">кофейня у старого причала</p>
+    </div>
+    <div class="intro__foam" aria-hidden="true"><span></span><span></span><span></span></div>
+    <button class="intro__skip" type="button" id="introSkip">Пропустить заставку</button>
+  </div>
+
+  <!-- ===================== ШАПКА ===================== -->
+  <header class="header" id="header">
+    <div class="wrap header__in">
+      <a class="logo" href="#top" aria-label="Латунный якорь — на главную">
+        <span class="logo__badge" aria-hidden="true"><svg><use href="#anchor"/></svg></span>
+        <span class="logo__text"><span class="logo__name" data-cafe="name">Латунный якорь</span><span class="logo__tag" data-cafe="tagline">кофейня у старого причала</span></span>
+      </a>
+      <nav class="nav" aria-label="Разделы">
+        <ul class="nav__list" id="navList">
+          <li><a href="#story">История</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="#showcase">Витрина дня</a></li>
+          <li><a href="#gallery">Атмосфера</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+      <button class="btn btn--brass header__order" type="button" data-open-cart>
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1.2 11.1a2 2 0 0 1-2 1.9H9.2a2 2 0 0 1-2-1.9Z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>
+        <span>Заказать</span>
+        <span class="badge" data-cart-count hidden>0</span>
+      </button>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navList">
+        <span class="sr-only" id="burgerText">Открыть меню</span>
+        <span class="burger__l" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== ГЛАВНЫЙ ЭКРАН ===================== -->
+    <section class="hero" id="top" aria-labelledby="heroTitle">
+      <!-- Фото: Unsplash, photo-1499678329028-101435549a4e (см. ATTRIBUTION.md) -->
+      <img class="hero__photo" src="assets/photos/hero-1100.jpg"
+           srcset="assets/photos/hero-1100.jpg 1100w, assets/photos/hero-2200.jpg 2200w" sizes="100vw"
+           alt="Старый прибрежный городок в сумерках: дома с огнями в окнах спускаются к гавани, вдали скалы и закат"
+           fetchpriority="high">
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__water" aria-hidden="true"></div>
+      <div class="wrap hero__in">
+        <p class="plate hero-up" style="--d:0"><svg aria-hidden="true"><use href="#anchor"/></svg>Причал № 3 · Старый Порт</p>
+        <h1 class="hero__title hero-up" id="heroTitle" tabindex="-1" style="--d:1">Кофе у&nbsp;старого<br><em>причала</em></h1>
+        <p class="hero__lead hero-up" style="--d:2">Утренний капучино с видом на мачты, круассаны из печи и тёплые вечера под огнями гавани.
+          Заходите на минуту — останетесь до заката.</p>
+        <div class="hero__cta hero-up" style="--d:3">
+          <a class="btn btn--foam" href="#menu">Посмотреть меню</a>
+          <button class="btn btn--brass" type="button" data-open-cart>Заказать</button>
+        </div>
+        <p class="hero__now hero-up" style="--d:4"><span class="dot" data-open-dot></span><span data-today>—</span></p>
+      </div>
+    </section>
+
+    <div class="rope" aria-hidden="true"></div>
+
+    <!-- ===================== ИСТОРИЯ ===================== -->
+    <section class="story chart-bg" id="story" aria-labelledby="storyTitle">
+      <svg class="story__compass" aria-hidden="true"><use href="#compass"/></svg>
+      <svg class="story__route" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-20 240 C200 120 380 280 600 170 S980 60 1220 120" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 10" stroke-linecap="round"/>
+      </svg>
+      <div class="wrap story__grid">
+        <div class="story__text">
+          <p class="eyebrow reveal">Бортовой журнал</p>
+          <h2 class="h2 reveal" id="storyTitle">Где раньше плели канаты, <em>теперь варят кофе</em></h2>
+          <p class="reveal">Наш дом стоит у третьего причала, в старом складе канатной мастерской. Мы сохранили дубовые балки,
+            крюки под потолком и латунный якорь у входа — его нашли при ремонте под полом и повесили обратно на почётное место.</p>
+          <p class="reveal">С утра здесь пахнет свежей выпечкой и зерном, днём заходят рыбаки и студенты, а вечером на террасе зажигаются огни гавани.
+            Кажется, что отсюда можно отправиться в любое путешествие — и обязательно вернуться к чашке горячего кофе.</p>
+          <ol class="log reveal">
+            <li><span>07:00</span> печь разогрета, первые круассаны</li>
+            <li><span>12:00</span> обед с уловом утренних лодок</li>
+            <li><span>19:00</span> огни гавани и тёплые пледы</li>
+          </ol>
+          <p class="fine reveal">История демонстрационная: кафе и город вымышлены.</p>
+        </div>
+        <figure class="postcard reveal">
+          <!-- Фото: Unsplash, photo-1563296291-14f26f10c20f -->
+          <img src="assets/photos/story-ship.jpg" width="1100" height="733" loading="lazy" decoding="async"
+               alt="Старинный парусник с белыми парусами идёт по спокойному морю под облачным небом">
+          <figcaption>«Всякое путешествие начинается с чашки кофе» — запись в журнале кафе</figcaption>
+          <span class="postcard__stamp" aria-hidden="true"><svg><use href="#anchor"/></svg></span>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== МЕНЮ ===================== -->
+    <section class="menu" id="menu" aria-labelledby="menuTitle">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow eyebrow--light reveal">Меню</p>
+          <h2 class="h2 reveal" id="menuTitle">Что сегодня <em>на борту</em></h2>
+          <p class="lead reveal">Выберите причал — и добавляйте в заказ кнопкой «+». Цены и позиции демонстрационные.</p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Категории меню" id="tabs"></div>
+        <div class="menu__panel" id="menuPanel" role="tabpanel" tabindex="0"></div>
+        <ul class="legend" aria-label="Обозначения">
+          <li><span class="mark mark--sign" aria-hidden="true">★</span> фирменное</li>
+          <li><span class="mark mark--veg" aria-hidden="true">V</span> вегетарианское</li>
+          <li><span class="mark mark--new" aria-hidden="true">new</span> новинка</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== ВИТРИНА ДНЯ ===================== -->
+    <section class="showcase" id="showcase" aria-labelledby="showTitle">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow reveal">Витрина дня</p>
+            <h2 class="h2 reveal" id="showTitle">Сегодня <em>советуем</em></h2>
+          </div>
+          <p class="chalk reveal" aria-hidden="true">свежее · с утра · пока есть</p>
+        </div>
+        <div class="show-grid" id="showGrid"></div>
+      </div>
+    </section>
+
+    <div class="rope rope--sand" aria-hidden="true"></div>
+
+    <!-- ===================== АТМОСФЕРА ===================== -->
+    <section class="gallery" id="gallery" aria-labelledby="galTitle">
+      <div class="wrap">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow eyebrow--light reveal">Внутри и снаружи</p>
+            <h2 class="h2 reveal" id="galTitle">Место, где <em>хочется остаться</em></h2>
+          </div>
+          <p class="lead reveal">Нажмите на фото, чтобы рассмотреть. На телефоне листайте пальцем.</p>
+        </div>
+        <ul class="gal" id="gal"></ul>
+      </div>
+    </section>
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section class="contacts" id="contacts" aria-labelledby="contactsTitle">
+      <!-- Фото: Unsplash, photo-1516483638261-f4dbaf036963 -->
+      <img class="contacts__photo" src="assets/photos/contacts-harbor.jpg" loading="lazy" decoding="async"
+           alt="Разноцветные дома на скалах над маленькой гаванью с лодками">
+      <div class="contacts__shade" aria-hidden="true"></div>
+      <div class="wrap contacts__in">
+        <div class="plaque reveal">
+          <span class="screw screw--tl" aria-hidden="true"></span><span class="screw screw--tr" aria-hidden="true"></span>
+          <span class="screw screw--bl" aria-hidden="true"></span><span class="screw screw--br" aria-hidden="true"></span>
+          <p class="eyebrow">Контакты</p>
+          <h2 class="h2" id="contactsTitle">Швартуйтесь <em>у нас</em></h2>
+          <dl class="info">
+            <div><dt>Адрес</dt><dd><span data-contact="address"></span><small data-contact="addressNote"></small></dd></div>
+            <div><dt>Телефон</dt><dd><span class="phone"><span data-contact="phone"></span>
+              <button class="mini-btn" type="button" data-copy-phone>Скопировать</button></span><small data-contact="phoneNote"></small></dd></div>
+            <div><dt>Часы работы</dt><dd><dl class="hours" data-hours></dl></dd></div>
+          </dl>
+          <div class="socials" id="socials" aria-label="Соцсети"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div class="footer__brand">
+        <svg aria-hidden="true"><use href="#anchor"/></svg>
+        <div><p class="footer__name" data-cafe="name">Латунный якорь</p><p class="footer__tag" data-cafe="tagline"></p></div>
+      </div>
+      <p class="footer__fine">Демонстрационный сайт: название, адрес, телефон, история и цены вымышлены.
+        Заказы не отправляются. Фотографии — Unsplash (см. ATTRIBUTION.md).</p>
+      <div class="footer__links">
+        <button class="link" type="button" id="replayIntro">Показать заставку</button>
+        <a class="link" href="#top">Наверх ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Плавающая корзина -->
+  <button class="cart-fab" type="button" data-open-cart hidden>
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1.2 11.1a2 2 0 0 1-2 1.9H9.2a2 2 0 0 1-2-1.9Z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>
+    <span>Заказ · <span data-cart-total>0 ₴</span></span>
+    <span class="cart-fab__n" data-cart-count>0</span>
+  </button>
+
+  <!-- ===================== КОРЗИНА ===================== -->
+  <dialog class="drawer" id="cart" aria-labelledby="cartTitle">
+    <div class="drawer__in">
+      <div class="drawer__head">
+        <button class="icon-btn" type="button" id="cartBack" aria-label="Назад к корзине" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <h2 class="drawer__title" id="cartTitle" tabindex="-1">Ваш заказ</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Закрыть корзину">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="view" data-view="cart">
+        <div class="drawer__scroll">
+          <ul class="lines" id="lines"></ul>
+          <div class="empty" id="empty" hidden>
+            <svg aria-hidden="true"><use href="#anchor"/></svg>
+            <p>В трюме пока пусто</p>
+            <p class="muted">Добавьте что-нибудь из меню или витрины дня.</p>
+            <button class="btn btn--teal" type="button" data-goto-menu>Открыть меню</button>
+          </div>
+        </div>
+        <div class="drawer__foot" id="cartFoot">
+          <div class="total"><span>Итого</span><strong data-cart-total>0 ₴</strong></div>
+          <button class="btn btn--brass btn--block" type="button" id="toCheckout">Оформить заказ</button>
+          <p class="tiny">Демо-версия: оплата и доставка не подключены.</p>
+        </div>
+      </div>
+
+      <div class="view" data-view="checkout" hidden>
+        <form id="orderForm" class="form" novalidate>
+          <div class="drawer__scroll">
+            <p class="demo-note" role="note"><strong>Демо-версия.</strong> Заказ никуда не отправляется, данные не сохраняются.</p>
+            <div class="form__errors" id="formErrors" role="alert" tabindex="-1" hidden></div>
+            <div class="field">
+              <label for="fName">Имя <span class="req" aria-hidden="true">*</span></label>
+              <input id="fName" name="name" type="text" autocomplete="name" maxlength="60" required aria-describedby="fNameErr">
+              <p class="err" id="fNameErr"></p>
+            </div>
+            <div class="field">
+              <label for="fPhone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+380 67 123 45 67" aria-describedby="fPhoneHint fPhoneErr">
+              <p class="hint" id="fPhoneHint">Украинский номер: +380… или 0…</p>
+              <p class="err" id="fPhoneErr"></p>
+            </div>
+            <fieldset class="field">
+              <legend>Как получить</legend>
+              <div class="seg">
+                <label><input type="radio" name="how" value="here" checked><span>В кафе</span></label>
+                <label><input type="radio" name="how" value="togo"><span>С собой</span></label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <label for="fComment">Комментарий</label>
+              <textarea id="fComment" name="comment" rows="3" maxlength="300" placeholder="Например: на овсяном молоке, к 9:30" aria-describedby="fCommentHint"></textarea>
+              <p class="hint" id="fCommentHint">Необязательно, до 300 символов</p>
+            </div>
+          </div>
+          <div class="drawer__foot">
+            <div class="total"><span>К оплате в кафе</span><strong data-cart-total>0 ₴</strong></div>
+            <button class="btn btn--brass btn--block" type="submit" id="submitBtn"><span class="spin" aria-hidden="true"></span><span class="btn__t">Отправить заказ</span></button>
+          </div>
+        </form>
+      </div>
+
+      <div class="view" data-view="done" hidden>
+        <div class="drawer__scroll done">
+          <svg class="done__ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
+          <h3 class="done__title">Заказ принят</h3>
+          <p class="done__num">Номер: <strong id="doneNum"></strong></p>
+          <p class="demo-note" role="note">Так будет выглядеть подтверждение. <strong>В демо-версии заказ никуда не отправлен</strong>, а введённые данные не сохранены.</p>
+          <div class="done__sum" id="doneSum"></div>
+          <button class="btn btn--teal btn--block" type="button" data-close>Вернуться на сайт</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Просмотр фото -->
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lbCap">
+    <figure class="lb__fig">
+      <img id="lbImg" src="assets/photos/gal-entrance-1400.jpg" alt="">
+      <figcaption><strong id="lbCap"></strong> <span id="lbText"></span> <span class="lb__n" id="lbN"></span></figcaption>
+    </figure>
+    <button class="icon-btn lb__close" type="button" data-lb="close" aria-label="Закрыть просмотр"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="icon-btn lb__prev" type="button" data-lb="prev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="icon-btn lb__next" type="button" data-lb="next" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

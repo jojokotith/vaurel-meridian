@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>VELOUR lounge</title>
+  <meta name="description" content="Демонстрационный сайт лаунж-бара: кальянная карта, кухня, коктейли и онлайн-заявка.">
+  <meta name="theme-color" content="#0b0a09">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Решаем до отрисовки, нужна ли заставка, чтобы не было «мигания» -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      // Заставка показывается при каждом заходе на сайт
+      d.classList.add('intro-active');
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- ===================== ЗАСТАВКА ===================== -->
+  <div class="intro" id="intro" aria-label="Заставка">
+    <canvas class="intro__smoke" aria-hidden="true"></canvas>
+    <div class="intro__stage" aria-hidden="true">
+      <svg class="intro__hookah" viewBox="0 0 160 360" width="160" height="360">
+        <g class="intro__coals">
+          <rect x="66" y="18" width="9" height="7" rx="2"/>
+          <rect x="78" y="16" width="9" height="8" rx="2"/>
+          <rect x="89" y="18" width="8" height="7" rx="2"/>
+        </g>
+        <g class="intro__lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path style="--i:0" pathLength="1" d="M58 30 H102"/>
+          <path style="--i:1" pathLength="1" d="M62 30 H98 L91 60 H69 Z"/>
+          <path style="--i:2" pathLength="1" d="M76 60 V76 M84 60 V76"/>
+          <path style="--i:3" pathLength="1" d="M40 82 A40 7 0 1 0 120 82 A40 7 0 1 0 40 82"/>
+          <path style="--i:4" pathLength="1" d="M76 89 V228 M84 89 V228"/>
+          <path style="--i:5" pathLength="1" d="M72 120 A8 3 0 1 0 88 120 A8 3 0 1 0 72 120 M71 160 A9 3.5 0 1 0 89 160 A9 3.5 0 1 0 71 160 M72 200 A8 3 0 1 0 88 200 A8 3 0 1 0 72 200"/>
+          <path style="--i:6" pathLength="1" d="M74 228 C44 250 34 300 52 332 Q80 350 108 332 C126 300 116 250 86 228 Z"/>
+          <path style="--i:7" pathLength="1" d="M44 298 Q80 308 116 298"/>
+          <path style="--i:8" pathLength="1" d="M84 188 C120 186 142 208 140 256 C138 300 112 328 146 346"/>
+        </g>
+        <g class="intro__bubbles">
+          <circle cx="70" cy="318" r="2.5"/><circle cx="86" cy="312" r="2"/><circle cx="78" cy="324" r="1.8"/>
+        </g>
+      </svg>
+      <p class="intro__word">VELOUR</p>
+    </div>
+    <div class="intro__veil" aria-hidden="true"></div>
+    <button class="intro__skip" type="button" id="introSkip">Пропустить заставку</button>
+  </div>
+
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- ===================== ШАПКА ===================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a class="logo" href="#top" aria-label="VELOUR — на главную">
+        <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M12 13 L20 29 L28 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 10 C17 7 23 5 20 2" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" opacity=".6"/>
+        </svg>
+        <span class="logo__text"><span data-brand="name">VELOUR</span><small data-brand="suffix">lounge &amp; bar</small></span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <ul class="nav__list" id="navList">
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="#order-info">Заказ</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="icon-btn cart-btn" type="button" data-action="open-cart" aria-label="Открыть корзину">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" id="navToggle" aria-expanded="false" aria-controls="navList" aria-label="Открыть меню навигации">
+          <span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== ПЕРВЫЙ ЭКРАН ===================== -->
+    <section class="hero" id="top" aria-labelledby="heroTitle">
+      <div class="hero__smoke" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow hero-in" style="--d:0">Кальяны · коктейли · кухня</p>
+          <h1 class="hero__title hero-in" id="heroTitle" tabindex="-1" style="--d:1">
+            Вечер, который<br><em>хочется растянуть</em>
+          </h1>
+          <p class="hero__lead hero-in" style="--d:2">
+            <span data-brand="name">VELOUR</span> — тёплый полумрак, мягкие диваны, авторская кальянная карта
+            и бар, где не торопят. Заглядывайте после работы или оставьте заявку заранее.
+          </p>
+          <div class="hero__cta hero-in" style="--d:3">
+            <a class="btn btn--primary" href="#menu">Посмотреть меню</a>
+            <button class="btn btn--ghost" type="button" data-action="checkout">Оформить заказ</button>
+          </div>
+
+          <dl class="hero__info hero-in" style="--d:4">
+            <div class="info-pill">
+              <dt>Сегодня</dt>
+              <dd><span class="status-dot" data-open-dot></span><span data-today>—</span></dd>
+            </div>
+            <div class="info-pill">
+              <dt>Связь</dt>
+              <dd><span data-phone-slot></span></dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero__art hero-in" style="--d:2" aria-hidden="true">
+          <svg viewBox="0 0 520 620" class="hero-svg">
+            <defs>
+              <radialGradient id="hg-glow" cx="50%" cy="38%" r="60%">
+                <stop offset="0" stop-color="#e7a66f" stop-opacity=".55"/>
+                <stop offset=".45" stop-color="#9a5a32" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#0b0a09" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="hg-arch" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2a1b12"/>
+                <stop offset="1" stop-color="#110d0a"/>
+              </linearGradient>
+              <linearGradient id="hg-copper" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f0c194"/>
+                <stop offset=".5" stop-color="#c8895a"/>
+                <stop offset="1" stop-color="#7f4b2a"/>
+              </linearGradient>
+              <radialGradient id="hg-bulb" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#ffd9a8"/>
+                <stop offset=".4" stop-color="#f3a564" stop-opacity=".7"/>
+                <stop offset="1" stop-color="#f3a564" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <!-- арка -->
+            <path d="M40 620 V270 A220 220 0 0 1 480 270 V620 Z" fill="url(#hg-arch)"/>
+            <path d="M40 620 V270 A220 220 0 0 1 480 270 V620 Z" fill="url(#hg-glow)"/>
+            <path d="M40 620 V270 A220 220 0 0 1 480 270 V620" fill="none" stroke="url(#hg-copper)" stroke-width="2"/>
+            <path d="M64 620 V276 A196 196 0 0 1 456 276 V620" fill="none" stroke="#c8895a" stroke-opacity=".25"/>
+            <!-- лампы -->
+            <g class="lamp lamp--1">
+              <path d="M180 60 V170" stroke="#c8895a" stroke-opacity=".6"/>
+              <circle cx="180" cy="186" r="46" fill="url(#hg-bulb)"/>
+              <path d="M166 170 h28 l-4 14 h-20 Z" fill="#c8895a"/>
+              <circle cx="180" cy="190" r="5" fill="#ffe2bb"/>
+            </g>
+            <g class="lamp lamp--2">
+              <path d="M340 40 V210" stroke="#c8895a" stroke-opacity=".6"/>
+              <circle cx="340" cy="226" r="52" fill="url(#hg-bulb)"/>
+              <path d="M324 210 h32 l-5 15 h-22 Z" fill="#c8895a"/>
+              <circle cx="340" cy="230" r="5" fill="#ffe2bb"/>
+            </g>
+            <!-- столик и бокалы -->
+            <ellipse cx="260" cy="560" rx="190" ry="26" fill="#000" opacity=".45"/>
+            <path d="M100 540 Q260 520 420 540" stroke="url(#hg-copper)" stroke-width="3" fill="none"/>
+            <g fill="none" stroke="#e7b58a" stroke-width="2" stroke-linecap="round">
+              <path d="M132 470 h40 c-2 26 -10 36 -20 36 c-10 0 -18 -10 -20 -36 Z M152 506 V530 M138 532 h28"/>
+              <path d="M372 480 h34 l-4 48 h-26 Z" />
+              <path d="M378 500 h22" opacity=".5"/>
+            </g>
+            <!-- кальян -->
+            <g transform="translate(206 250) scale(.95)" fill="none" stroke="#f1e6d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M58 30 H102 M62 30 H98 L91 60 H69 Z"/>
+              <path d="M76 60 V76 M84 60 V76"/>
+              <ellipse cx="80" cy="82" rx="40" ry="7"/>
+              <path d="M76 89 V228 M84 89 V228"/>
+              <ellipse cx="80" cy="120" rx="8" ry="3"/><ellipse cx="80" cy="160" rx="9" ry="3.5"/><ellipse cx="80" cy="200" rx="8" ry="3"/>
+              <path d="M84 188 C120 186 142 208 140 256 C138 290 120 300 132 306"/>
+              <path d="M74 228 C44 250 34 300 52 300 L108 300 C126 300 116 250 86 228 Z" fill="#1a120d"/>
+              <g fill="#ff9d5c" stroke="none"><rect x="66" y="18" width="9" height="7" rx="2"/><rect x="78" y="16" width="9" height="8" rx="2"/><rect x="89" y="18" width="8" height="7" rx="2"/></g>
+            </g>
+            <!-- дым -->
+            <g class="wisps" fill="none" stroke="#f5efe7" stroke-linecap="round">
+              <path class="wisp wisp--1" d="M286 262 C262 230 314 206 286 170 C262 140 300 110 284 80" stroke-width="2.4"/>
+              <path class="wisp wisp--2" d="M292 262 C320 236 280 210 312 178 C338 152 304 126 326 96" stroke-width="1.6"/>
+              <path class="wisp wisp--3" d="M280 262 C250 246 268 214 240 196 C214 178 236 150 214 130" stroke-width="1.2"/>
+            </g>
+          </svg>
+          <p class="hero__art-note">Иллюстрация — замените на фото зала</p>
+        </div>
+      </div>
+      <a class="hero__scroll" href="#about" aria-label="Прокрутить к разделу «О нас»"><span></span></a>
+    </section>
+
+    <!-- ===================== 18+ ===================== -->
+    <aside class="age-band" aria-label="Возрастное ограничение">
+      <div class="container age-band__inner">
+        <span class="age-badge" aria-hidden="true">18+</span>
+        <p>Кальяны и алкогольные напитки доступны только совершеннолетним гостям в соответствии с местным законодательством.
+          Персонал может попросить документ, подтверждающий возраст.</p>
+      </div>
+    </aside>
+
+    <!-- ===================== О НАС ===================== -->
+    <section class="section about" id="about" aria-labelledby="aboutTitle">
+      <div class="container about__grid">
+        <div class="about__text reveal">
+          <p class="eyebrow">Атмосфера</p>
+          <h2 class="section-title" id="aboutTitle">Место, где время<br>течёт медленнее</h2>
+          <p>Приглушённый свет медных ламп, глубокие кресла, винил по вечерам и бар, который знает, что вы любите.
+            Мы собрали пространство для неспешных встреч: с друзьями, на свидание или после длинного дня.</p>
+          <p>Кальянные мастера подбирают вкус и крепость под гостя, на кухне готовят до самого закрытия,
+            а бармены смешивают классику и сезонные авторские коктейли — в том числе безалкогольные.</p>
+        </div>
+        <ul class="features">
+          <li class="feature reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M12 6h8l-1.5 6h-5Z M16 12v14 M10 26h12"/><path d="M16 4c-1-1.5 1-2.5 0-4" opacity=".6"/></svg>
+            <h3>Кальянная карта</h3>
+            <p>Классика, авторские миксы и фруктовые чаши — подскажем сочетание.</p>
+          </li>
+          <li class="feature reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 7h18l-9 10Z M16 17v9 M11 27h10"/><circle cx="23" cy="6" r="3"/></svg>
+            <h3>Бар</h3>
+            <p>Коктейльная классика, сезонные авторские напитки и честные 0%-коктейли.</p>
+          </li>
+          <li class="feature reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 16h22a11 11 0 0 1-22 0Z M10 12c0-2 2-2 2-4 M16 12c0-2 2-2 2-4 M22 12c0-2 2-2 2-4"/></svg>
+            <h3>Кухня до закрытия</h3>
+            <p>Закуски на компанию, боулы, паста и десерты — горячее до последнего гостя.</p>
+          </li>
+          <li class="feature reveal">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="10"/><circle cx="16" cy="16" r="2"/><path d="M16 6v3 M26 16h-3"/></svg>
+            <h3>Музыка и свет</h3>
+            <p>Мягкий свет, спокойный звук и зоны для компаний от двух до двенадцати гостей.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== МЕНЮ ===================== -->
+    <section class="section menu" id="menu" aria-labelledby="menuTitle">
+      <div class="section-smoke" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Меню</p>
+          <h2 class="section-title" id="menuTitle">Выберите свой вечер</h2>
+          <p class="section-lead">Все цены и позиции — демонстрационные. Нажмите «Выбрать», чтобы настроить позицию и добавить её в заказ.</p>
+        </div>
+
+        <div class="filters" role="group" aria-label="Категории меню" id="filters"></div>
+
+        <p class="menu-note" id="hookahNote" hidden>
+          <span class="age-badge age-badge--sm" aria-hidden="true">18+</span>
+          Кальяны подаются только совершеннолетним гостям. Курение вредит вашему здоровью.
+        </p>
+
+        <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ===================== КАК ЗАКАЗАТЬ ===================== -->
+    <section class="section steps" id="order-info" aria-labelledby="stepsTitle">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Заказ</p>
+          <h2 class="section-title" id="stepsTitle">Как это работает</h2>
+        </div>
+        <ol class="steps__list">
+          <li class="step reveal"><span class="step__num">01</span><h3>Соберите заказ</h3><p>Выберите позиции, вкус, крепость и опции — корзина посчитает сумму.</p></li>
+          <li class="step reveal"><span class="step__num">02</span><h3>Выберите формат</h3><p>Самовывоз или столик в заведении к нужному времени. Доставка — пока в демо-режиме.</p></li>
+          <li class="step reveal"><span class="step__num">03</span><h3>Оставьте контакты</h3><p>Имя и телефон — чтобы администратор мог подтвердить заявку.</p></li>
+        </ol>
+        <div class="demo-note reveal" role="note">
+          <strong>Демонстрационная версия.</strong> Заявки с этого сайта никуда не отправляются, оплата не подключена,
+          персональные данные не сохраняются.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section class="section contacts" id="contacts" aria-labelledby="contactsTitle">
+      <div class="container contacts__grid">
+        <div class="reveal">
+          <p class="eyebrow">Контакты</p>
+          <h2 class="section-title" id="contactsTitle">Ждём вас вечером</h2>
+          <div class="contact-block">
+            <h3>Адрес</h3>
+            <p data-contact="address">—</p>
+            <p class="muted small" data-contact="addressNote"></p>
+          </div>
+          <div class="contact-block">
+            <h3>Телефон</h3>
+            <p data-phone-slot></p>
+          </div>
+          <div class="contact-block">
+            <h3>График работы</h3>
+            <dl class="hours" data-hours></dl>
+          </div>
+          <button class="btn btn--primary" type="button" data-action="checkout">Оформить заказ</button>
+        </div>
+        <div class="map reveal" aria-hidden="true">
+          <svg viewBox="0 0 400 320">
+            <rect width="400" height="320" fill="#120f0c"/>
+            <g stroke="#2a231c" stroke-width="14" fill="none" stroke-linecap="round">
+              <path d="M-10 90 L410 60"/><path d="M-10 230 L410 260"/><path d="M120 -10 L150 330"/><path d="M290 -10 L260 330"/>
+            </g>
+            <g stroke="#1f1a15" stroke-width="6" fill="none">
+              <path d="M-10 160 L410 150"/><path d="M200 -10 L210 330"/><path d="M40 -10 L60 330"/><path d="M360 -10 L350 330"/>
+            </g>
+            <path d="M0 300 C80 280 120 320 200 300 S340 280 400 300 V320 H0Z" fill="#16202a"/>
+            <circle cx="205" cy="152" r="40" fill="#c8895a" opacity=".12"/>
+            <path d="M205 118 c-14 0 -24 10 -24 23 c0 18 24 39 24 39 s24 -21 24 -39 c0 -13 -10 -23 -24 -23Z" fill="#c8895a"/>
+            <circle cx="205" cy="141" r="8" fill="#120f0c"/>
+          </svg>
+          <p class="map__note">Схема-заглушка. Здесь можно разместить карту.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== ПОДВАЛ ===================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <p class="footer__brand"><span data-brand="name">VELOUR</span> <span class="muted" data-brand="suffix">lounge &amp; bar</span></p>
+        <p class="muted small" data-brand="tagline"></p>
+      </div>
+      <div class="footer__legal small muted">
+        <p>18+ Кальяны и алкоголь — только для совершеннолетних. Курение вредит вашему здоровью.</p>
+        <p>Демонстрационный сайт: названия, цены, контакты и изображения вымышлены. Заявки не отправляются.</p>
+        <p>© <span data-year></span> <span data-brand="name">VELOUR</span></p>
+      </div>
+      <button class="link-btn small" type="button" id="replayIntro">Повторить заставку</button>
+    </div>
+  </footer>
+
+  <!-- Плавающая кнопка корзины -->
+  <button class="cart-fab" type="button" data-action="open-cart" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 11.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+    <span>Корзина · <span data-cart-total>0 ₴</span></span>
+    <span class="cart-fab__count" data-cart-count>0</span>
+  </button>
+
+  <!-- ===================== ОКНО ПОЗИЦИИ ===================== -->
+  <dialog class="modal" id="itemDialog" aria-labelledby="itemTitle">
+    <form method="dialog" class="modal__inner" id="itemForm" novalidate>
+      <button class="modal__close icon-btn" type="button" data-close aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="modal__media"><img id="itemImg" src="assets/menu/placeholder.svg" alt="" width="400" height="300"></div>
+      <div class="modal__body">
+        <h2 class="modal__title" id="itemTitle"></h2>
+        <p class="modal__desc" id="itemDesc"></p>
+        <div id="itemAgeNote"></div>
+        <div id="itemOptions"></div>
+        <div class="field-row">
+          <span class="field-label" id="qtyLabel">Количество</span>
+          <div class="stepper" role="group" aria-labelledby="qtyLabel">
+            <button type="button" class="stepper__btn" data-qty="-1" aria-label="Уменьшить количество">−</button>
+            <output class="stepper__val" id="itemQty" aria-live="polite">1</output>
+            <button type="button" class="stepper__btn" data-qty="1" aria-label="Увеличить количество">+</button>
+          </div>
+        </div>
+        <div id="itemAgeConfirm"></div>
+      </div>
+      <div class="modal__foot">
+        <button class="btn btn--primary btn--block" type="submit" id="itemAdd">Добавить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ===================== КОРЗИНА И ОФОРМЛЕНИЕ ===================== -->
+  <dialog class="drawer" id="cartDialog" aria-labelledby="cartTitle">
+    <div class="drawer__inner">
+      <div class="drawer__head">
+        <button class="icon-btn drawer__back" type="button" id="cartBack" aria-label="Назад к корзине" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <h2 class="drawer__title" id="cartTitle" tabindex="-1">Ваш заказ</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Закрыть корзину">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <!-- Шаг 1: корзина -->
+      <div class="drawer__view" data-view="cart">
+        <div class="drawer__scroll">
+          <ul class="cart-list" id="cartList"></ul>
+          <div class="cart-empty" id="cartEmpty" hidden>
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M14 20h36l-3.5 28a4 4 0 0 1-4 3.5H21.5a4 4 0 0 1-4-3.5Z"/><path d="M24 20a8 8 0 0 1 16 0"/></svg>
+            <p>Корзина пока пуста</p>
+            <button class="btn btn--ghost" type="button" data-action="goto-menu">Перейти к меню</button>
+          </div>
+        </div>
+        <div class="drawer__foot" id="cartFoot">
+          <div class="total-row"><span>Итого</span><strong data-cart-total>0 ₴</strong></div>
+          <button class="btn btn--primary btn--block" type="button" id="toCheckout">Оформить заказ</button>
+          <p class="tiny muted">Демо-режим: оплата не подключена.</p>
+        </div>
+      </div>
+
+      <!-- Шаг 2: оформление -->
+      <div class="drawer__view" data-view="checkout" hidden>
+        <form class="checkout" id="checkoutForm" novalidate>
+          <div class="drawer__scroll">
+            <div class="demo-note demo-note--compact" role="note">
+              <strong>Демо-версия:</strong> заявка никуда не отправляется, данные не сохраняются.
+            </div>
+            <div class="form-errors" id="formErrors" role="alert" tabindex="-1" hidden></div>
+
+            <div class="field">
+              <label for="fName">Имя <span class="req" aria-hidden="true">*</span></label>
+              <input id="fName" name="name" type="text" autocomplete="name" required maxlength="60" aria-describedby="fNameErr">
+              <p class="field-error" id="fNameErr"></p>
+            </div>
+
+            <div class="field">
+              <label for="fPhone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+380 XX XXX XX XX" aria-describedby="fPhoneHint fPhoneErr">
+              <p class="field-hint" id="fPhoneHint">Например: +380 67 123 45 67 или 067 123 45 67</p>
+              <p class="field-error" id="fPhoneErr"></p>
+            </div>
+
+            <fieldset class="field">
+              <legend>Способ получения <span class="req" aria-hidden="true">*</span></legend>
+              <div class="choice-cards">
+                <label class="choice-card">
+                  <input type="radio" name="method" value="pickup" checked>
+                  <span><strong>Самовывоз</strong><small>Заберёте заказ у бара</small></span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="method" value="dinein">
+                  <span><strong>В заведении</strong><small>Подадим к столику к вашему приходу</small></span>
+                </label>
+                <label class="choice-card">
+                  <input type="radio" name="method" value="delivery">
+                  <span><strong>Доставка <em class="pill">демо</em></strong><small>Сервис доставки не подключён</small></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="field" data-for="pickup dinein">
+              <label for="fTime">Время</label>
+              <select id="fTime" name="time"></select>
+            </div>
+
+            <div class="field" data-for="dinein" hidden>
+              <label for="fGuests">Количество гостей <span class="req" aria-hidden="true">*</span></label>
+              <input id="fGuests" name="guests" type="number" inputmode="numeric" min="1" max="20" value="2" aria-describedby="fGuestsErr">
+              <p class="field-error" id="fGuestsErr"></p>
+            </div>
+
+            <div class="field" data-for="delivery" hidden>
+              <p class="demo-note demo-note--compact">Доставка показана только для примера: курьерский сервис не подключён,
+                а кальяны и алкоголь в демо-сценарии доставки не предусмотрены.</p>
+              <label for="fAddress">Адрес доставки <span class="req" aria-hidden="true">*</span></label>
+              <input id="fAddress" name="address" type="text" autocomplete="street-address" maxlength="120" aria-describedby="fAddressErr">
+              <p class="field-error" id="fAddressErr"></p>
+            </div>
+
+            <div class="field">
+              <label for="fComment">Комментарий</label>
+              <textarea id="fComment" name="comment" rows="3" maxlength="300" placeholder="Пожелания к заказу, повод, зона в зале…" aria-describedby="fCommentHint"></textarea>
+              <p class="field-hint" id="fCommentHint">Необязательно, до 300 символов</p>
+            </div>
+
+            <div class="field" id="ageField" hidden>
+              <label class="check">
+                <input type="checkbox" name="age" id="fAge" aria-describedby="fAgeErr">
+                <span>Подтверждаю, что мне исполнилось 18 лет. Понимаю, что персонал может попросить документ.</span>
+              </label>
+              <p class="field-error" id="fAgeErr"></p>
+            </div>
+          </div>
+          <div class="drawer__foot">
+            <div class="total-row"><span>К оплате на месте</span><strong data-cart-total>0 ₴</strong></div>
+            <button class="btn btn--primary btn--block" type="submit">Отправить заявку (демо)</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Шаг 3: подтверждение -->
+      <div class="drawer__view" data-view="done" hidden>
+        <div class="drawer__scroll done">
+          <div class="done__icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30"/><path d="M20 33l8 8 16-17"/></svg>
+          </div>
+          <h3 class="done__title">Заявка оформлена</h3>
+          <p class="done__num">Номер: <strong id="doneNum"></strong></p>
+          <div class="demo-note demo-note--compact" role="note">
+            Это демонстрационный сценарий: заявка <strong>никуда не отправлена</strong>, а введённые данные не сохранены.
+            В рабочей версии здесь будет подтверждение от администратора.
+          </div>
+          <div class="done__summary" id="doneSummary"></div>
+          <button class="btn btn--primary btn--block" type="button" data-close>Вернуться на сайт</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/intro.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

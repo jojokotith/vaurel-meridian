@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Солёный свет — кухня у старого маяка</title>
+  <meta name="description" content="Демонстрационный сайт ресторана у моря: меню, история места, галерея и бронирование столика.">
+  <meta name="theme-color" content="#071419">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      var reduce = false;
+      try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      d.classList.add(reduce ? 'intro-done' : 'intro-play');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- Вступление: туман рассеивается, проходит луч маяка -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="fog fog--1"></div>
+    <div class="fog fog--2"></div>
+    <div class="fog fog--3"></div>
+  </div>
+  <button class="intro-skip" id="introSkip" type="button">Пропустить вступление</button>
+
+  <!-- ===================== ШАПКА ===================== -->
+  <header class="header" id="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="#top">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-opacity=".45"/>
+          <path d="M16 31 L17.5 15 H22.5 L24 31 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          <rect x="17" y="10" width="6" height="5" fill="#ffd79b"/>
+          <path d="M23 12 L35 8 M23 13 L35 17" stroke="#ffd79b" stroke-opacity=".7" stroke-linecap="round"/>
+          <path d="M9 31 q3 -2 6 0 t6 0 t6 0 t6 0" fill="none" stroke="currentColor" stroke-opacity=".6" stroke-linecap="round"/>
+        </svg>
+        <span class="brand__text">
+          <span class="brand__name" data-site="name">Солёный свет</span>
+          <span class="brand__tag" data-site="tagline">кухня у старого маяка</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Разделы сайта">
+        <ul class="nav__list" id="navList">
+          <li><a href="#story">История</a></li>
+          <li><a href="#menu">Меню</a></li>
+          <li><a href="#place">Внутри и снаружи</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+          <li class="nav__cta-mobile"><a class="btn btn--coral" href="#booking" data-book>Забронировать столик</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn btn--coral btn--sm header__book" href="#booking" data-book>Забронировать столик</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navList">
+        <span class="sr-only" id="burgerLabel">Открыть меню</span>
+        <span class="burger__lines" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== ПЕРВЫЙ ЭКРАН ===================== -->
+    <section class="hero" id="top" aria-labelledby="heroTitle">
+      <div class="hero__scene">
+        <svg class="panorama" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="panoTitle">
+          <title id="panoTitle">Сумерки у моря: на скалистом мысе стоит маяк, рядом стеклянный павильон ресторана с тёплым светом в окнах и деревянной террасой над водой</title>
+          <defs>
+            <linearGradient id="p-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#06131a"/><stop offset=".35" stop-color="#12303d"/>
+              <stop offset=".55" stop-color="#3d5563"/><stop offset=".72" stop-color="#c58a73"/><stop offset=".8" stop-color="#f2c08e"/>
+            </linearGradient>
+            <linearGradient id="p-sea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2b5865"/><stop offset=".25" stop-color="#173b47"/><stop offset="1" stop-color="#050f13"/>
+            </linearGradient>
+            <linearGradient id="p-rock" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1b2a30"/><stop offset="1" stop-color="#070e11"/>
+            </linearGradient>
+            <linearGradient id="p-glass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe4b4"/><stop offset="1" stop-color="#e9935a"/>
+            </linearGradient>
+            <radialGradient id="p-glow"><stop offset="0" stop-color="#ffe2ad" stop-opacity="1"/><stop offset=".3" stop-color="#ffbf75" stop-opacity=".5"/><stop offset="1" stop-color="#ffbf75" stop-opacity="0"/></radialGradient>
+            <radialGradient id="p-sun"><stop offset="0" stop-color="#ffd9a3" stop-opacity=".8"/><stop offset="1" stop-color="#ffd9a3" stop-opacity="0"/></radialGradient>
+            <linearGradient id="p-beam" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ffe2ad" stop-opacity=".55"/><stop offset="1" stop-color="#ffe2ad" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="p-soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+          </defs>
+
+          <rect x="-900" width="3400" height="620" fill="url(#p-sky)"/>
+          <g fill="#fff" class="stars">
+            <circle cx="120" cy="60" r="1.2" opacity=".7"/><circle cx="260" cy="140" r="1" opacity=".5"/><circle cx="420" cy="80" r="1.4" opacity=".8"/>
+            <circle cx="560" cy="180" r="1" opacity=".4"/><circle cx="880" cy="60" r="1.3" opacity=".7"/><circle cx="1040" cy="130" r="1" opacity=".5"/>
+            <circle cx="1210" cy="70" r="1.5" opacity=".8"/><circle cx="1380" cy="160" r="1" opacity=".5"/><circle cx="1520" cy="90" r="1.2" opacity=".6"/><circle cx="-120" cy="110" r="1.2" opacity=".6"/><circle cx="-300" cy="220" r="1" opacity=".5"/><circle cx="1720" cy="140" r="1.2" opacity=".6"/><circle cx="1900" cy="60" r="1" opacity=".5"/>
+            <circle cx="340" cy="250" r=".9" opacity=".4"/><circle cx="980" cy="230" r=".9" opacity=".4"/><circle cx="1460" cy="260" r=".9" opacity=".4"/>
+          </g>
+          <circle cx="1260" cy="610" r="300" fill="url(#p-sun)"/>
+          <circle cx="1260" cy="606" r="46" fill="#ffd8a2"/>
+          <path d="M-900 598 C-500 584 -100 590 0 596 C140 580 260 588 380 600 L380 612 H-900Z" fill="#3a4b55" opacity=".75"/>
+          <path d="M1380 604 C1460 590 1540 592 1600 598 C1800 590 2100 596 2500 600 V612 H1380Z" fill="#3a4b55" opacity=".7"/>
+
+          <!-- луч маяка -->
+          <g class="beam">
+            <path d="M700 268 L1700 150 L1700 330 Z" fill="url(#p-beam)" filter="url(#p-soft)" opacity=".55"/>
+          </g>
+
+          <rect x="-900" y="610" width="3400" height="390" fill="url(#p-sea)"/>
+          <!-- блики на воде -->
+          <g class="shimmer" stroke-linecap="round">
+            <g stroke="#ffcf98">
+              <path d="M1236 622 h48" stroke-width="3" opacity=".9"/><path d="M1220 640 h80" stroke-width="3" opacity=".8"/>
+              <path d="M1240 660 h50" stroke-width="4" opacity=".7"/><path d="M1205 684 h110" stroke-width="4" opacity=".6"/>
+              <path d="M1230 712 h70" stroke-width="5" opacity=".5"/><path d="M1190 746 h140" stroke-width="6" opacity=".4"/>
+              <path d="M1225 790 h90" stroke-width="7" opacity=".3"/><path d="M1180 840 h170" stroke-width="8" opacity=".22"/>
+            </g>
+            <g stroke="#ffd79b" class="shimmer__lh">
+              <path d="M690 640 h22" stroke-width="2" opacity=".7"/><path d="M684 664 h34" stroke-width="3" opacity=".55"/>
+              <path d="M692 694 h20" stroke-width="3" opacity=".45"/><path d="M676 730 h50" stroke-width="4" opacity=".35"/>
+            </g>
+            <g stroke="#ffc98a" class="shimmer__win">
+              <path d="M830 636 h200" stroke-width="5" opacity=".45"/><path d="M850 660 h150" stroke-width="5" opacity=".35"/>
+              <path d="M820 690 h220" stroke-width="6" opacity=".28"/><path d="M860 724 h130" stroke-width="7" opacity=".2"/>
+            </g>
+          </g>
+          <g class="waves" stroke="#dcebe6" stroke-linecap="round" fill="none">
+            <path d="M-200 650 h80 M-420 700 h120 M40 640 h90 M240 655 h60 M470 646 h70 M1420 650 h80 M1500 680 h70" stroke-width="1.5" opacity=".25"/>
+            <path d="M60 720 h140 M380 700 h110 M1080 760 h120 M1400 730 h150" stroke-width="2" opacity=".22"/>
+            <path d="M120 820 h200 M520 860 h160 M1000 880 h220 M1360 840 h200" stroke-width="3" opacity=".18"/>
+          </g>
+
+          <!-- мыс -->
+          <path d="M470 612 L540 560 L600 470 L660 440 L760 436 L820 470 L880 492 L1180 500 L1230 540 L1270 612 Z" fill="url(#p-rock)"/>
+          <path d="M600 470 L660 440 L680 520 L620 560Z M760 436 L820 470 L790 540 L740 500Z M1180 500 L1230 540 L1180 580Z" fill="#2a3d44" opacity=".6"/>
+          <path d="M470 612 C520 606 560 614 610 608 M1150 608 C1190 602 1230 610 1270 612" stroke="#e8efe9" stroke-opacity=".55" stroke-width="2" fill="none"/>
+
+          <!-- маяк -->
+          <g class="lighthouse">
+            <circle class="lamp-halo" cx="700" cy="268" r="120" fill="url(#p-glow)"/>
+            <path d="M684 300 L670 442 H730 L716 300 Z" fill="#e7e1d4"/>
+            <path d="M680 340 L677 368 H723 L720 340 Z M674 400 L672 424 H728 L726 400 Z" fill="#e9805f" opacity=".85"/>
+            <path d="M684 300 L670 442 H694 L696 300 Z" fill="#000" opacity=".2"/>
+            <rect x="678" y="290" width="44" height="10" fill="#1e2427"/>
+            <rect class="lamp" x="688" y="258" width="24" height="32" fill="#ffd79b"/>
+            <path d="M688 258 v32 M700 258 v32 M712 258 v32" stroke="#1e2427" stroke-width="2"/>
+            <path d="M682 258 L700 238 L718 258 Z" fill="#1e2427"/>
+          </g>
+
+          <!-- ресторан -->
+          <g class="pavilion">
+            <circle cx="960" cy="470" r="260" fill="url(#p-glow)" opacity=".35"/>
+            <rect x="820" y="420" width="300" height="84" fill="url(#p-glass)"/>
+            <g stroke="#2a2420" stroke-width="3">
+              <path d="M880 420 v84 M940 420 v84 M1000 420 v84 M1060 420 v84"/>
+            </g>
+            <g fill="#3a2618" opacity=".55">
+              <circle cx="850" cy="440" r="5"/><circle cx="910" cy="440" r="5"/><circle cx="970" cy="440" r="5"/><circle cx="1030" cy="440" r="5"/><circle cx="1090" cy="440" r="5"/>
+              <path d="M845 504 v-22 h10 v22 M960 504 c0 -18 4 -26 12 -26 s12 8 12 26 M1040 504 c0 -16 4 -24 10 -24 s10 8 10 24"/>
+            </g>
+            <path d="M808 412 H1132 V422 H808Z" fill="#1a1512"/>
+            <path d="M790 504 H1160 V514 H790Z" fill="#7a5034"/>
+            <path d="M790 494 H1160" stroke="#3b261a" stroke-width="2"/>
+            <path d="M800 514 V612 M860 514 V612 M920 514 V612 M1020 514 V612 M1080 514 V612 M1140 514 V612" stroke="#2b1c13" stroke-width="6"/>
+            <g fill="#ffe8bf" class="garland">
+              <path d="M790 470 Q830 488 870 474 Q910 488 950 474" stroke="#2a2420" fill="none" opacity=".6"/>
+              <circle cx="800" cy="476" r="2.4"/><circle cx="818" cy="482" r="2.4"/><circle cx="838" cy="482" r="2.4"/><circle cx="858" cy="477" r="2.4"/>
+            </g>
+          </g>
+
+          <!-- парус -->
+          <g class="sail" transform="translate(1440 588)">
+            <path d="M0 0 L0 -60 L32 -4Z" fill="#efe8dc"/><path d="M-3 -52 L-3 0 L-26 -4Z" fill="#d9cfbf"/>
+            <path d="M-30 2 H38 L30 10 H-24Z" fill="#1c2226"/>
+          </g>
+
+          <!-- передний план -->
+          <path d="M0 880 L80 840 L170 860 L260 920 L300 1000 H0Z" fill="#050b0d"/>
+          <path d="M1600 860 L1520 820 L1420 850 L1360 930 L1340 1000 H1600Z" fill="#050b0d"/>
+          <path class="foam" d="M60 846 C110 836 150 852 200 868 M1400 852 C1450 830 1500 828 1560 842" stroke="#e8efe9" stroke-width="3" stroke-linecap="round" fill="none" opacity=".5"/>
+        </svg>
+        <div class="hero__shade" aria-hidden="true"></div>
+        <div class="hero__veil" aria-hidden="true"></div>
+      </div>
+
+      <div class="wrap hero__content">
+        <p class="kicker hero-rise" style="--d:0">Ресторан на мысе · у старого маяка</p>
+        <h1 class="hero__title" id="heroTitle" tabindex="-1">
+          <span class="hero__title-text">Ужин в&nbsp;луче<br><em>маяка</em></span>
+          <span class="sweep" aria-hidden="true"></span>
+        </h1>
+        <p class="hero__lead hero-rise" style="--d:1">
+          Свежий улов с утренних лодок, огонь открытых углей и большие окна,
+          за которыми каждый вечер море становится другим.
+        </p>
+        <div class="hero__actions hero-rise" style="--d:2">
+          <a class="btn btn--light" href="#menu">Посмотреть меню</a>
+          <a class="btn btn--ghost" href="#booking" data-book>Найти столик</a>
+        </div>
+        <dl class="hero__facts hero-rise" style="--d:3">
+          <div><dt>Сегодня</dt><dd><span class="dot" data-open-dot></span><span data-today>—</span></dd></div>
+          <div><dt>Где</dt><dd data-contact="address">—</dd></div>
+        </dl>
+      </div>
+      <a class="hero__down" href="#story" aria-label="Прокрутить к истории ресторана"><span aria-hidden="true"></span></a>
+    </section>
+
+    <!-- ===================== ИСТОРИЯ ===================== -->
+    <section class="story" id="story" aria-labelledby="storyTitle">
+      <div class="wrap story__grid">
+        <div class="story__aside">
+          <div class="story__sticky">
+            <p class="kicker reveal">История места</p>
+            <h2 class="title reveal" id="storyTitle">Бортовой журнал <em>одного берега</em></h2>
+            <figure class="story__photo reveal">
+              <img src="assets/img/window-view.svg" width="900" height="1200" loading="lazy" decoding="async"
+                   alt="Вид из окна ресторана ночью: маяк на тёмной скале, лунная дорожка на воде, на подоконнике бокал и свеча">
+              <figcaption>Вид из-за столика № 7 — около девяти вечера</figcaption>
+            </figure>
+          </div>
+        </div>
+        <ol class="log">
+          <li class="log__entry reveal">
+            <span class="log__num" aria-hidden="true">I</span>
+            <svg class="log__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M20 42 L21.5 18 H26.5 L28 42Z M20 14 h8 v4 h-8z M18 14 L24 8 L30 14"/><path d="M28 15 L44 10 M28 16 L44 22" opacity=".6"/></svg>
+            <div>
+              <h3>Маяк</h3>
+              <p>Башня на мысе давно светит кораблям. Мы не стали её трогать — построили рядом стеклянный павильон, чтобы ужинать в её свете.</p>
+            </div>
+          </li>
+          <li class="log__entry reveal">
+            <span class="log__num" aria-hidden="true">II</span>
+            <svg class="log__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 30 l6 -10 l6 10z M24 34 l8 -12 l8 12z M8 36 l5 -7 l5 7z"/><path d="M6 40 q6 -3 12 0 t12 0 t12 0" opacity=".6"/></svg>
+            <div>
+              <h3>Соль</h3>
+              <p>Рыба приходит с утренних лодок, а соль мы собираем в каменных ваннах на скалах. Меню пишется после того, как посмотрели на улов.</p>
+            </div>
+          </li>
+          <li class="log__entry reveal">
+            <span class="log__num" aria-hidden="true">III</span>
+            <svg class="log__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40 c-8 0 -12 -6 -12 -12 c0 -8 8 -10 8 -20 c6 4 6 10 4 14 c3 -2 5 -5 5 -8 c5 5 7 9 7 14 c0 6 -4 12 -12 12z"/><path d="M10 42 h28" opacity=".6"/></svg>
+            <div>
+              <h3>Огонь</h3>
+              <p>Сердце кухни — открытые угли. На них готовится рыба целиком, осьминог и хлеб, который приносят к столу ещё тёплым.</p>
+            </div>
+          </li>
+          <li class="log__entry reveal">
+            <span class="log__num" aria-hidden="true">IV</span>
+            <svg class="log__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M22 6 L22 38 L8 36 Z M26 10 L26 38 L40 36 C38 26 34 16 26 10Z"/><path d="M6 42 h36" opacity=".6"/></svg>
+            <div>
+              <h3>Ветер</h3>
+              <p>Когда тихо — открываем террасу над водой. Когда штормит — зажигаем больше свечей и выносим пледы. Каждый вечер немного другой.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== МЕНЮ ===================== -->
+    <section class="menu" id="menu" aria-labelledby="menuTitle">
+      <div class="water" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="menu__head">
+          <div>
+            <p class="kicker reveal">Меню</p>
+            <h2 class="title reveal" id="menuTitle">Что сегодня <em>принесло море</em></h2>
+          </div>
+          <p class="menu__intro reveal">Демонстрационное меню: названия, состав и цены условные. Позиции меняются вместе с уловом и погодой.</p>
+        </div>
+
+        <div class="tabs reveal" role="tablist" aria-label="Категории меню" id="menuTabs"></div>
+
+        <div class="menu__panel" id="menuPanel" role="tabpanel" tabindex="0">
+          <!-- наполняется из js/data.js -->
+        </div>
+
+        <ul class="legend" aria-label="Обозначения">
+          <li><span class="tag tag--sign" aria-hidden="true">★</span> фирменное</li>
+          <li><span class="tag tag--veg" aria-hidden="true">V</span> вегетарианское</li>
+          <li><span class="tag tag--hot" aria-hidden="true">🌶</span> острое</li>
+          <li><span class="tag tag--age" aria-hidden="true">18+</span> алкоголь, только для совершеннолетних</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== ВНУТРИ И СНАРУЖИ ===================== -->
+    <section class="place" id="place" aria-labelledby="placeTitle">
+      <div class="wrap place__head">
+        <div>
+          <p class="kicker reveal">Внутри и снаружи</p>
+          <h2 class="title reveal" id="placeTitle">Один вечер <em>от заката до огней</em></h2>
+        </div>
+        <div class="place__controls reveal">
+          <p class="place__hint">Листайте сцены или нажмите на фото, чтобы открыть крупно</p>
+          <div class="place__btns">
+            <button class="round-btn" type="button" id="scenePrev" aria-label="Предыдущая сцена">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="round-btn" type="button" id="sceneNext" aria-label="Следующая сцена">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="timeline" aria-hidden="true"><div class="timeline__bar" id="timelineBar"></div></div>
+      <ul class="scenes" id="scenes" aria-label="Сцены вечера"></ul>
+    </section>
+
+    <!-- ===================== БРОНИРОВАНИЕ ===================== -->
+    <section class="booking" id="booking" aria-labelledby="bookingTitle">
+      <div class="wrap booking__grid">
+        <div class="booking__intro">
+          <p class="kicker reveal">Бронирование</p>
+          <h2 class="title reveal" id="bookingTitle">Столик <em>у самой воды</em></h2>
+          <p class="reveal">Оставьте заявку — и мы подберём место: у большого окна, на террасе или у бара.
+            Лучшие столики на закат разбирают первыми.</p>
+          <ul class="notes reveal">
+            <li><strong>Держим столик 15 минут.</strong> Если задерживаетесь — просто позвоните.</li>
+            <li><strong>Компания больше <span data-max-guests>10</span> гостей?</strong> Позвоните, соберём длинный стол.</li>
+            <li><strong>Терраса</strong> открыта в тёплую и тихую погоду — при ветре пересадим в зал у окна.</li>
+          </ul>
+          <div class="demo-flag reveal" role="note">
+            <strong>Демо-версия.</strong> Заявка никуда не отправляется и не сохраняется — это пример того, как будет работать бронь.
+          </div>
+        </div>
+
+        <div class="ticket reveal">
+          <div class="ticket__top" aria-hidden="true">
+            <span>Посадочный талон к ужину</span><span>№ <span id="ticketNo">—</span></span>
+          </div>
+
+          <form class="form" id="bookingForm" novalidate>
+            <div class="form__errors" id="formErrors" role="alert" tabindex="-1" hidden></div>
+
+            <div class="field">
+              <label for="fName">Имя <span class="req" aria-hidden="true">*</span></label>
+              <input id="fName" name="name" type="text" autocomplete="name" maxlength="60" required aria-describedby="fNameErr">
+              <p class="field__err" id="fNameErr"></p>
+            </div>
+
+            <div class="field">
+              <label for="fPhone">Телефон <span class="req" aria-hidden="true">*</span></label>
+              <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+380 67 123 45 67" aria-describedby="fPhoneHint fPhoneErr">
+              <p class="field__hint" id="fPhoneHint">Украинский номер: +380… или 0…</p>
+              <p class="field__err" id="fPhoneErr"></p>
+            </div>
+
+            <div class="form__row">
+              <div class="field">
+                <label for="fDate">Дата <span class="req" aria-hidden="true">*</span></label>
+                <input id="fDate" name="date" type="date" required aria-describedby="fDateErr">
+                <p class="field__err" id="fDateErr"></p>
+              </div>
+              <div class="field">
+                <label for="fTime">Время <span class="req" aria-hidden="true">*</span></label>
+                <select id="fTime" name="time" required aria-describedby="fTimeHint fTimeErr"></select>
+                <p class="field__hint" id="fTimeHint"></p>
+                <p class="field__err" id="fTimeErr"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="guestsLabel">Гостей <span class="req" aria-hidden="true">*</span></span>
+              <div class="guests" role="group" aria-labelledby="guestsLabel">
+                <button type="button" class="guests__btn" data-guests="-1" aria-label="Меньше гостей">−</button>
+                <input id="fGuests" name="guests" type="number" inputmode="numeric" min="1" value="2" aria-labelledby="guestsLabel" aria-describedby="fGuestsErr">
+                <button type="button" class="guests__btn" data-guests="1" aria-label="Больше гостей">+</button>
+              </div>
+              <p class="field__err" id="fGuestsErr"></p>
+            </div>
+
+            <fieldset class="field">
+              <legend>Где хотите сидеть</legend>
+              <div class="zones">
+                <label class="zone"><input type="radio" name="zone" value="any" checked><span>Где свободно</span></label>
+                <label class="zone"><input type="radio" name="zone" value="window"><span>У окна</span></label>
+                <label class="zone"><input type="radio" name="zone" value="terrace"><span>Терраса</span></label>
+                <label class="zone"><input type="radio" name="zone" value="bar"><span>Бар</span></label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="fComment">Комментарий</label>
+              <textarea id="fComment" name="comment" rows="3" maxlength="300" placeholder="Повод, детский стул, пожелания по меню…"></textarea>
+            </div>
+
+            <button class="btn btn--coral btn--block" type="submit" id="bookSubmit">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn__label">Отправить заявку</span>
+            </button>
+            <p class="form__fine">Демо: данные не отправляются и не сохраняются.</p>
+          </form>
+
+          <div class="success" id="bookingSuccess" hidden tabindex="-1" aria-labelledby="successTitle">
+            <svg class="success__icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
+            <h3 id="successTitle">Заявка оформлена</h3>
+            <p class="success__lead">Так будет выглядеть подтверждение. <strong>В демо-версии заявка никуда не отправлена</strong>, а данные не сохранены.</p>
+            <dl class="success__list" id="successList"></dl>
+            <button class="btn btn--dark btn--block" type="button" id="bookAgain">Оформить другую бронь</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== КОНТАКТЫ ===================== -->
+    <section class="contacts" id="contacts" aria-labelledby="contactsTitle">
+      <div class="wrap contacts__grid">
+        <div>
+          <p class="kicker reveal">Контакты</p>
+          <h2 class="title reveal" id="contactsTitle">Как нас <em>найти</em></h2>
+          <dl class="info reveal">
+            <div><dt>Адрес</dt><dd><span data-contact="address"></span><small data-contact="addressNote"></small></dd></div>
+            <div><dt>Телефон</dt><dd><span class="phone"><span data-contact="phone"></span>
+              <button type="button" class="chip-btn" data-copy-phone>Скопировать</button></span></dd></div>
+            <div><dt>График</dt><dd><dl class="hours" data-hours></dl></dd></div>
+          </dl>
+          <div class="links reveal" id="links" aria-label="Карты и соцсети"></div>
+        </div>
+        <figure class="chart reveal">
+          <svg viewBox="0 0 600 480" role="img" aria-labelledby="chartTitle">
+            <title id="chartTitle">Схема побережья в стиле морской карты: мыс с маяком и отметка ресторана. Это иллюстрация, а не настоящая карта.</title>
+            <rect width="600" height="480" fill="#e9dcc2"/>
+            <g fill="none" stroke="#6f8f95" stroke-opacity=".5">
+              <path d="M0 140 C120 160 200 120 300 170 C380 210 420 300 600 290"/>
+              <path d="M0 110 C130 130 210 90 310 140 C400 185 440 260 600 255" stroke-dasharray="4 6"/>
+              <path d="M0 80 C140 100 220 60 320 110 C420 160 460 220 600 220" stroke-dasharray="2 8"/>
+            </g>
+            <path d="M0 170 C120 190 200 150 290 200 C360 240 380 300 450 330 C520 360 560 340 600 330 V480 H0Z" fill="#c9b48e"/>
+            <path d="M0 170 C120 190 200 150 290 200 C360 240 380 300 450 330 C520 360 560 340 600 330" fill="none" stroke="#7a5d3c" stroke-width="2"/>
+            <g fill="#7a5d3c" opacity=".35">
+              <circle cx="80" cy="260" r="2"/><circle cx="140" cy="300" r="2"/><circle cx="220" cy="270" r="2"/><circle cx="300" cy="340" r="2"/><circle cx="420" cy="400" r="2"/><circle cx="520" cy="420" r="2"/>
+            </g>
+            <path d="M40 420 C200 380 360 430 560 400" stroke="#7a5d3c" stroke-width="5" stroke-opacity=".5" fill="none" stroke-dasharray="1 0"/>
+            <text x="300" y="456" fill="#5b4530" font-size="13" font-family="Onest, sans-serif" text-anchor="middle">Набережная (схема)</text>
+            <g transform="translate(330 214)">
+              <circle r="46" fill="#ffd79b" opacity=".35"/>
+              <path d="M-6 14 L-4 -12 H4 L6 14Z" fill="#20343a"/><rect x="-5" y="-18" width="10" height="6" fill="#e9805f"/>
+            </g>
+            <g transform="translate(392 262)">
+              <circle r="15" fill="#e9805f"/><circle r="6" fill="#fff8ec"/>
+            </g>
+            <text x="412" y="252" fill="#3a2a1c" font-size="15" font-weight="600" font-family="Onest, sans-serif">Солёный свет</text>
+            <text x="250" y="190" fill="#3a2a1c" font-size="12" font-family="Onest, sans-serif" opacity=".8">маяк</text>
+            <g transform="translate(90 70)" stroke="#5b4530" fill="none" opacity=".7">
+              <circle r="30"/><path d="M0 -40 L6 0 L0 40 L-6 0Z" fill="#5b4530" fill-opacity=".25"/><path d="M-40 0 H40"/>
+              <text y="-46" fill="#5b4530" stroke="none" font-size="12" text-anchor="middle" font-family="Onest, sans-serif">С</text>
+            </g>
+          </svg>
+          <figcaption>Схема-иллюстрация. Для рабочей версии подключите настоящую карту.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <div>
+        <p class="footer__name" data-site="name">Солёный свет</p>
+        <p class="footer__tag" data-site="tagline">кухня у старого маяка</p>
+      </div>
+      <p class="footer__fine">Демонстрационный сайт. Название, адрес, телефон, меню, цены и история вымышлены; иллюстрации — заглушки.
+        Бронирования не отправляются. Алкоголь — только для совершеннолетних.</p>
+      <a class="footer__top" href="#top">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <!-- Просмотр фото -->
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lbTitle">
+    <figure class="lightbox__fig">
+      <img id="lbImg" src="assets/img/exterior-promenade.svg" alt="">
+      <figcaption>
+        <span class="lightbox__time" id="lbTime"></span>
+        <strong id="lbTitle"></strong>
+        <span id="lbText"></span>
+        <span class="lightbox__count" id="lbCount"></span>
+      </figcaption>
+    </figure>
+    <button class="round-btn lightbox__close" type="button" data-lb="close" aria-label="Закрыть просмотр">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <button class="round-btn lightbox__prev" type="button" data-lb="prev" aria-label="Предыдущее фото">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="round-btn lightbox__next" type="button" data-lb="next" aria-label="Следующее фото">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
