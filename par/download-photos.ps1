@@ -1,4 +1,4 @@
-﻿# Скачивает фото сайта в .\photos и создаёт index-offline.html, который берёт их из этой папки.
+﻿# Завантажує фото сайту в .\photos і створює index-offline.html, який бере їх із цієї папки.
 $ErrorActionPreference = "Stop"
 Set-Location -Path $PSScriptRoot
 New-Item -ItemType Directory -Force -Path photos | Out-Null
@@ -24,4 +24,4 @@ foreach ($id in $ids) {
   $html = [regex]::Replace($html, $pattern, "photos/$id.jpg")
 }
 [IO.File]::WriteAllText((Join-Path $PSScriptRoot "index-offline.html"), $html, (New-Object System.Text.UTF8Encoding $false))
-Write-Host "Готово: photos\ и index-offline.html"
+Write-Host "Готово: photos\ і index-offline.html"
