@@ -495,8 +495,8 @@ html:not(.js) .evening .night{opacity:1}
         const n = o.rate * self.boost * dt * 6; for (let i = 0; i < n; i++) if (Math.random() < n - i) P.push({ x: self.src.x + (Math.random() - .5) * self.src.r * 1.4, y: self.src.y + (Math.random() - .5) * self.src.r * .5, r: o.size * (.6 + Math.random() * .6) * (self.boost > 1 ? 1.6 : 1), l: 0, m: 3.5 + Math.random() * 2.5, s: Math.random() * 10, v: o.rise * (.7 + Math.random() * .6) });
         g.clearRect(0, 0, W, H);
         for (let i = P.length - 1; i >= 0; i--) { const p = P[i]; p.l += dt; if (p.l > p.m) { P.splice(i, 1); continue; }
-          const k = p.l / p.m; p.y -= p.v * dt * (1 + self.boost * .3); p.x += Math.sin(t / 1000 * .9 + p.s + p.y * .012) * o.spread * dt; p.r += o.size * .35 * dt * (self.boost > 1 ? 3 : 1);
-          g.globalAlpha = Math.sin(Math.PI * k) * o.alpha * (self.boost > 1 ? 2.4 : 1); g.drawImage(sprite, p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); }
+          const k = p.l / p.m; p.y -= p.v * dt * (1 + self.boost * .3); p.x += Math.sin(t / 1000 * .9 + p.s + p.y * .012) * o.spread * dt; p.r += o.size * .22 * dt * (self.boost > 1 ? 4 : 1);
+          g.globalAlpha = Math.sin(Math.PI * k) * (1 - k * .5) * o.alpha * (self.boost > 1 ? 3 : 1); g.drawImage(sprite, p.x - p.r, p.y - p.r, p.r * 2, p.r * 2); }
         g.globalAlpha = 1; if (P.length > 400) P.splice(0, P.length - 400);
       },
       set active(v) { on = v; if (!v) g.clearRect(0, 0, W, H); }, size
@@ -551,7 +551,7 @@ html:not(.js) .evening .night{opacity:1}
   if (reduce) $$('.rv').forEach(e => e.classList.add('in')); else $$('.rv').forEach(e => io.observe(e));
 
   /* ---------- 1. entry: steam from the cup, a slow ripple on the crema ---------- */
-  const espImg = $('img[data-photo=espresso]'), ripple = $('#ripple'), steam = Steam($('#steam'), { rate: reduce ? 0 : 7, size: 30, rise: 34, alpha: .085, spread: 16 });
+  const espImg = $('img[data-photo=espresso]'), ripple = $('#ripple'), steam = Steam($('#steam'), { rate: reduce ? 0 : 4, size: 30, rise: 30, alpha: .035, spread: 14 });
   const CUP = { x: .517, y: .50, r: .118 };   // coffee centre and radius in the photo, measured on the image
   function placeCup() {
     const iw = espImg.naturalWidth || 1600, ih = espImg.naturalHeight || 1066, W = enter.clientWidth, H = enter.clientHeight, R = coverRect(W, H, iw, ih, .52, .5);
@@ -559,7 +559,7 @@ html:not(.js) .evening .night{opacity:1}
     Object.assign(ripple.style, { left: cx - rr + 'px', top: cy - rr + 'px', width: rr * 2 + 'px', height: rr * 2 + 'px' });
     let im = ripple.querySelector('img'); if (!im) { im = espImg.cloneNode(); im.removeAttribute('srcset'); im.alt = ''; im.className = ''; im.src = espImg.currentSrc || espImg.src; ripple.appendChild(im); }
     Object.assign(im.style, { left: R.x - (cx - rr) + 'px', top: R.y - (cy - rr) + 'px', width: R.w + 'px', height: R.h + 'px' });
-    Object.assign(steam.src, { x: cx, y: cy - rr * .2, r: rr * .8 }); steam.o.size = rr * .55;
+    Object.assign(steam.src, { x: cx, y: cy - rr * .1, r: rr * .7 }); steam.o.size = rr * .3; steam.o.rise = rr * .5;
   }
   if (espImg.complete) placeCup(); else espImg.addEventListener('load', placeCup);
   addEventListener('resize', placeCup);
